@@ -1,7 +1,8 @@
 small tweak
 
-open matchup shouldn't show under pending.
-maybe under pending just have open matchup showing as open
+the currently open matchup shouldn't show under pending.
+maybe under pending but just to have open matchup showing as open?
+i dislike it appearing and disappearing whenever i validate an edit
 this reduces... changes visually that would be otherwise disturbing
 
 also, move discard draft under sync github

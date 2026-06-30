@@ -93,18 +93,9 @@
                             </svg>
                         </button>
                     </div>
-                    <!-- Discard Confirmation UI triggers -->
-                    <div id="discardWrapper" style="display: flex; align-items: center; gap: 8px;">
-                        <button id="discardBtn" class="btn-danger" onclick="showDiscardConfirm()" style="display: none; padding: 6px 12px; font-size: 12px; width: auto;">Discard Draft</button>
-                        <div id="discardConfirmGroup" style="display: none; align-items: center; gap: 6px;">
-                            <span style="font-size: 12px; color: var(--danger); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">Are you sure?</span>
-                            <button id="confirmDiscardYes" class="btn-danger" onclick="discardCurrentDraft()" style="padding: 4px 10px; font-size: 11px; width: auto; text-transform: uppercase;">Yes</button>
-                            <button id="confirmDiscardNo" class="btn-secondary" onclick="hideDiscardConfirm()" style="padding: 4px 10px; font-size: 11px; width: auto; text-transform: uppercase; border: 1px solid var(--gold-dark); background: transparent; color: var(--text-secondary);">No</button>
-                        </div>
-                    </div>
                 </div>
 
-                <!-- Local-Remote Edit Conflict Resolution Banner -->
+
                 <div id="conflictBanner" class="warning-banner" style="display: none;">
                     <div style="flex: 1;">
                         <strong>Unsynced Draft Conflict:</strong> You have edited this matchup locally, but a different version exists on GitHub.
@@ -126,8 +117,6 @@
                     </div>
                     <div id="detectedLinksList" class="detected-links-list"></div>
                 </div>
-                
-                <!-- Bottom controls: status label, Mobalytics Counters shortcuts, Sync to GitHub triggers -->
                 <div class="editor-actions">
                     <div id="status" class="status-text">Status: Checking bridge connectivity...</div>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -138,8 +127,14 @@
                             </svg>
                             Mobalytics Counters
                         </a>
-                        <button id="syncBtn" class="btn-gold-sm" onclick="saveToGitHub()" style="width: auto; display: none;">Sync to GitHub</button>
+                        <button id="discardBtn" class="btn-discard" onclick="showDiscardConfirm()" disabled style="padding: 10px 15px; font-size: 12px; width: auto;">Discard Draft</button>
+                        <button id="syncBtn" class="btn-gold-sm" onclick="saveToGitHub()" disabled style="width: auto; display: inline-flex; opacity: 0.6; cursor: not-allowed;">Sync to GitHub</button>
                     </div>
+                </div>
+                <div id="discardConfirmGroup" style="display: none; align-items: center; gap: 6px; margin-top: 8px;">
+                    <span style="font-size: 12px; color: var(--danger); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">Are you sure?</span>
+                    <button id="confirmDiscardYes" class="btn-discard" onclick="discardCurrentDraft()" style="padding: 6px 12px; font-size: 11px; width: auto; text-transform: uppercase;">Yes</button>
+                    <button id="confirmDiscardNo" class="btn-secondary" onclick="hideDiscardConfirm()" style="padding: 6px 12px; font-size: 11px; width: auto; text-transform: uppercase; border: 1px solid var(--gold-dark); background: transparent; color: var(--text-secondary);">No</button>
                 </div>
             </div>
         </div>

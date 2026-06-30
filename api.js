@@ -221,6 +221,11 @@ async function checkTokenValidity() {
                 connStatusEl.innerText = "Bad Credentials";
             }
             if (statusEl) statusEl.innerText = "Status: Stopped. Token Rejected.";
+            if (syncBtnEl) {
+                syncBtnEl.disabled = true;
+                syncBtnEl.style.opacity = '0.6';
+                syncBtnEl.style.cursor = 'not-allowed';
+            }
         } else if (response.ok) {
             // Token is active and valid
             if (connStatusEl) {
@@ -228,7 +233,11 @@ async function checkTokenValidity() {
                 connStatusEl.innerText = 'Connected';
             }
             if (statusEl) statusEl.innerText = "Status: Authenticated & Ready.";
-            if (syncBtnEl) syncBtnEl.style.display = 'inline-block'; // Reveal sync controls
+            if (syncBtnEl) {
+                syncBtnEl.disabled = false;
+                syncBtnEl.style.opacity = '1';
+                syncBtnEl.style.cursor = 'pointer';
+            }
         } else {
             // Server error or rate-limit issues
             if (connStatusEl) {

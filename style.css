@@ -258,6 +258,25 @@ button:disabled {
     color: var(--text-primary);
 }
 
+.btn-discard {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.45);
+    width: auto;
+}
+
+.btn-discard:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.25);
+    color: #f87171;
+}
+
+.btn-discard:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
 /*
  * 8. LOCAL DRAFTS SIDEBAR
  * ------------------------

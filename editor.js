@@ -147,32 +147,61 @@ function updateDetectedLinks() {
 
 // --- Discard Draft UI Confirmation Helpers ---
 
-/** Show or hide the core "Discard" button */
-function setDiscardBtnDisplay(style) {
+/** Shows the discard button when a matchup is active and disables it if there is no draft.
+ *  The button is rendered in the sync control row, but only enabled when a draft exists.
+ */
+function updateDiscardButtonState(hasDraft) {
     const discardBtn = document.getElementById('discardBtn');
     const discardConfirmGroup = document.getElementById('discardConfirmGroup');
-    if (discardBtn) discardBtn.style.display = style;
-    if (discardConfirmGroup) discardConfirmGroup.style.display = 'none';
+    if (!discardBtn || !discardConfirmGroup) return;
+
+    discardBtn.style.display = 'inline-block';
+    discardBtn.disabled = !hasDraft;
+    discardConfirmGroup.style.display = 'none';
 }
 
-/** Hides the main "Discard" button and reveals the "Are you sure? Yes/No" controls */
-function showDiscardConfirm() {
-    const discardBtn = document.getElementById('discardBtn');
-    const discardConfirmGroup = document.getElementById('discardConfirmGroup');
-    if (discardBtn) discardBtn.style.display = 'none';
-    if (discardConfirmGroup) discardConfirmGroup.style.display = 'inline-flex';
-}
-
-/** Restores the main "Discard" button and hides the confirmation triggers */
+/** Hides the confirmation controls and shows the main discard button.
+ *  The discard button stays visible at all times after editor load.
+ */
 function hideDiscardConfirm() {
     const discardBtn = document.getElementById('discardBtn');
     const discardConfirmGroup = document.getElementById('discardConfirmGroup');
-    if (discardBtn) discardBtn.style.display = 'inline-block';
-    if (discardConfirmGroup) discardConfirmGroup.style.display = 'none';
+    if (!discardBtn || !discardConfirmGroup) return;
+
+    discardConfirmGroup.style.display = 'none';
+}
+
+/** Shows the confirmation row for the discard action if the button is enabled. */
+function showDiscardConfirm() {
+    const discardBtn = document.getElementById('discardBtn');
+    const discardConfirmGroup = document.getElementById('discardConfirmGroup');
+    if (!discardBtn || !discardConfirmGroup || discardBtn.disabled) return;
+
+    discardConfirmGroup.style.display = 'inline-flex';
 }
 
 // --- Application Boot Loop ---
 window.onload = async () => {
+    const editorEl = document.getElementById('editor');
+    const fileLabel = document.getElementById('currentFileLabel');
+    const statusEl = document.getElementById('status');
+    if (editorEl && fileLabel && statusEl) {
+        const notesDraft = localStorage.getItem('draft_matchup:Notes');
+        fileLabel.innerText = 'Notes';
+        if (notesDraft !== null) {
+            editorEl.value = notesDraft;
+            editorEl.disabled = false;
+            statusEl.innerText = 'Status: Loading default notes...';
+            updateDiscardButtonState(true);
+        } else {
+            editorEl.value = 'Loading default notes...';
+            editorEl.disabled = true;
+            statusEl.innerText = 'Status: Loading default notes...';
+            updateDiscardButtonState(false);
+        }
+        updateDetectedLinks();
+    }
+
     // 1. Establish bridge connectivity status
     const bridgeOk = await checkBridgeStatus();
     
@@ -447,7 +476,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     
     statusEl.innerText = `Searching for ${label}...`;
     if (conflictBanner) conflictBanner.style.display = 'none';
-    setDiscardBtnDisplay('none');
+    updateDiscardButtonState(false);
     currentSha = null; 
     githubTextCache = null;
 
@@ -460,7 +489,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
         editorEl.value = localDraft || "";
         editorEl.disabled = false;
         statusEl.innerText = "Offline Mode: Draft active.";
-        if (localDraft) setDiscardBtnDisplay('inline-block');
+        updateDiscardButtonState(localDraft !== null);
         updateDetectedLinks();
         updateStarButtonUI();
         return;
@@ -479,11 +508,11 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
 
         if (response.status === 404) {
             // File does not exist on GitHub yet
-            statusEl.innerText = `${label} not found on GitHub. Ready to create new file.`;
+            statusEl.innerText = `${label} not found on GitHub.\n Ready to create new file.`;
             fileLabel.innerText = `New File: ${label}`;
             editorEl.value = localDraft || "";
             editorEl.disabled = false;
-            if (localDraft) setDiscardBtnDisplay('inline-block');
+            updateDiscardButtonState(true);
             updateDetectedLinks();
         } else if (response.ok) {
             // File loaded successfully
@@ -500,7 +529,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
                 if (conflictBanner) conflictBanner.style.display = 'flex'; // reveal conflict warning banner
                 editorEl.value = localDraft; // Default display local edits
                 statusEl.innerText = "Conflict! Unsaved local edits differ from GitHub version.";
-                setDiscardBtnDisplay('inline-block');
+                updateDiscardButtonState(true);
                 updateDetectedLinks();
             } else {
                 // Synced state: No local variations
@@ -510,6 +539,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
                 }
                 editorEl.value = decodedText;
                 statusEl.innerText = "Loaded successfully from GitHub!";
+                updateDiscardButtonState(false);
                 updateDetectedLinks();
             }
             fileLabel.innerText = label;
@@ -522,7 +552,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
         fileLabel.innerText = `${label} (Offline)`;
         editorEl.value = localDraft || "";
         editorEl.disabled = false;
-        if (localDraft) setDiscardBtnDisplay('inline-block');
+        updateDiscardButtonState(localDraft !== null);
         updateDetectedLinks();
     }
     
@@ -542,7 +572,7 @@ document.getElementById('editor').addEventListener('input', () => {
     localStorage.setItem(activeMatchup.draftKey, textContent);
     renderLocalDrafts(); // Refresh list display
     
-    setDiscardBtnDisplay('inline-block');
+    updateDiscardButtonState(true);
     document.getElementById('status').innerText = "Typing... saved draft locally.";
     updateDetectedLinks();
 });
@@ -590,7 +620,7 @@ async function saveToGitHub() {
             // Delete local draft cache
             localStorage.removeItem(activeMatchup.draftKey);
             renderLocalDrafts();
-            setDiscardBtnDisplay('none');
+            updateDiscardButtonState(false);
             const conflictBanner = document.getElementById('conflictBanner');
             if (conflictBanner) conflictBanner.style.display = 'none';
             
@@ -622,7 +652,7 @@ function resolveConflict(decision) {
             document.getElementById('editor').value = githubTextCache;
             localStorage.removeItem(activeMatchup.draftKey); // Delete local conflicting edits
             renderLocalDrafts();
-            setDiscardBtnDisplay('none');
+            updateDiscardButtonState(false);
             if (conflictBanner) conflictBanner.style.display = 'none';
             document.getElementById('status').innerText = "Loaded GitHub version. Local draft deleted.";
             updateDetectedLinks();
@@ -681,14 +711,16 @@ function renderLocalDrafts() {
     if (!container) return;
     
     const drafts = getLocalDrafts();
+    const activeDraftKey = activeMatchup?.draftKey || null;
+    const visibleDrafts = drafts.filter(d => activeDraftKey !== `draft_matchup:${d.path}`);
     
-    if (drafts.length === 0) {
+    if (visibleDrafts.length === 0) {
         container.innerHTML = '<div class="no-drafts">No pending local drafts.</div>';
         return;
     }
     
     container.innerHTML = '';
-    drafts.forEach(d => {
+    visibleDrafts.forEach(d => {
         const card = document.createElement('div');
         card.className = 'draft-card';
         if (d.isNotes) {
@@ -783,7 +815,7 @@ async function syncDraftDirectly(enemyKey, myKey) {
                 const putResult = syncResponse.json();
                 currentSha = putResult.content.sha;
                 githubTextCache = textContent;
-                setDiscardBtnDisplay('none');
+                updateDiscardButtonState(false);
                 const conflictBanner = document.getElementById('conflictBanner');
                 if (conflictBanner) conflictBanner.style.display = 'none';
             }
