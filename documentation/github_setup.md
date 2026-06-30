@@ -41,7 +41,7 @@ const CONFIG = {
 
 ## 4. Token Validity Verification
 
-When you open [matchups.html.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html.html), the editor performs a security and credentials check:
+When you open [matchups.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html), the editor performs a security and credentials check:
 1.  It sends a request to `https://api.github.com/user` using the provided token.
 2.  If the token is valid, the UI elements (input fields and buttons) are unlocked.
 3.  If the token is expired (e.g., after the expiration limit you set on GitHub) or invalid, the editor shows a warning banner and blocks input to prevent data loss.

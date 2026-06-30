@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>LoL Matchup Portal</title>
+    <link rel="icon" href="https://external-preview.redd.it/cI-jnDO5fH2eGT-Id68L-0XyXGypFuKJJ6E5LU3r1Wc.jpg?auto=webp&s=a7ca39677084b498403806a655465c81d9ef6085" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -450,7 +451,14 @@
                     <div class="editor-title" id="currentFileLabel">
                         No matchup loaded
                     </div>
-                    <button id="discardBtn" class="btn-danger" onclick="discardCurrentDraft()" style="display: none; padding: 6px 12px; font-size: 12px;">Discard Draft</button>
+                    <div id="discardWrapper" style="display: flex; align-items: center; gap: 8px;">
+                        <button id="discardBtn" class="btn-danger" onclick="showDiscardConfirm()" style="display: none; padding: 6px 12px; font-size: 12px; width: auto;">Discard Draft</button>
+                        <div id="discardConfirmGroup" style="display: none; align-items: center; gap: 6px;">
+                            <span style="font-size: 12px; color: var(--danger); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">Are you sure?</span>
+                            <button id="confirmDiscardYes" class="btn-danger" onclick="discardCurrentDraft()" style="padding: 4px 10px; font-size: 11px; width: auto; text-transform: uppercase;">Yes</button>
+                            <button id="confirmDiscardNo" class="btn-secondary" onclick="hideDiscardConfirm()" style="padding: 4px 10px; font-size: 11px; width: auto; text-transform: uppercase; border: 1px solid var(--gold-dark); background: transparent; color: var(--text-secondary);">No</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="conflictBanner" class="warning-banner" style="display: none;">
@@ -467,7 +475,14 @@
                 
                 <div class="editor-actions">
                     <div id="status" class="status-text">Status: Checking bridge connectivity...</div>
-                    <div style="display: flex; gap: 10px;">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <a id="mobalyticsLink" href="#" target="_blank" class="btn-outline-sm" style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 10px 15px; font-size: 13px; font-weight: bold; width: auto; font-family: sans-serif; border-radius: 3px; height: 38px; line-height: 1; justify-content: center; box-sizing: border-box;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#5f3bf4" style="border-radius: 2px;">
+                                <polygon points="12 2 22 7 22 17 12 22 2 17 2 7" fill="#5f3bf4" />
+                                <path d="M7 17V10L12 14L17 10V17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            </svg>
+                            Mobalytics Counters
+                        </a>
                         <button id="syncBtn" class="btn-gold-sm" onclick="saveToGitHub()" style="width: auto; display: none;">Sync to GitHub</button>
                     </div>
                 </div>
@@ -477,20 +492,59 @@
 
     <datalist id="championList"></datalist>
 
+    <script src="utils.js"></script>
     <script src="config.js" onerror="handleConfigMissing()"></script>
 
     <script>
         let currentSha = null; 
-        let autoSaveTimeout = null;
         let isConfigValid = true;
         let bridgeActive = false;
         let CHAMPIONS = [];
         let githubTextCache = null;
 
+        // Discard draft UI confirmation state management
+        function setDiscardBtnDisplay(style) {
+            const discardBtn = document.getElementById('discardBtn');
+            const discardConfirmGroup = document.getElementById('discardConfirmGroup');
+            if (discardBtn) discardBtn.style.display = style;
+            if (discardConfirmGroup) discardConfirmGroup.style.display = 'none';
+        }
+
+        // Toggles confirm controls and hides main Discard button
+        function showDiscardConfirm() {
+            const discardBtn = document.getElementById('discardBtn');
+            const discardConfirmGroup = document.getElementById('discardConfirmGroup');
+            if (discardBtn) discardBtn.style.display = 'none';
+            if (discardConfirmGroup) discardConfirmGroup.style.display = 'inline-flex';
+        }
+
+        // Restores main Discard button and hides confirm controls
+        function hideDiscardConfirm() {
+            const discardBtn = document.getElementById('discardBtn');
+            const discardConfirmGroup = document.getElementById('discardConfirmGroup');
+            if (discardBtn) discardBtn.style.display = 'inline-block';
+            if (discardConfirmGroup) discardConfirmGroup.style.display = 'none';
+        }
+
         window.onload = async () => {
             // Check bridge status
             const bridgeOk = await checkBridgeStatus();
             
+            // Bind Mobalytics click event to open in a background tab via the bridge
+            document.getElementById('mobalyticsLink').addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = e.currentTarget.href;
+                if (url && url !== '#' && !url.endsWith('#')) {
+                    if (bridgeActive) {
+                        window.dispatchEvent(new CustomEvent("OpenBackgroundTab", {
+                            detail: { url: url }
+                        }));
+                    } else {
+                        window.open(url, '_blank');
+                    }
+                }
+            });
+
             if (bridgeOk) {
                 bridgeActive = true;
                 document.getElementById('bridgeError').style.display = 'none';
@@ -521,6 +575,13 @@
             }
             
             renderLocalDrafts();
+
+            // Auto-load if inputs are populated by browser reload/session restore
+            const enemyVal = document.getElementById('enemyChamp').value;
+            const myVal = document.getElementById('myChamp').value;
+            if (enemyVal && myVal) {
+                loadMatchup();
+            }
         };
 
         function handleConfigMissing() {
@@ -728,17 +789,7 @@
             document.getElementById('loadBtn').disabled = false;
         }
 
-        function getChampionKeyByName(name) {
-            if (!name) return null;
-            const clean = name.trim().toLowerCase();
-            const found = CHAMPIONS.find(c => c.name.toLowerCase() === clean || c.key.toLowerCase() === clean);
-            return found ? found.key : null;
-        }
-
-        function getChampionNameByKey(key) {
-            const found = CHAMPIONS.find(c => c.key === key);
-            return found ? found.name : key;
-        }
+        // Champion utility mappings are loaded from utils.js
 
         async function checkTokenValidity() {
             try {
@@ -781,16 +832,21 @@
                 return;
             }
 
+            // Setup Mobalytics Link URL and show the button
+            const mobaLink = document.getElementById('mobalyticsLink');
+            const slug = getMobalyticsSlug(enemyKey);
+            mobaLink.href = `https://mobalytics.gg/lol/champions/${slug}/counters`;
+            mobaLink.style.display = 'inline-flex';
+
             const path = `matchups/${enemyKey}/${myKey}.md`;
             const statusEl = document.getElementById('status');
             const editorEl = document.getElementById('editor');
             const fileLabel = document.getElementById('currentFileLabel');
             const conflictBanner = document.getElementById('conflictBanner');
-            const discardBtn = document.getElementById('discardBtn');
             
-            statusEl.innerText = `Searching for ${enemyKey} vs ${myKey}...`;
+            statusEl.innerText = `Searching for ${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}...`;
             conflictBanner.style.display = 'none';
-            discardBtn.style.display = 'none';
+            setDiscardBtnDisplay('none');
             currentSha = null; 
             githubTextCache = null;
 
@@ -800,11 +856,11 @@
 
             if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
                 // Offline load
-                fileLabel.innerText = `Editing (Local Draft): ${getChampionNameByKey(enemyKey)} vs ${getChampionNameByKey(myKey)}`;
+                fileLabel.innerText = `Editing (Local Draft): ${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
                 editorEl.value = localDraft || "";
                 editorEl.disabled = false;
                 statusEl.innerText = "Offline Mode: Draft active.";
-                if (localDraft) discardBtn.style.display = 'inline-block';
+                if (localDraft) setDiscardBtnDisplay('inline-block');
                 return;
             }
 
@@ -820,10 +876,10 @@
                 if (response.status === 404) {
                     // Not on GitHub
                     statusEl.innerText = "Matchup not found on GitHub. Ready to create new file.";
-                    fileLabel.innerText = `New File: ${getChampionNameByKey(enemyKey)} vs ${getChampionNameByKey(myKey)}`;
+                    fileLabel.innerText = `New File: ${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
                     editorEl.value = localDraft || "";
                     editorEl.disabled = false;
-                    if (localDraft) discardBtn.style.display = 'inline-block';
+                    if (localDraft) setDiscardBtnDisplay('inline-block');
                 } else if (response.ok) {
                     const data = response.json();
                     currentSha = data.sha; 
@@ -835,7 +891,7 @@
                         conflictBanner.style.display = 'flex';
                         editorEl.value = localDraft; // Show local edits
                         statusEl.innerText = "Conflict! Unsaved local edits differ from GitHub version.";
-                        discardBtn.style.display = 'inline-block';
+                        setDiscardBtnDisplay('inline-block');
                     } else {
                         // Synced or no draft
                         if (localDraft !== null) {
@@ -845,17 +901,17 @@
                         editorEl.value = decodedText;
                         statusEl.innerText = "Loaded successfully from GitHub!";
                     }
-                    fileLabel.innerText = `${getChampionNameByKey(enemyKey)} vs ${getChampionNameByKey(myKey)}`;
+                    fileLabel.innerText = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
                     editorEl.disabled = false;
                 } else {
                     statusEl.innerText = `Error code: ${response.status}`;
                 }
             } catch (err) {
                 statusEl.innerText = "Bridge fetch error: " + err.message;
-                fileLabel.innerText = `${getChampionNameByKey(enemyKey)} vs ${getChampionNameByKey(myKey)} (Offline)`;
+                fileLabel.innerText = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)} (Offline)`;
                 editorEl.value = localDraft || "";
                 editorEl.disabled = false;
-                if (localDraft) discardBtn.style.display = 'inline-block';
+                if (localDraft) setDiscardBtnDisplay('inline-block');
             }
         }
 
@@ -874,12 +930,8 @@
             localStorage.setItem(draftKey, textContent);
             renderLocalDrafts();
             
-            document.getElementById('discardBtn').style.display = 'inline-block';
+            setDiscardBtnDisplay('inline-block');
             document.getElementById('status').innerText = "Typing... saved draft locally.";
-            
-            // Auto sync online debounced
-            clearTimeout(autoSaveTimeout);
-            autoSaveTimeout = setTimeout(saveToGitHub, 1500);
         });
 
         async function saveToGitHub() {
@@ -904,7 +956,7 @@
 
             const encodedContent = btoa(unescape(encodeURIComponent(textContent)));
             const bodyData = {
-                message: `Sync: updated ${enemyKey} vs ${myKey} matchup`,
+                message: `Sync: updated ${myKey} vs ${enemyKey} matchup`,
                 content: encodedContent
             };
             
@@ -924,7 +976,7 @@
                     // Clear local draft
                     localStorage.removeItem(`draft_matchup:${enemyKey}/${myKey}`);
                     renderLocalDrafts();
-                    document.getElementById('discardBtn').style.display = 'none';
+                    setDiscardBtnDisplay('none');
                     document.getElementById('conflictBanner').style.display = 'none';
                     
                     statusEl.innerText = "Changes safely synced to GitHub!";
@@ -955,7 +1007,7 @@
                     document.getElementById('editor').value = githubTextCache;
                     localStorage.removeItem(draftKey);
                     renderLocalDrafts();
-                    document.getElementById('discardBtn').style.display = 'none';
+                    setDiscardBtnDisplay('none');
                     conflictBanner.style.display = 'none';
                     document.getElementById('status').innerText = "Loaded GitHub version. Local draft deleted.";
                 }
@@ -970,11 +1022,9 @@
             
             if (!enemyKey || !myKey) return;
 
-            if (confirm("Are you sure you want to discard your local draft changes?")) {
-                localStorage.removeItem(`draft_matchup:${enemyKey}/${myKey}`);
-                renderLocalDrafts();
-                loadMatchup();
-            }
+            localStorage.removeItem(`draft_matchup:${enemyKey}/${myKey}`);
+            renderLocalDrafts();
+            loadMatchup();
         }
 
         // Sidebar Draft list
@@ -1012,7 +1062,7 @@
                 card.className = 'draft-card';
                 card.innerHTML = `
                     <div class="draft-info">
-                        <span class="draft-champ">${getChampionNameByKey(d.enemy)} vs ${getChampionNameByKey(d.mySide)}</span>
+                        <span class="draft-champ">${getChampionNameByKey(d.mySide)} vs ${getChampionNameByKey(d.enemy)}</span>
                         <span class="draft-tag">Local Draft</span>
                     </div>
                     <div class="draft-actions">
@@ -1032,7 +1082,7 @@
 
         function deleteDraft(enemyKey, myKey, event) {
             if (event) event.stopPropagation();
-            if (confirm(`Discard local draft for ${getChampionNameByKey(enemyKey)} vs ${getChampionNameByKey(myKey)}?`)) {
+            if (confirm(`Discard local draft for ${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}?`)) {
                 localStorage.removeItem(`draft_matchup:${enemyKey}/${myKey}`);
                 renderLocalDrafts();
                 

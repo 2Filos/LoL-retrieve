@@ -5,9 +5,10 @@
 // @description  Bypasses Firefox CORS blocks, handles token checks, and supports ping diagnostics
 // @author       You
 // @match        file:///*matchup*.html*
-// @match        file:///*/matchups.html.html
+// @match        file:///*/matchups.html
 // @match        file:///*
 // @grant        GM_xmlhttpRequest
+// @grant        GM_openInTab
 // @connect      api.github.com
 // @connect      ddragon.leagueoflegends.com
 // ==/UserScript==
@@ -18,6 +19,16 @@
     // Ping diagnostic listener
     window.addEventListener("PingTampermonkeyBridge", function() {
         window.dispatchEvent(new CustomEvent("PongTampermonkeyBridge"));
+    });
+
+    // Background tab opening listener
+    window.addEventListener("OpenBackgroundTab", function(event) {
+        const { url } = event.detail;
+        if (typeof GM_openInTab !== 'undefined') {
+            GM_openInTab(url, { active: false, insert: true });
+        } else {
+            window.open(url, '_blank');
+        }
     });
 
     window.addEventListener("ToTampermonkeyBridge", function(event) {

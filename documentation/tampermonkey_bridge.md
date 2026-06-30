@@ -1,4 +1,4 @@
-# Tampermonkey CORS Bridge
+# Tampermonkey CORS & Automation Bridge
 
 This document explains the purpose, mechanics, and installation of the Tampermonkey userscript bridge ([bridge.js](file:///c:/Users/User/Documents/VSC/LoL-retrieve/bridge.js)).
 
@@ -11,11 +11,24 @@ Modern web browsers enforce strict security rules:
 
 To bypass these limitations without running a complex local Node.js or Python backend server, we use a Tampermonkey userscript.
 
-## 2. How the Bridge Works
+---
 
-Tampermonkey scripts have elevated browser privileges. They can use a special function called `GM_xmlhttpRequest`, which is not bound by the browser's standard CORS restrictions.
+## 2. Elevated Bridge API Features
 
-Since the local HTML page itself cannot call `GM_xmlhttpRequest`, the project implements a **CustomEvent Bridge**:
+Because the Tampermonkey userscript runs with elevated browser privileges, it can execute actions that standard sandboxed browser pages cannot:
+
+### A. CORS-Free Network Requests (`GM_xmlhttpRequest`)
+Bypasses standard CORS origin limits to allow the local HTML editor to communicate directly with GitHub's REST API and Riot's Data Dragon endpoint.
+
+### B. Background Tab Opening (`GM_openInTab`)
+Allows the editor to open links (like Mobalytics Counters) in a new browser tab **without taking active focus** away from the current page. This keeps the user focused on the editor while the matchup guide opens quietly in the background.
+
+### C. Ping/Pong Connection Diagnostics
+The editor dispatches `PingTampermonkeyBridge` events, and the bridge responds with `PongTampermonkeyBridge` to confirm it is active, avoiding silent hangs.
+
+---
+
+## 3. CustomEvent Communication Flow
 
 ```mermaid
 sequenceDiagram
@@ -23,38 +36,36 @@ sequenceDiagram
     participant TM as Tampermonkey (bridge.js)
     participant GH as GitHub API
 
-    HTML->>HTML: Generates unique requestId
+    Note over HTML,TM: 1. Handshake (Load Time)
+    HTML->>TM: Dispatches PingTampermonkeyBridge (interval)
+    TM-->>HTML: Dispatches PongTampermonkeyBridge (confirmed)
+
+    Note over HTML,TM: 2. Background Tab Request
+    HTML->>TM: Dispatches CustomEvent("OpenBackgroundTab", {url})
+    TM->>TM: GM_openInTab(url, {active: false})
+
+    Note over HTML,GH: 3. API Forwarding
     HTML->>TM: Dispatches CustomEvent("ToTampermonkeyBridge", details)
-    Note over TM: Listens for event & extracts method, URL, headers, body
     TM->>GH: Executes GM_xmlhttpRequest(details)
     GH-->>TM: Returns Response (headers, status, text)
-    TM->>TM: Checks response for "bad credentials" or 401
     TM->>HTML: Dispatches CustomEvent("FromTampermonkeyBridge_{requestId}", details)
-    Note over HTML: Receives payload & resolves promise
 ```
 
-### Event Mechanics
+---
 
-1.  **Request Initiation**: The page calls `bridgeFetch(url, options)`. It generates a random `requestId` and sets up a one-time event listener for `FromTampermonkeyBridge_${requestId}`.
-2.  **Request Forwarding**: The page dispatches a `ToTampermonkeyBridge` CustomEvent containing the request parameters.
-3.  **Execution**: The userscript receives the event, triggers `GM_xmlhttpRequest`, and checks if GitHub returned a "bad credentials" header (meaning the token has expired).
-4.  **Response Return**: The userscript fires a return event named `FromTampermonkeyBridge_${requestId}` with the response details.
-5.  **Completion**: The page captures the return event, deletes the listener, and parses the response data.
+## 4. Metadata Headers & Match Patterns
 
-## 3. How to Install the Bridge Script
-
-1.  Install the **Tampermonkey** extension on your preferred web browser (e.g., Firefox, Chrome).
-2.  Click the Tampermonkey icon in your browser toolbar and select **Create a new script...** (or go to the Dashboard and click the `+` icon).
-3.  Replace any template code with the full contents of [bridge.js](file:///c:/Users/User/Documents/VSC/LoL-retrieve/bridge.js).
-4.  Save the script (`Ctrl + S` or `File` -> `Save`).
-
-### Userscript Metadata Headers
-
-The script is configured with matching rules:
+To make sure the script activates on local matchup files, the script is configured with matching headers:
 ```javascript
-// @match        file:///*matchup*.html
+// @match        file:///*matchup*.html*
+// @match        file:///*/matchups.html
+// @match        file:///*
 // @grant        GM_xmlhttpRequest
+// @grant        GM_openInTab
 // @connect      api.github.com
+// @connect      ddragon.leagueoflegends.com
 ```
-*   `@match`: Ensures the script only runs on local files whose names contain `matchup` and end with `.html` (such as [matchups.html.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html.html)).
-*   `@connect`: Whitelists `api.github.com` so the extension doesn't repeatedly ask for permission when executing requests.
+
+*   `@match`: Matches matchup HTML files (e.g. `matchups.html`) on local directories.
+*   `@grant`: Configures authorization for network requests and tab controls.
+*   `@connect`: Whitelists target domains to prevent repetitive browser security prompt popups.
