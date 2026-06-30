@@ -1,0 +1,10 @@
+small tweak
+
+open matchup shouldn't show under pending.
+maybe under pending just have open matchup showing as open
+this reduces... changes visually that would be otherwise disturbing
+
+also, move discard draft under sync github
+and have it displayed by default, even with no edits
+and tone down its color to a less disturbing tone of red
+perhaps a more muted red to indicate a less important action
