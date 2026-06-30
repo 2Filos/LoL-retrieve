@@ -15,4 +15,4 @@ vs Tryndamere
 Special
 Sett vs Garen
 Garen/Yorick vs Camille
-Yorick vs Mordekaiser (test Maiden)
+Yorick vs Mordekaiser (tested Maiden! gets dragged in)
