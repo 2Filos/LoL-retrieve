@@ -1,16 +1,24 @@
 // ==UserScript==
 // @name         Local HTML to GitHub CORS Bridge
 // @namespace    http://tampermonkey.net/
-// @version      1.1
-// @description  Bypasses Firefox CORS blocks and handles token expiration checks
+// @version      1.2
+// @description  Bypasses Firefox CORS blocks, handles token checks, and supports ping diagnostics
 // @author       You
-// @match        file:///*matchup*.html
+// @match        file:///*matchup*.html*
+// @match        file:///*/matchups.html.html
+// @match        file:///*
 // @grant        GM_xmlhttpRequest
 // @connect      api.github.com
+// @connect      ddragon.leagueoflegends.com
 // ==/UserScript==
 
 (function() {
     'use strict';
+
+    // Ping diagnostic listener
+    window.addEventListener("PingTampermonkeyBridge", function() {
+        window.dispatchEvent(new CustomEvent("PongTampermonkeyBridge"));
+    });
 
     window.addEventListener("ToTampermonkeyBridge", function(event) {
         const { detail } = event;
