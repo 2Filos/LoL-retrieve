@@ -3,499 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>LoL Matchup Portal</title>
+    <!-- Favicon configuration -->
     <link rel="icon" href="https://external-preview.redd.it/cI-jnDO5fH2eGT-Id68L-0XyXGypFuKJJ6E5LU3r1Wc.jpg?auto=webp&s=a7ca39677084b498403806a655465c81d9ef6085" type="image/x-icon">
+    
+    <!-- Load fonts (Cinzel for headers, Inter for normal text, Fira Code for editor markdown) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-darker: #0c131d;
-            --bg-dark: #121b28;
-            --bg-light: #182535;
-            --gold-dark: #1d2f44;
-            --gold-accent: #00bcab;
-            --gold-light: #e2e8f0;
-            --text-gold: #00bcab;
-            --blue-accent: #1d2f44;
-            --blue-light: #00bcab;
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --success: #10b981;
-            --danger: #ef4444;
-            --card-border: 1px solid #1d2f44;
-            --gold-gradient: linear-gradient(135deg, #1d2f44 0%, #00bcab 50%, #1d2f44 100%);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-darker);
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .app-container {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 25px;
-            background: var(--bg-dark);
-            border: 1px solid var(--gold-dark);
-            border-radius: 4px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            background-image: linear-gradient(to right, rgba(18, 27, 40, 0.9), rgba(12, 19, 29, 0.9));
-        }
-
-        h1 {
-            font-family: 'Cinzel', Georgia, serif;
-            font-size: 24px;
-            letter-spacing: 2px;
-            color: var(--text-primary);
-            margin: 0;
-            background: linear-gradient(to right, #e2e8f0, #00bcab);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-        }
-
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid currentColor;
-            transition: all 0.3s;
-        }
-
-        .status-badge.online {
-            color: var(--success);
-            background: rgba(70, 162, 84, 0.1);
-        }
-
-        .status-badge.offline {
-            color: var(--danger);
-            background: rgba(232, 64, 64, 0.1);
-        }
-
-        .status-badge.pinging {
-            color: var(--gold-accent);
-            background: rgba(200, 155, 60, 0.1);
-        }
-
-        .main-layout {
-            display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 900px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background: var(--bg-dark);
-            border: var(--card-border);
-            border-radius: 4px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            font-weight: bold;
-        }
-
-        input[type="text"] {
-            background: var(--bg-darker);
-            border: 1px solid var(--gold-dark);
-            color: var(--text-primary);
-            padding: 10px 12px;
-            font-size: 14px;
-            border-radius: 3px;
-            transition: all 0.3s;
-            width: 100%;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--gold-accent);
-            outline: none;
-            box-shadow: 0 0 5px rgba(200, 155, 60, 0.3);
-        }
-
-        button {
-            background: var(--gold-accent);
-            color: #0c131d;
-            border: 1px solid var(--gold-accent);
-            font-weight: bold;
-            padding: 10px 20px;
-            cursor: pointer;
-            font-size: 13px;
-            border-radius: 3px;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-        }
-
-        button:hover:not(:disabled) {
-            background: #00e0cc;
-            color: #0c131d;
-            box-shadow: 0 0 10px rgba(0, 188, 171, 0.4);
-        }
-
-        button:disabled {
-            background: rgba(0, 188, 171, 0.1);
-            color: rgba(148, 163, 184, 0.4);
-            border-color: rgba(29, 47, 68, 0.8);
-            cursor: not-allowed;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--text-secondary);
-        }
-
-        .btn-secondary:hover:not(:disabled) {
-            background: rgba(255,255,255,0.05);
-            color: var(--text-primary);
-        }
-
-        .btn-danger {
-            background: rgba(232, 64, 64, 0.2);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-            width: auto;
-        }
-
-        .btn-danger:hover:not(:disabled) {
-            background: var(--danger);
-            color: var(--text-primary);
-        }
-
-        .drafts-panel h3 {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 0;
-            margin-bottom: 15px;
-            color: var(--text-gold);
-            border-bottom: 1px solid var(--gold-dark);
-            padding-bottom: 8px;
-        }
-
-        .drafts-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-height: 350px;
-            overflow-y: auto;
-        }
-
-        .draft-card {
-            background: var(--bg-darker);
-            border: 1px solid #111e2e;
-            padding: 10px;
-            border-radius: 3px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: border-color 0.3s;
-        }
-
-        .draft-card:hover {
-            border-color: var(--gold-accent);
-        }
-
-        .draft-info {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-
-        .draft-champ {
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .draft-tag {
-            font-size: 9px;
-            color: var(--gold-accent);
-            text-transform: uppercase;
-        }
-
-        .draft-actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .draft-actions button {
-            padding: 4px 8px;
-            font-size: 10px;
-            width: auto;
-        }
-
-
-
-        .editor-card {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .editor-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--gold-dark);
-            padding-bottom: 10px;
-        }
-
-        .editor-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--gold-light);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 480px;
-            background: var(--bg-light);
-            border: 1px solid var(--gold-dark);
-            color: var(--text-primary);
-            font-family: 'Fira Code', monospace;
-            font-size: 14px;
-            padding: 15px;
-            box-sizing: border-box;
-            border-radius: 3px;
-            resize: vertical;
-        }
-
-        textarea:focus {
-            border-color: var(--gold-accent);
-            outline: none;
-            box-shadow: 0 0 5px rgba(0, 188, 171, 0.3);
-        }
-
-        .editor-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .status-text {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        .error-banner, .warning-banner {
-            background: rgba(232, 64, 64, 0.15);
-            border: 1px solid var(--danger);
-            color: #fca5a5;
-            padding: 12px 15px;
-            border-radius: 4px;
-            font-size: 13px;
-            line-height: 1.5;
-            margin-bottom: 15px;
-        }
-
-        .warning-banner {
-            background: rgba(200, 155, 60, 0.15);
-            border: 1px solid var(--gold-accent);
-            color: var(--gold-light);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .banner-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .banner-buttons button {
-            padding: 6px 12px;
-            font-size: 11px;
-            width: auto;
-        }
-
-        .btn-gold-sm {
-            background: var(--gold-accent);
-            color: var(--bg-darker);
-            border-color: var(--gold-light);
-        }
-
-        .btn-outline-sm {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--gold-dark);
-        }
-
-        .btn-outline-sm:hover {
-            border-color: var(--gold-accent);
-            background: rgba(200, 155, 60, 0.1);
-        }
-
-        .no-drafts {
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-style: italic;
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        /* Detected Links styles */
-        .detected-links-container {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 12px;
-            padding: 10px 14px;
-            background: var(--bg-darker);
-            border: 1px solid var(--gold-dark);
-            border-radius: 4px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            align-items: flex-start;
-            transition: all 0.3s ease;
-            min-height: 48px;
-        }
-
-        .detected-links-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border-right: 1px solid var(--gold-dark);
-            padding-right: 12px;
-            margin-right: 2px;
-            height: 26px;
-            flex-shrink: 0;
-        }
-
-        .detected-links-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: flex-start;
-            flex-grow: 1;
-        }
-
-        .link-badge {
-            display: inline-flex;
-            align-items: center;
-            background: var(--bg-light);
-            border: 1px solid var(--gold-dark);
-            border-radius: 3px;
-            padding: 3px 3px 3px 8px;
-            font-size: 12px;
-            transition: all 0.2s ease;
-            gap: 6px;
-            height: 26px;
-        }
-
-        .link-badge:hover {
-            border-color: var(--gold-accent);
-            box-shadow: 0 0 5px rgba(0, 188, 171, 0.2);
-        }
-
-        .link-badge .link-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.8;
-        }
-
-        .link-badge a {
-            color: var(--text-primary);
-            text-decoration: none;
-            max-width: 180px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            transition: color 0.2s ease;
-            font-weight: 500;
-        }
-
-        .link-badge a:hover {
-            color: var(--gold-accent);
-        }
-
-        .link-badge .bg-tab-btn {
-            background: rgba(0, 188, 171, 0.1);
-            border: 1px solid rgba(0, 188, 171, 0.3);
-            color: var(--gold-accent);
-            padding: 0 8px;
-            height: 18px;
-            line-height: 16px;
-            font-size: 12px;
-            font-weight: bold;
-            border-radius: 2px;
-            cursor: pointer;
-            width: auto;
-            text-transform: none;
-            letter-spacing: 0;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .link-badge .bg-tab-btn:hover {
-            background: var(--gold-accent);
-            color: #0c131d;
-            box-shadow: 0 0 5px rgba(0, 188, 171, 0.4);
-        }
-    </style>
+    
+    <!-- Extracted External CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="app-container">
+        <!-- Main Header Bar -->
         <header>
             <h1>LoL Matchup Portal</h1>
             <div id="connectionStatus" class="status-badge pinging">
@@ -503,10 +25,13 @@
             </div>
         </header>
 
+        <!-- Dynamic Error & Alert Banners -->
+        <!-- 1. Config missing warning banner -->
         <div id="configError" class="error-banner" style="display: none;">
             <strong>Missing Configuration:</strong> `config.js` was not detected locally. Please check your folder structure.
         </div>
         
+        <!-- 2. CORS Bridge inactive warning banner -->
         <div id="bridgeError" class="error-banner" style="display: none;">
             <strong>Tampermonkey Bridge Inactive:</strong> The CORS bridge script is not responding. Please check the following settings:
             <ol style="margin: 5px 0; padding-left: 20px;">
@@ -517,37 +42,58 @@
             </ol>
         </div>
 
+        <!-- 3. Invalid credentials/token expired banner -->
         <div id="tokenExpiredError" class="error-banner" style="display: none;">
             <strong>Token Expired or Invalid:</strong> GitHub rejected your token. Please verify or update your personal access token in `config.js`.
         </div>
 
+        <!-- Portal Workspaces Grid Layout -->
         <div class="main-layout">
+            <!-- Sidebar: Controls and Pending Draft Items -->
             <div class="sidebar">
+                <!-- Matchup Selection Form -->
                 <div class="card">
-                    <div class="form-group">
-                        <label for="enemyChamp">Enemy Champion</label>
-                        <input type="text" id="enemyChamp" list="championList" placeholder="e.g. Ahri" disabled>
-                    </div>
                     <div class="form-group">
                         <label for="myChamp">My Champion</label>
                         <input type="text" id="myChamp" list="championList" placeholder="e.g. Yasuo" disabled>
                     </div>
+                    <div class="form-group">
+                        <label for="enemyChamp">Enemy Champion</label>
+                        <input type="text" id="enemyChamp" list="championList" placeholder="e.g. Ahri" disabled>
+                    </div>
                     <button id="loadBtn" onclick="loadMatchup()" disabled>Load Matchup</button>
                 </div>
 
+                <!-- Unsaved local drafts stack panel -->
                 <div class="card drafts-panel">
                     <h3>Pending Local Drafts</h3>
                     <div id="draftsList" class="drafts-list">
                         <div class="no-drafts">Loading drafts...</div>
                     </div>
                 </div>
+
+                <!-- Saved matchups stack panel -->
+                <div class="card saved-panel">
+                    <h3>Saved Matchups</h3>
+                    <div id="savedList" class="drafts-list">
+                        <div class="no-drafts">No saved matchups.</div>
+                    </div>
+                </div>
             </div>
 
+            <!-- Notes Editor Main Panel -->
             <div class="card editor-card">
+                <!-- Editor Meta Details Header -->
                 <div class="editor-header">
-                    <div class="editor-title" id="currentFileLabel">
-                        No matchup loaded
+                    <div class="editor-title">
+                        <span id="currentFileLabel">No matchup loaded</span>
+                        <button id="starBtn" class="star-btn" onclick="toggleSaveMatchup()" style="display: none;" title="Save Matchup">
+                            <svg class="star-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </button>
                     </div>
+                    <!-- Discard Confirmation UI triggers -->
                     <div id="discardWrapper" style="display: flex; align-items: center; gap: 8px;">
                         <button id="discardBtn" class="btn-danger" onclick="showDiscardConfirm()" style="display: none; padding: 6px 12px; font-size: 12px; width: auto;">Discard Draft</button>
                         <div id="discardConfirmGroup" style="display: none; align-items: center; gap: 6px;">
@@ -558,6 +104,7 @@
                     </div>
                 </div>
 
+                <!-- Local-Remote Edit Conflict Resolution Banner -->
                 <div id="conflictBanner" class="warning-banner" style="display: none;">
                     <div style="flex: 1;">
                         <strong>Unsynced Draft Conflict:</strong> You have edited this matchup locally, but a different version exists on GitHub.
@@ -568,8 +115,10 @@
                     </div>
                 </div>
 
+                <!-- Core Markdown Notepad Textarea -->
                 <textarea id="editor" placeholder="Select a matchup to start writing notes..." disabled></textarea>
 
+                <!-- Extracted URLs Mentions List -->
                 <div id="detectedLinksContainer" class="detected-links-container">
                     <div class="detected-links-title">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
@@ -578,6 +127,7 @@
                     <div id="detectedLinksList" class="detected-links-list"></div>
                 </div>
                 
+                <!-- Bottom controls: status label, Mobalytics Counters shortcuts, Sync to GitHub triggers -->
                 <div class="editor-actions">
                     <div id="status" class="status-text">Status: Checking bridge connectivity...</div>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -595,701 +145,20 @@
         </div>
     </div>
 
+    <!-- Dropdown source cache container -->
     <datalist id="championList"></datalist>
 
+    <!-- Core Script references -->
+    <!-- 1. utils.js: Champion name mappings & Mobalytics slug formatters -->
     <script src="utils.js"></script>
+    
+    <!-- 2. api.js: Networking APIs & event message passing to the CORS bridge userscript -->
+    <script src="api.js"></script>
+    
+    <!-- 3. config.js: Personal Access tokens (PATs) & git configurations (loaded with fallback error listener) -->
     <script src="config.js" onerror="handleConfigMissing()"></script>
-
-    <script>
-        let currentSha = null; 
-        let isConfigValid = true;
-        let bridgeActive = false;
-        let CHAMPIONS = [];
-        let githubTextCache = null;
-
-        // Extract URLs from text
-        function extractUrls(text) {
-            if (!text) return [];
-            const regex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
-            const matches = text.match(regex) || [];
-            return matches.map(url => {
-                let cleaned = url;
-                while (/[.,;:!?)]$/.test(cleaned)) {
-                    cleaned = cleaned.slice(0, -1);
-                }
-                return cleaned;
-            }).filter((url, index, self) => self.indexOf(url) === index);
-        }
-
-        // Return domain-specific HTML/SVG icons for links
-        function getLinkIcon(url) {
-            let domain = "";
-            try {
-                const parsed = new URL(url.startsWith('http') ? url : 'https://' + url);
-                domain = parsed.hostname.toLowerCase();
-            } catch(e) {
-                return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
-            }
-
-            if (domain.includes('youtube.com') || domain.includes('youtu.be')) {
-                return `<svg width="12" height="12" viewBox="0 0 24 24" fill="#ef4444"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`;
-            }
-            if (domain.includes('op.gg')) {
-                return `<span style="font-size: 8px; font-weight: bold; background: #5383e8; color: white; padding: 1px 3px; border-radius: 2px; line-height: 1.2; font-family: sans-serif; display: inline-block;">OP</span>`;
-            }
-            if (domain.includes('mobalytics.gg')) {
-                return `<svg width="12" height="12" viewBox="0 0 24 24" fill="#5f3bf4"><polygon points="12 2 22 7 22 17 12 22 2 17 2 7"/></svg>`;
-            }
-            if (domain.includes('lolalytics.com')) {
-                return `<span style="font-size: 8px; font-weight: bold; background: #c8102e; color: white; padding: 1px 3px; border-radius: 2px; line-height: 1.2; font-family: sans-serif; display: inline-block;">LA</span>`;
-            }
-            return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
-        }
-
-        // Update the list of detected links
-        function updateDetectedLinks() {
-            const editorEl = document.getElementById('editor');
-            const container = document.getElementById('detectedLinksContainer');
-            const listEl = document.getElementById('detectedLinksList');
-            
-            if (!editorEl || !container || !listEl) return;
-            
-            const urls = extractUrls(editorEl.value);
-            
-            listEl.innerHTML = '';
-            if (urls.length === 0) {
-                return;
-            }
-            
-            urls.forEach(url => {
-                const cleanHref = url.startsWith('http') ? url : 'https://' + url;
-                let displayUrl = url.replace(/https?:\/\/(www\.)?/, '');
-                if (displayUrl.length > 30) {
-                    displayUrl = displayUrl.substring(0, 27) + '...';
-                }
-                
-                const badge = document.createElement('div');
-                badge.className = 'link-badge';
-                
-                const iconSpan = document.createElement('span');
-                iconSpan.className = 'link-icon';
-                iconSpan.innerHTML = getLinkIcon(url);
-                
-                const link = document.createElement('a');
-                link.href = cleanHref;
-                link.target = '_blank';
-                link.textContent = displayUrl;
-                link.title = url;
-                
-                const bgBtn = document.createElement('button');
-                bgBtn.className = 'bg-tab-btn';
-                bgBtn.textContent = '...';
-                bgBtn.title = 'Open in background tab';
-                bgBtn.onclick = (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (bridgeActive) {
-                        window.dispatchEvent(new CustomEvent("OpenBackgroundTab", {
-                            detail: { url: cleanHref }
-                        }));
-                    } else {
-                        window.open(cleanHref, '_blank');
-                    }
-                };
-                
-                badge.appendChild(iconSpan);
-                badge.appendChild(link);
-                badge.appendChild(bgBtn);
-                listEl.appendChild(badge);
-            });
-        }
-
-        // Discard draft UI confirmation state management
-        function setDiscardBtnDisplay(style) {
-            const discardBtn = document.getElementById('discardBtn');
-            const discardConfirmGroup = document.getElementById('discardConfirmGroup');
-            if (discardBtn) discardBtn.style.display = style;
-            if (discardConfirmGroup) discardConfirmGroup.style.display = 'none';
-        }
-
-        // Toggles confirm controls and hides main Discard button
-        function showDiscardConfirm() {
-            const discardBtn = document.getElementById('discardBtn');
-            const discardConfirmGroup = document.getElementById('discardConfirmGroup');
-            if (discardBtn) discardBtn.style.display = 'none';
-            if (discardConfirmGroup) discardConfirmGroup.style.display = 'inline-flex';
-        }
-
-        // Restores main Discard button and hides confirm controls
-        function hideDiscardConfirm() {
-            const discardBtn = document.getElementById('discardBtn');
-            const discardConfirmGroup = document.getElementById('discardConfirmGroup');
-            if (discardBtn) discardBtn.style.display = 'inline-block';
-            if (discardConfirmGroup) discardConfirmGroup.style.display = 'none';
-        }
-
-        window.onload = async () => {
-            // Check bridge status
-            const bridgeOk = await checkBridgeStatus();
-            
-            // Bind Mobalytics click event to open in a background tab via the bridge
-            document.getElementById('mobalyticsLink').addEventListener('click', (e) => {
-                e.preventDefault();
-                const url = e.currentTarget.href;
-                if (url && url !== '#' && !url.endsWith('#')) {
-                    if (bridgeActive) {
-                        window.dispatchEvent(new CustomEvent("OpenBackgroundTab", {
-                            detail: { url: url }
-                        }));
-                    } else {
-                        window.open(url, '_blank');
-                    }
-                }
-            });
-
-            if (bridgeOk) {
-                bridgeActive = true;
-                document.getElementById('bridgeError').style.display = 'none';
-                
-                // Load champions from Riot DDragon
-                await loadChampionsList();
-                
-                if (typeof CONFIG !== 'undefined' && isConfigValid) {
-                    await checkTokenValidity();
-                } else {
-                    document.getElementById('connectionStatus').className = 'status-badge offline';
-                    document.getElementById('connectionStatus').innerText = 'Offline Mode';
-                }
-            } else {
-                bridgeActive = false;
-                document.getElementById('bridgeError').style.display = 'block';
-                document.getElementById('connectionStatus').className = 'status-badge offline';
-                document.getElementById('connectionStatus').innerText = 'Bridge Offline';
-                document.getElementById('status').innerText = 'Status: Bridge unavailable. Operating in local-only mode.';
-                
-                // Fallback to local cache of champions if available
-                await loadChampionsList();
-                
-                // Enable inputs to work locally
-                document.getElementById('enemyChamp').disabled = false;
-                document.getElementById('myChamp').disabled = false;
-                document.getElementById('loadBtn').disabled = false;
-            }
-            
-            renderLocalDrafts();
-
-            // Auto-load if inputs are populated by browser reload/session restore
-            const enemyVal = document.getElementById('enemyChamp').value;
-            const myVal = document.getElementById('myChamp').value;
-            if (enemyVal && myVal) {
-                loadMatchup();
-            }
-        };
-
-        function handleConfigMissing() {
-            isConfigValid = false;
-            document.getElementById('configError').style.display = 'block';
-            document.getElementById('connectionStatus').className = 'status-badge offline';
-            document.getElementById('connectionStatus').innerText = 'Config Error';
-        }
-
-        async function checkBridgeStatus() {
-            return new Promise((resolve) => {
-                let attempts = 0;
-                const maxAttempts = 15; // Span up to 3 seconds
-                let interval;
-                
-                function onPong() {
-                    clearInterval(interval);
-                    resolve(true);
-                }
-                
-                window.addEventListener("PongTampermonkeyBridge", onPong, { once: true });
-                
-                interval = setInterval(() => {
-                    attempts++;
-                    window.dispatchEvent(new CustomEvent("PingTampermonkeyBridge"));
-                    if (attempts >= maxAttempts) {
-                        clearInterval(interval);
-                        window.removeEventListener("PongTampermonkeyBridge", onPong);
-                        resolve(false);
-                    }
-                }, 200);
-                
-                // Fire immediately once
-                window.dispatchEvent(new CustomEvent("PingTampermonkeyBridge"));
-            });
-        }
-
-        function bridgeFetch(url, options = {}) {
-            return new Promise((resolve) => {
-                const requestId = Math.random().toString(36).substr(2, 9);
-                
-                const responseHandler = (e) => {
-                    window.removeEventListener(`FromTampermonkeyBridge_${requestId}`, responseHandler);
-                    
-                    let parsedJson = null;
-                    try { parsedJson = JSON.parse(e.detail.responseText); } catch(err) {}
-
-                    resolve({
-                        ok: e.detail.ok,
-                        status: e.detail.status,
-                        isExpired: e.detail.isExpired,
-                        json: () => parsedJson,
-                        text: () => e.detail.responseText
-                    });
-                };
-                window.addEventListener(`FromTampermonkeyBridge_${requestId}`, responseHandler);
-
-                window.dispatchEvent(new CustomEvent("ToTampermonkeyBridge", {
-                    detail: {
-                        requestId: requestId,
-                        url: url,
-                        method: options.method || "GET",
-                        headers: options.headers || {},
-                        body: options.body || null
-                    }
-                }));
-            });
-        }
-
-        function getAPIConfig() {
-            if (!isConfigValid || typeof CONFIG === 'undefined') {
-                throw new Error("Missing local configuration mapping.");
-            }
-            return {
-                url: `https://api.github.com/repos/${CONFIG.GITHUB_REPO}/contents/`,
-                headers: {
-                    "Authorization": `token ${CONFIG.GITHUB_TOKEN}`,
-                    "Accept": "application/vnd.github.v3+json"
-                }
-            };
-        }
-
-        async function fetchDirectOrBridge(url) {
-            try {
-                const res = await fetch(url);
-                if (res.ok) return await res.json();
-            } catch(e) {
-                console.warn("Direct fetch failed or blocked by CORS, trying bridge...", e);
-            }
-            
-            if (bridgeActive) {
-                const response = await bridgeFetch(url);
-                if (response.ok) return response.json();
-            }
-            throw new Error("Failed to reach Riot DDragon API.");
-        }
-
-        async function loadChampionsList() {
-            const cachedData = localStorage.getItem('lol_champions_cache');
-            let cache = null;
-            if (cachedData) {
-                try { cache = JSON.parse(cachedData); } catch(e) {}
-            }
-
-            try {
-                // Fetch versions
-                const versions = await fetchDirectOrBridge('https://ddragon.leagueoflegends.com/api/versions.json');
-                const latestVersion = versions[0];
-                
-                if (cache && cache.version === latestVersion && cache.champions && cache.champions.length > 0) {
-                    CHAMPIONS = cache.champions;
-                    console.log(`Loaded champions from cache: Patch ${latestVersion}`);
-                } else {
-                    const data = await fetchDirectOrBridge(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/champion.json`);
-                    CHAMPIONS = Object.values(data.data).map(c => ({
-                        key: c.id,
-                        name: c.name
-                    })).sort((a, b) => a.name.localeCompare(b.name));
-                    
-                    localStorage.setItem('lol_champions_cache', JSON.stringify({
-                        version: latestVersion,
-                        champions: CHAMPIONS
-                    }));
-                    console.log(`Cached champions: Patch ${latestVersion}`);
-                }
-            } catch (err) {
-                console.warn("Could not fetch fresh champion list. Using cache or defaults.", err);
-                if (cache && cache.champions) {
-                    CHAMPIONS = cache.champions;
-                } else {
-                    // Fail-safe static array of champions
-                    CHAMPIONS = [
-                        { key: "Aatrox", name: "Aatrox" }, { key: "Ahri", name: "Ahri" }, { key: "Akali", name: "Akali" },
-                        { key: "Akshan", name: "Akshan" }, { key: "Alistar", name: "Alistar" }, { key: "Amumu", name: "Amumu" },
-                        { key: "Anivia", name: "Anivia" }, { key: "Annie", name: "Annie" }, { key: "Aphelios", name: "Aphelios" },
-                        { key: "Ashe", name: "Ashe" }, { key: "AurelionSol", name: "Aurelion Sol" }, { key: "Azir", name: "Azir" },
-                        { key: "Bard", name: "Bard" }, { key: "Belveth", name: "Bel'Veth" }, { key: "Blitzcrank", name: "Blitzcrank" },
-                        { key: "Brand", name: "Brand" }, { key: "Braum", name: "Braum" }, { key: "Briar", name: "Briar" },
-                        { key: "Caitlyn", name: "Caitlyn" }, { key: "Camille", name: "Camille" }, { key: "Cassiopeia", name: "Cassiopeia" },
-                        { key: "Chogath", name: "Cho'Gath" }, { key: "Corki", name: "Corki" }, { key: "Darius", name: "Darius" },
-                        { key: "Diana", name: "Diana" }, { key: "DrMundo", name: "Dr. Mundo" }, { key: "Draven", name: "Draven" },
-                        { key: "Ekko", name: "Ekko" }, { key: "Elise", name: "Elise" }, { key: "Evelynn", name: "Evelynn" },
-                        { key: "Ezreal", name: "Ezreal" }, { key: "Fiddlesticks", name: "Fiddlesticks" }, { key: "Fiora", name: "Fiora" },
-                        { key: "Fizz", name: "Fizz" }, { key: "Galio", name: "Galio" }, { key: "Gangplank", name: "Gangplank" },
-                        { key: "Garen", name: "Garen" }, { key: "Gnar", name: "Gnar" }, { key: "Gragas", name: "Gragas" },
-                        { key: "Graves", name: "Graves" }, { key: "Gwen", name: "Gwen" }, { key: "Hecarim", name: "Hecarim" },
-                        { key: "Heimerdinger", name: "Heimerdinger" }, { key: "Hwei", name: "Hwei" }, { key: "Illaoi", name: "Illaoi" },
-                        { key: "Irelia", name: "Irelia" }, { key: "Ivern", name: "Ivern" }, { key: "Janna", name: "Janna" },
-                        { key: "JarvanIV", name: "Jarvan IV" }, { key: "Jax", name: "Jax" }, { key: "Jayce", name: "Jayce" },
-                        { key: "Jhin", name: "Jhin" }, { key: "Jinx", name: "Jinx" }, { key: "Ksante", name: "K'Sante" },
-                        { key: "Kaisa", name: "Kai'Sa" }, { key: "Kalista", name: "Kalista" }, { key: "Karma", name: "Karma" },
-                        { key: "Karthus", name: "Karthus" }, { key: "Kassadin", name: "Kassadin" }, { key: "Katarina", name: "Katarina" },
-                        { key: "Kayle", name: "Kayle" }, { key: "Kayn", name: "Kayn" }, { key: "Kennen", name: "Kennen" },
-                        { key: "Khazix", name: "Kha'Zix" }, { key: "Kindred", name: "Kindred" }, { key: "Kled", name: "Kled" },
-                        { key: "KogMaw", name: "Kog'Maw" }, { key: "Leblanc", name: "LeBlanc" }, { key: "LeeSin", name: "Lee Sin" },
-                        { key: "Leona", name: "Leona" }, { key: "Lillia", name: "Lillia" }, { key: "Lissandra", name: "Lissandra" },
-                        { key: "Lucian", name: "Lucian" }, { key: "Lulu", name: "Lulu" }, { key: "Lux", name: "Lux" },
-                        { key: "Malphite", name: "Malphite" }, { key: "Malzahar", name: "Malzahar" }, { key: "Maokai", name: "Maokai" },
-                        { key: "MasterYi", name: "Master Yi" }, { key: "Milio", name: "Milio" }, { key: "MissFortune", name: "Miss Fortune" },
-                        { key: "Mordekaiser", name: "Mordekaiser" }, { key: "Morgana", name: "Morgana" }, { key: "Naafiri", name: "Naafiri" },
-                        { key: "Nami", name: "Nami" }, { key: "Nasus", name: "Nasus" }, { key: "Nautilus", name: "Nautilus" },
-                        { key: "Neeko", name: "Neeko" }, { key: "Nidalee", name: "Nidalee" }, { key: "Nilah", name: "Nilah" },
-                        { key: "Nocturne", name: "Nocturne" }, { key: "Nunu", name: "Nunu & Willump" }, { key: "Olaf", name: "Olaf" },
-                        { key: "Orianna", name: "Orianna" }, { key: "Ornn", name: "Ornn" }, { key: "Pantheon", name: "Pantheon" },
-                        { key: "Poppy", name: "Poppy" }, { key: "Pyke", name: "Pyke" }, { key: "Qiyana", name: "Qiyana" },
-                        { key: "Quinn", name: "Quinn" }, { key: "Rakan", name: "Rakan" }, { key: "Rammus", name: "Rammus" },
-                        { key: "RekSai", name: "Rek'Sai" }, { key: "Rell", name: "Rell" }, { key: "Renata", name: "Renata Glasc" },
-                        { key: "Renekton", name: "Renekton" }, { key: "Rengar", name: "Rengar" }, { key: "Riven", name: "Riven" },
-                        { key: "Rumble", name: "Rumble" }, { key: "Ryze", name: "Ryze" }, { key: "Samira", name: "Samira" },
-                        { key: "Sejuani", name: "Sejuani" }, { key: "Senna", name: "Senna" }, { key: "Seraphine", name: "Seraphine" },
-                        { key: "Sett", name: "Sett" }, { key: "Shaco", name: "Shaco" }, { key: "Shen", name: "Shen" },
-                        { key: "Shyvana", name: "Shyvana" }, { key: "Singed", name: "Singed" }, { key: "Sion", name: "Sion" },
-                        { key: "Sivir", name: "Sivir" }, { key: "Skarner", name: "Skarner" }, { key: "Sona", name: "Sona" },
-                        { key: "Soraka", name: "Soraka" }, { key: "Swain", name: "Swain" }, { key: "Sylas", name: "Sylas" },
-                        { key: "Syndra", name: "Syndra" }, { key: "TahmKench", name: "Tahm Kench" }, { key: "Taliyah", name: "Taliyah" },
-                        { key: "Talon", name: "Talon" }, { key: "Taric", name: "Taric" }, { key: "Teemo", name: "Teemo" },
-                        { key: "Thresh", name: "Thresh" }, { key: "Tristana", name: "Tristana" }, { key: "Trundle", name: "Trundle" },
-                        { key: "Tryndamere", name: "Tryndamere" }, { key: "TwistedFate", name: "Twisted Fate" }, { key: "Twitch", name: "Twitch" },
-                        { key: "Udyr", name: "Udyr" }, { key: "Urgot", name: "Urgot" }, { key: "Varus", name: "Varus" },
-                        { key: "Vayne", name: "Vayne" }, { key: "Veigar", name: "Veigar" }, { key: "Velkoz", name: "Vel'Koz" },
-                        { key: "Vex", name: "Vex" }, { key: "Vi", name: "Vi" }, { key: "Viego", name: "Viego" },
-                        { key: "Viktor", name: "Viktor" }, { key: "Vladimir", name: "Vladimir" }, { key: "Volibear", name: "Volibear" },
-                        { key: "Warwick", name: "Warwick" }, { key: "Wukong", name: "Wukong" }, { key: "Xayah", name: "Xayah" },
-                        { key: "Xerath", name: "Xerath" }, { key: "XinZhao", name: "Xin Zhao" }, { key: "Yasuo", name: "Yasuo" },
-                        { key: "Yone", name: "Yone" }, { key: "Yorick", name: "Yorick" }, { key: "Yuumi", name: "Yuumi" },
-                        { key: "Zac", name: "Zac" }, { key: "Zed", name: "Zed" }, { key: "Zeri", name: "Zeri" },
-                        { key: "Ziggs", name: "Ziggs" }, { key: "Zilean", name: "Zilean" }, { key: "Zoe", name: "Zoe" },
-                        { key: "Zyra", name: "Zyra" }
-                    ];
-                }
-            }
-            
-            // Populate Datalist
-            const dl = document.getElementById('championList');
-            dl.innerHTML = '';
-            CHAMPIONS.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c.name;
-                dl.appendChild(opt);
-            });
-
-            // Unlock inputs
-            document.getElementById('enemyChamp').disabled = false;
-            document.getElementById('myChamp').disabled = false;
-            document.getElementById('loadBtn').disabled = false;
-        }
-
-        // Champion utility mappings are loaded from utils.js
-
-        async function checkTokenValidity() {
-            try {
-                document.getElementById('status').innerText = "Status: Authorizing with GitHub...";
-                const response = await bridgeFetch("https://api.github.com/user", {
-                    headers: { "Authorization": `token ${CONFIG.GITHUB_TOKEN}` }
-                });
-
-                if (response.isExpired || response.status === 401) {
-                    document.getElementById('tokenExpiredError').style.display = 'block';
-                    document.getElementById('connectionStatus').className = 'status-badge offline';
-                    document.getElementById('connectionStatus').innerText = "Bad Credentials";
-                    document.getElementById('status').innerText = "Status: Stopped. Token Rejected.";
-                } else if (response.ok) {
-                    document.getElementById('connectionStatus').className = 'status-badge online';
-                    document.getElementById('connectionStatus').innerText = 'Connected';
-                    document.getElementById('status').innerText = "Status: Authenticated & Ready.";
-                    document.getElementById('syncBtn').style.display = 'inline-block';
-                } else {
-                    document.getElementById('connectionStatus').className = 'status-badge offline';
-                    document.getElementById('connectionStatus').innerText = `Error ${response.status}`;
-                    document.getElementById('status').innerText = `Warning: GitHub status check returned ${response.status}`;
-                }
-            } catch (err) {
-                document.getElementById('connectionStatus').className = 'status-badge offline';
-                document.getElementById('connectionStatus').innerText = 'Offline';
-                document.getElementById('status').innerText = "Status Check Failed: " + err.message;
-            }
-        }
-
-        async function loadMatchup() {
-            const enemyName = document.getElementById('enemyChamp').value;
-            const myName = document.getElementById('myChamp').value;
-            
-            const enemyKey = getChampionKeyByName(enemyName);
-            const myKey = getChampionKeyByName(myName);
-            
-            if (!enemyKey || !myKey) {
-                alert("Please select or enter valid champions from the list.");
-                return;
-            }
-
-            // Setup Mobalytics Link URL and show the button
-            const mobaLink = document.getElementById('mobalyticsLink');
-            const slug = getMobalyticsSlug(myKey);
-            mobaLink.href = `https://mobalytics.gg/lol/champions/${slug}/counters`;
-            mobaLink.style.display = 'inline-flex';
-
-            const path = `matchups/${enemyKey}/${myKey}.md`;
-            const statusEl = document.getElementById('status');
-            const editorEl = document.getElementById('editor');
-            const fileLabel = document.getElementById('currentFileLabel');
-            const conflictBanner = document.getElementById('conflictBanner');
-            
-            statusEl.innerText = `Searching for ${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}...`;
-            conflictBanner.style.display = 'none';
-            setDiscardBtnDisplay('none');
-            currentSha = null; 
-            githubTextCache = null;
-
-            // Load local draft if present
-            const draftKey = `draft_matchup:${enemyKey}/${myKey}`;
-            const localDraft = localStorage.getItem(draftKey);
-
-            if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
-                // Offline load
-                fileLabel.innerText = `Editing (Local Draft): ${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
-                editorEl.value = localDraft || "";
-                editorEl.disabled = false;
-                statusEl.innerText = "Offline Mode: Draft active.";
-                if (localDraft) setDiscardBtnDisplay('inline-block');
-                updateDetectedLinks();
-                return;
-            }
-
-            const config = getAPIConfig();
-            try {
-                const response = await bridgeFetch(config.url + path, { headers: config.headers });
-                
-                if (response.isExpired) {
-                    document.getElementById('tokenExpiredError').style.display = 'block';
-                    return;
-                }
-
-                if (response.status === 404) {
-                    // Not on GitHub
-                    statusEl.innerText = "Matchup not found on GitHub. Ready to create new file.";
-                    fileLabel.innerText = `New File: ${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
-                    editorEl.value = localDraft || "";
-                    editorEl.disabled = false;
-                    if (localDraft) setDiscardBtnDisplay('inline-block');
-                    updateDetectedLinks();
-                } else if (response.ok) {
-                    const data = response.json();
-                    currentSha = data.sha; 
-                    const decodedText = decodeURIComponent(escape(atob(data.content)));
-                    githubTextCache = decodedText;
-                    
-                    if (localDraft !== null && localDraft !== decodedText) {
-                        // Conflict
-                        conflictBanner.style.display = 'flex';
-                        editorEl.value = localDraft; // Show local edits
-                        statusEl.innerText = "Conflict! Unsaved local edits differ from GitHub version.";
-                        setDiscardBtnDisplay('inline-block');
-                        updateDetectedLinks();
-                    } else {
-                        // Synced or no draft
-                        if (localDraft !== null) {
-                            localStorage.removeItem(draftKey);
-                            renderLocalDrafts();
-                        }
-                        editorEl.value = decodedText;
-                        statusEl.innerText = "Loaded successfully from GitHub!";
-                        updateDetectedLinks();
-                    }
-                    fileLabel.innerText = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
-                    editorEl.disabled = false;
-                } else {
-                    statusEl.innerText = `Error code: ${response.status}`;
-                }
-            } catch (err) {
-                statusEl.innerText = "Bridge fetch error: " + err.message;
-                fileLabel.innerText = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)} (Offline)`;
-                editorEl.value = localDraft || "";
-                editorEl.disabled = false;
-                if (localDraft) setDiscardBtnDisplay('inline-block');
-                updateDetectedLinks();
-            }
-        }
-
-        document.getElementById('editor').addEventListener('input', () => {
-            const enemyVal = document.getElementById('enemyChamp').value;
-            const myVal = document.getElementById('myChamp').value;
-            const enemyKey = getChampionKeyByName(enemyVal);
-            const myKey = getChampionKeyByName(myVal);
-            
-            if (!enemyKey || !myKey) return;
-            
-            const draftKey = `draft_matchup:${enemyKey}/${myKey}`;
-            const textContent = document.getElementById('editor').value;
-            
-            // Auto save locally instantly
-            localStorage.setItem(draftKey, textContent);
-            renderLocalDrafts();
-            
-            setDiscardBtnDisplay('inline-block');
-            document.getElementById('status').innerText = "Typing... saved draft locally.";
-            updateDetectedLinks();
-        });
-
-        async function saveToGitHub() {
-            if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
-                document.getElementById('status').innerText = "Saved draft locally. (Cannot sync: Bridge or Config offline).";
-                return;
-            }
-
-            const config = getAPIConfig();
-            const enemyVal = document.getElementById('enemyChamp').value;
-            const myVal = document.getElementById('myChamp').value;
-            const enemyKey = getChampionKeyByName(enemyVal);
-            const myKey = getChampionKeyByName(myVal);
-            
-            if (!enemyKey || !myKey) return;
-            
-            const path = `matchups/${enemyKey}/${myKey}.md`;
-            const textContent = document.getElementById('editor').value;
-            const statusEl = document.getElementById('status');
-
-            statusEl.innerText = "Syncing changes to GitHub...";
-
-            const encodedContent = btoa(unescape(encodeURIComponent(textContent)));
-            const bodyData = {
-                message: `Sync: updated ${myKey} vs ${enemyKey} matchup`,
-                content: encodedContent
-            };
-            
-            if (currentSha) bodyData.sha = currentSha;
-
-            try {
-                const response = await bridgeFetch(config.url + path, {
-                    method: 'PUT',
-                    headers: config.headers,
-                    body: JSON.stringify(bodyData)
-                });
-
-                if (response.ok) {
-                    const result = response.json();
-                    currentSha = result.content.sha; 
-                    
-                    // Clear local draft
-                    localStorage.removeItem(`draft_matchup:${enemyKey}/${myKey}`);
-                    renderLocalDrafts();
-                    setDiscardBtnDisplay('none');
-                    document.getElementById('conflictBanner').style.display = 'none';
-                    
-                    statusEl.innerText = "Changes safely synced to GitHub!";
-                } else {
-                    statusEl.innerText = `Sync failed (Status ${response.status}). Kept local draft.`;
-                }
-            } catch (err) {
-                statusEl.innerText = "Sync error: " + err.message + ". Draft saved locally.";
-            }
-        }
-
-        function resolveConflict(decision) {
-            const enemyVal = document.getElementById('enemyChamp').value;
-            const myVal = document.getElementById('myChamp').value;
-            const enemyKey = getChampionKeyByName(enemyVal);
-            const myKey = getChampionKeyByName(myVal);
-            
-            if (!enemyKey || !myKey) return;
-            
-            const draftKey = `draft_matchup:${enemyKey}/${myKey}`;
-            const conflictBanner = document.getElementById('conflictBanner');
-            
-            if (decision === 'local') {
-                conflictBanner.style.display = 'none';
-                document.getElementById('status').innerText = "Using local draft. Save to push to GitHub.";
-                updateDetectedLinks();
-            } else if (decision === 'github') {
-                if (githubTextCache !== null) {
-                    document.getElementById('editor').value = githubTextCache;
-                    localStorage.removeItem(draftKey);
-                    renderLocalDrafts();
-                    setDiscardBtnDisplay('none');
-                    conflictBanner.style.display = 'none';
-                    document.getElementById('status').innerText = "Loaded GitHub version. Local draft deleted.";
-                    updateDetectedLinks();
-                }
-            }
-        }
-
-        function discardCurrentDraft() {
-            const enemyVal = document.getElementById('enemyChamp').value;
-            const myVal = document.getElementById('myChamp').value;
-            const enemyKey = getChampionKeyByName(enemyVal);
-            const myKey = getChampionKeyByName(myVal);
-            
-            if (!enemyKey || !myKey) return;
-
-            localStorage.removeItem(`draft_matchup:${enemyKey}/${myKey}`);
-            renderLocalDrafts();
-            loadMatchup();
-        }
-
-        // Sidebar Draft list
-        function getLocalDrafts() {
-            const drafts = [];
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key.startsWith('draft_matchup:')) {
-                    const path = key.replace('draft_matchup:', '');
-                    const parts = path.split('/');
-                    if (parts.length === 2) {
-                        drafts.push({
-                            enemy: parts[0],
-                            mySide: parts[1],
-                            path: path
-                        });
-                    }
-                }
-            }
-            return drafts;
-        }
-
-        function renderLocalDrafts() {
-            const container = document.getElementById('draftsList');
-            const drafts = getLocalDrafts();
-            
-            if (drafts.length === 0) {
-                container.innerHTML = '<div class="no-drafts">No pending local drafts.</div>';
-                return;
-            }
-            
-            container.innerHTML = '';
-            drafts.forEach(d => {
-                const card = document.createElement('div');
-                card.className = 'draft-card';
-                card.innerHTML = `
-                    <div class="draft-info">
-                        <span class="draft-champ">${getChampionNameByKey(d.mySide)} vs ${getChampionNameByKey(d.enemy)}</span>
-                        <span class="draft-tag">Local Draft</span>
-                    </div>
-                    <div class="draft-actions">
-                        <button class="btn-outline-sm" onclick="loadDraft('${d.enemy}', '${d.mySide}')">Edit</button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function loadDraft(enemyKey, myKey) {
-            document.getElementById('enemyChamp').value = getChampionNameByKey(enemyKey);
-            document.getElementById('myChamp').value = getChampionNameByKey(myKey);
-            loadMatchup();
-        }
-
-
-    </script>
+    
+    <!-- 4. editor.js: GUI orchestration, local drafts state loops, and textareas listeners -->
+    <script src="editor.js"></script>
 </body>
 </html>
