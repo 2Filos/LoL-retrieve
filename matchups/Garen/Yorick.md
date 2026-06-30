@@ -1,9 +1,4 @@
 Problematic Matchup.
- 
-
-
-
-
 
 
 
