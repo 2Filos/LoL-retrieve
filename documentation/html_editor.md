@@ -7,7 +7,7 @@ This document details the structure, behavior, and lifecycle events of the front
 The editor interface features a slate-blue and teal design, including:
 *   **Security Error Banners**: Banners alerting you to configuration issues (missing `config.js`), active token issues (GitHub token expiration), or bridge script status (inactive Tampermonkey userscript).
 *   **Autocomplete Selectors**: Separate **Enemy Champion** and **My Champion** search inputs mapped to native `<datalist>` dropdown elements. These are loaded dynamically from Riot Games Data Dragon and cached in local storage.
-*   **Mobalytics Counters Link**: A button equipped with the Mobalytics logo that opens the counter statistics for the selected enemy champion in a background browser tab without taking active focus.
+*   **Mobalytics Counters Link**: A button equipped with the Mobalytics logo that opens the counter statistics for the selected my champion in a background browser tab without taking active focus.
 *   **Pending Local Drafts Sidebar**: A panel listing all unsynced local drafts saved in `localStorage`.
 *   **Conflict Resolution Banner**: A warning element that appears if a file is loaded from GitHub but differing unsynced edits exist in local storage, allowing the user to select which version to preserve.
 *   **Editor Panel**: A text writing area (`<textarea>`) styled with softer slate colors for legibility.
