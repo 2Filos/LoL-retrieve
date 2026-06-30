@@ -273,16 +273,7 @@
             width: auto;
         }
 
-        .draft-actions .delete-btn {
-            background: rgba(232, 64, 64, 0.15);
-            color: var(--danger);
-            border-color: var(--danger);
-        }
 
-        .draft-actions .delete-btn:hover {
-            background: var(--danger);
-            color: white;
-        }
 
         .editor-card {
             display: flex;
@@ -394,6 +385,112 @@
             text-align: center;
             padding: 20px 0;
         }
+
+        /* Detected Links styles */
+        .detected-links-container {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 12px;
+            padding: 10px 14px;
+            background: var(--bg-darker);
+            border: 1px solid var(--gold-dark);
+            border-radius: 4px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+            min-height: 48px;
+        }
+
+        .detected-links-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-right: 1px solid var(--gold-dark);
+            padding-right: 12px;
+            margin-right: 2px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .detected-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+            flex-grow: 1;
+        }
+
+        .link-badge {
+            display: inline-flex;
+            align-items: center;
+            background: var(--bg-light);
+            border: 1px solid var(--gold-dark);
+            border-radius: 3px;
+            padding: 3px 3px 3px 8px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            gap: 6px;
+            height: 26px;
+        }
+
+        .link-badge:hover {
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 5px rgba(0, 188, 171, 0.2);
+        }
+
+        .link-badge .link-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+
+        .link-badge a {
+            color: var(--text-primary);
+            text-decoration: none;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            transition: color 0.2s ease;
+            font-weight: 500;
+        }
+
+        .link-badge a:hover {
+            color: var(--gold-accent);
+        }
+
+        .link-badge .bg-tab-btn {
+            background: rgba(0, 188, 171, 0.1);
+            border: 1px solid rgba(0, 188, 171, 0.3);
+            color: var(--gold-accent);
+            padding: 0 8px;
+            height: 18px;
+            line-height: 16px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 2px;
+            cursor: pointer;
+            width: auto;
+            text-transform: none;
+            letter-spacing: 0;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .link-badge .bg-tab-btn:hover {
+            background: var(--gold-accent);
+            color: #0c131d;
+            box-shadow: 0 0 5px rgba(0, 188, 171, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -472,6 +569,14 @@
                 </div>
 
                 <textarea id="editor" placeholder="Select a matchup to start writing notes..." disabled></textarea>
+
+                <div id="detectedLinksContainer" class="detected-links-container">
+                    <div class="detected-links-title">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                        Links
+                    </div>
+                    <div id="detectedLinksList" class="detected-links-list"></div>
+                </div>
                 
                 <div class="editor-actions">
                     <div id="status" class="status-text">Status: Checking bridge connectivity...</div>
@@ -501,6 +606,103 @@
         let bridgeActive = false;
         let CHAMPIONS = [];
         let githubTextCache = null;
+
+        // Extract URLs from text
+        function extractUrls(text) {
+            if (!text) return [];
+            const regex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+            const matches = text.match(regex) || [];
+            return matches.map(url => {
+                let cleaned = url;
+                while (/[.,;:!?)]$/.test(cleaned)) {
+                    cleaned = cleaned.slice(0, -1);
+                }
+                return cleaned;
+            }).filter((url, index, self) => self.indexOf(url) === index);
+        }
+
+        // Return domain-specific HTML/SVG icons for links
+        function getLinkIcon(url) {
+            let domain = "";
+            try {
+                const parsed = new URL(url.startsWith('http') ? url : 'https://' + url);
+                domain = parsed.hostname.toLowerCase();
+            } catch(e) {
+                return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
+            }
+
+            if (domain.includes('youtube.com') || domain.includes('youtu.be')) {
+                return `<svg width="12" height="12" viewBox="0 0 24 24" fill="#ef4444"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`;
+            }
+            if (domain.includes('op.gg')) {
+                return `<span style="font-size: 8px; font-weight: bold; background: #5383e8; color: white; padding: 1px 3px; border-radius: 2px; line-height: 1.2; font-family: sans-serif; display: inline-block;">OP</span>`;
+            }
+            if (domain.includes('mobalytics.gg')) {
+                return `<svg width="12" height="12" viewBox="0 0 24 24" fill="#5f3bf4"><polygon points="12 2 22 7 22 17 12 22 2 17 2 7"/></svg>`;
+            }
+            if (domain.includes('lolalytics.com')) {
+                return `<span style="font-size: 8px; font-weight: bold; background: #c8102e; color: white; padding: 1px 3px; border-radius: 2px; line-height: 1.2; font-family: sans-serif; display: inline-block;">LA</span>`;
+            }
+            return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
+        }
+
+        // Update the list of detected links
+        function updateDetectedLinks() {
+            const editorEl = document.getElementById('editor');
+            const container = document.getElementById('detectedLinksContainer');
+            const listEl = document.getElementById('detectedLinksList');
+            
+            if (!editorEl || !container || !listEl) return;
+            
+            const urls = extractUrls(editorEl.value);
+            
+            listEl.innerHTML = '';
+            if (urls.length === 0) {
+                return;
+            }
+            
+            urls.forEach(url => {
+                const cleanHref = url.startsWith('http') ? url : 'https://' + url;
+                let displayUrl = url.replace(/https?:\/\/(www\.)?/, '');
+                if (displayUrl.length > 30) {
+                    displayUrl = displayUrl.substring(0, 27) + '...';
+                }
+                
+                const badge = document.createElement('div');
+                badge.className = 'link-badge';
+                
+                const iconSpan = document.createElement('span');
+                iconSpan.className = 'link-icon';
+                iconSpan.innerHTML = getLinkIcon(url);
+                
+                const link = document.createElement('a');
+                link.href = cleanHref;
+                link.target = '_blank';
+                link.textContent = displayUrl;
+                link.title = url;
+                
+                const bgBtn = document.createElement('button');
+                bgBtn.className = 'bg-tab-btn';
+                bgBtn.textContent = '...';
+                bgBtn.title = 'Open in background tab';
+                bgBtn.onclick = (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (bridgeActive) {
+                        window.dispatchEvent(new CustomEvent("OpenBackgroundTab", {
+                            detail: { url: cleanHref }
+                        }));
+                    } else {
+                        window.open(cleanHref, '_blank');
+                    }
+                };
+                
+                badge.appendChild(iconSpan);
+                badge.appendChild(link);
+                badge.appendChild(bgBtn);
+                listEl.appendChild(badge);
+            });
+        }
 
         // Discard draft UI confirmation state management
         function setDiscardBtnDisplay(style) {
@@ -861,6 +1063,7 @@
                 editorEl.disabled = false;
                 statusEl.innerText = "Offline Mode: Draft active.";
                 if (localDraft) setDiscardBtnDisplay('inline-block');
+                updateDetectedLinks();
                 return;
             }
 
@@ -880,6 +1083,7 @@
                     editorEl.value = localDraft || "";
                     editorEl.disabled = false;
                     if (localDraft) setDiscardBtnDisplay('inline-block');
+                    updateDetectedLinks();
                 } else if (response.ok) {
                     const data = response.json();
                     currentSha = data.sha; 
@@ -892,6 +1096,7 @@
                         editorEl.value = localDraft; // Show local edits
                         statusEl.innerText = "Conflict! Unsaved local edits differ from GitHub version.";
                         setDiscardBtnDisplay('inline-block');
+                        updateDetectedLinks();
                     } else {
                         // Synced or no draft
                         if (localDraft !== null) {
@@ -900,6 +1105,7 @@
                         }
                         editorEl.value = decodedText;
                         statusEl.innerText = "Loaded successfully from GitHub!";
+                        updateDetectedLinks();
                     }
                     fileLabel.innerText = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
                     editorEl.disabled = false;
@@ -912,6 +1118,7 @@
                 editorEl.value = localDraft || "";
                 editorEl.disabled = false;
                 if (localDraft) setDiscardBtnDisplay('inline-block');
+                updateDetectedLinks();
             }
         }
 
@@ -932,6 +1139,7 @@
             
             setDiscardBtnDisplay('inline-block');
             document.getElementById('status').innerText = "Typing... saved draft locally.";
+            updateDetectedLinks();
         });
 
         async function saveToGitHub() {
@@ -1002,6 +1210,7 @@
             if (decision === 'local') {
                 conflictBanner.style.display = 'none';
                 document.getElementById('status').innerText = "Using local draft. Save to push to GitHub.";
+                updateDetectedLinks();
             } else if (decision === 'github') {
                 if (githubTextCache !== null) {
                     document.getElementById('editor').value = githubTextCache;
@@ -1010,6 +1219,7 @@
                     setDiscardBtnDisplay('none');
                     conflictBanner.style.display = 'none';
                     document.getElementById('status').innerText = "Loaded GitHub version. Local draft deleted.";
+                    updateDetectedLinks();
                 }
             }
         }
@@ -1067,7 +1277,6 @@
                     </div>
                     <div class="draft-actions">
                         <button class="btn-outline-sm" onclick="loadDraft('${d.enemy}', '${d.mySide}')">Edit</button>
-                        <button class="delete-btn btn-danger" onclick="deleteDraft('${d.enemy}', '${d.mySide}', event)">✕</button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -1080,20 +1289,7 @@
             loadMatchup();
         }
 
-        function deleteDraft(enemyKey, myKey, event) {
-            if (event) event.stopPropagation();
-            if (confirm(`Discard local draft for ${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}?`)) {
-                localStorage.removeItem(`draft_matchup:${enemyKey}/${myKey}`);
-                renderLocalDrafts();
-                
-                // If it is the current matchup, reload
-                const currentEnemy = getChampionKeyByName(document.getElementById('enemyChamp').value);
-                const currentMy = getChampionKeyByName(document.getElementById('myChamp').value);
-                if (currentEnemy === enemyKey && currentMy === myKey) {
-                    loadMatchup();
-                }
-            }
-        }
+
     </script>
 </body>
 </html>

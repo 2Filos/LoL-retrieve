@@ -50,3 +50,20 @@ When the page loads:
     *   Updates `currentSha` with the new commit SHA returned by GitHub (critical to prevent subsequent conflicts).
     *   Clears the local draft from `localStorage` and updates the sidebar.
 
+---
+
+## 3. Link Recognition & Management
+
+The editor dynamically parses and highlights external links (like YouTube or OP.GG) included in the notes:
+1.  **Extraction**: Every time a matchup load completes, conflict resolution occurs, or the user edits notes, the text is scanned for URLs starting with `http://`, `https://`, or `www.`.
+2.  **Visual Layout**: The links panel is **permanently visible** directly **below the editor textarea**. If multiple links are detected within the note, they are stacked **vertically** within the panel for a cleaner, organized structure. If no links are detected, the panel remains visible but empty.
+3.  **Domain-specific Favicons / Icons**:
+    *   **YouTube**: Displays a custom red YouTube play SVG icon.
+    *   **OP.GG**: Displays a custom blue `OP` label.
+    *   **Mobalytics**: Displays a purple hexagon SVG icon.
+    *   **Lolalytics**: Displays a red `LA` label.
+    *   **Others**: A generic network link SVG icon.
+4.  **Background Tab Controls (`...` Button)**:
+    *   Clicking the link text itself navigates to the target page in a new focused tab.
+    *   Clicking the **`...`** button next to the link sends an `OpenBackgroundTab` CustomEvent to the bridge. The bridge invokes `GM_openInTab(url, { active: false })` to load the URL in a non-focused background tab, allowing you to queue up multiple guides/videos without interrupting your current workspace window.
+
