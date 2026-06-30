@@ -137,6 +137,10 @@ The main ideas from this lesson are:
 
 ---
 
+### Bridge to the project
+- Read [api.js](../api.js#L56-L85) and [bridge.js](../bridge.js#L52-L90) side by side to compare the event handshake with the userscript listener.
+- Take another look at [bridge.js](../bridge.js#L82-L120) and then read [learning/cors_bypassing_userscripts.md](cors_bypassing_userscripts.md) for the broader conceptual background.
+
 ## 11. Practice question
 
 Try to explain these in your own words:

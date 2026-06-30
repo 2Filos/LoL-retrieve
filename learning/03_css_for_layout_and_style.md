@@ -336,6 +336,10 @@ The key ideas from this lesson are:
 
 ---
 
+### Bridge to the project
+- Read [style.css](../style.css#L54-L80) first and look for the rules that shape the page background, spacing, and container layout.
+- Take another look at [style.css](../style.css#L164-L180) and [style.css](../style.css#L399-L442), then compare them with the structure in [matchups.html](../matchups.html#L17-L30) and the UI updates in [editor.js](../editor.js#L566-L578).
+
 ## 16. Practice question
 
 Try to explain these in your own words:

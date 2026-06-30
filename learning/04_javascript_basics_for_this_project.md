@@ -364,6 +364,10 @@ The major ideas from this lesson are:
 
 ---
 
+### Bridge to the project
+- Read [editor.js](../editor.js#L560-L578) and identify the event listener, the DOM access, and the local draft update logic in the real file.
+- Take another look at [editor.js](../editor.js#L675-L686) and then compare that behavior with the higher-level explanation in [learning/05_editor_flow_and_local_drafts.md](05_editor_flow_and_local_drafts.md).
+
 ## 18. Practice question
 
 Try to explain these in your own words:

@@ -445,6 +445,10 @@ The main ideas from this lesson are:
 
 ---
 
+### Bridge to the project
+- Read [matchups.html](../matchups.html#L17-L30) again and trace the sections described here: the head, the body, the header, and the main app container.
+- Take another look at [matchups.html](../matchups.html#L104-L157) and compare those HTML blocks with the behavior in [editor.js](../editor.js#L566-L578) and the layout rules in [style.css](../style.css#L67-L80).
+
 ## 22. Practice question
 
 Try to answer these:

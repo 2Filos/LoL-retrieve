@@ -211,6 +211,10 @@ The main ideas from this lesson are:
 
 ---
 
+### Bridge to the project
+- Read [editor.js](../editor.js#L566-L578) and trace the draft-saving behavior while the user types.
+- Take another look at [editor.js](../editor.js#L681-L686) and compare that storage flow with the explanation in [learning/local_drafts_persistence.md](local_drafts_persistence.md).
+
 ## 15. Practice question
 
 Try to answer these in your own words:

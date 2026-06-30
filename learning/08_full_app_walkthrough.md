@@ -180,6 +180,10 @@ The key ideas from this lesson are:
 
 ---
 
+### Bridge to the project
+- Read [matchups.html](../matchups.html#L17-L30), [style.css](../style.css#L54-L80), [editor.js](../editor.js#L566-L578), [api.js](../api.js#L56-L85), and [bridge.js](../bridge.js#L52-L90) as one connected sequence.
+- Take another look at [matchups.html](../matchups.html#L104-L157) and [api.js](../api.js#L105-L140) to tie the UI, the editor behavior, and the bridge flow together in one mental model.
+
 ## 13. Final practice question
 
 Try to describe the whole app in one paragraph.

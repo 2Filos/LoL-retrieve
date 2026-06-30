@@ -478,6 +478,10 @@ The most important ideas from this lesson are:
 
 ---
 
+### Bridge to the project
+- Read [matchups.html](../matchups.html#L17-L30) side by side with this lesson and notice how the same concepts appear in the real page structure.
+- Take another look at [matchups.html](../matchups.html#L110-L157) and then compare it with [style.css](../style.css#L54-L80) and [editor.js](../editor.js#L560-L578) to see how structure, style, and behavior fit together.
+
 ## 24. Practice question
 
 Try to answer these in your own words:

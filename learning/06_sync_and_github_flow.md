@@ -172,6 +172,10 @@ The main ideas from this lesson are:
 
 ---
 
+### Bridge to the project
+- Read [api.js](../api.js#L56-L85) and [api.js](../api.js#L105-L140) to see how the bridge request is set up before the GitHub call is made.
+- Take another look at [api.js](../api.js#L188-L207) and compare that network flow with the deeper explanation in [learning/github_contents_api.md](github_contents_api.md).
+
 ## 14. Practice question
 
 Try to explain these in your own words:
