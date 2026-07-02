@@ -15,3 +15,6 @@ vs Tryndamere
 Special
 Sett vs Garen
 Garen/Yorick vs Camille
+
+Garen vs Nasus - watch VOD for wave control
+I let him over-stack Q
