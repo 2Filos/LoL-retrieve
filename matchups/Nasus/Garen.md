@@ -8,3 +8,8 @@ If he wastes W you can, but depends on Nasus
 A strong Nasus might take advantage of that moment of greed and run you down
 Especially after lv6
 
+I don't actually have a good history vs Nasus
+I either fail to snowball, or get greedy
+I generally let him overstack Q, that's for sure
+
+Should watch vod?
