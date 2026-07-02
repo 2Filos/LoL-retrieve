@@ -1,0 +1,10 @@
+Gotta find snowball angles
+And care for ganks
+
+Voidlings are a no-brainer, need more awareness of that
+Also a control–ward given high-prio is vital for better defense from ganks
+Trying to go for tower plates is tricky
+If he wastes W you can, but depends on Nasus
+A strong Nasus might take advantage of that moment of greed and run you down
+Especially after lv6
+
