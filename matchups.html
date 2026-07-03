@@ -86,16 +86,30 @@
 
             <!-- Notes Editor Main Panel -->
             <div class="card editor-card">
-                <!-- Editor Meta Details Header -->
+                <!-- Editor Meta Details Header — Champion Portraits + VS + Star -->
                 <div class="editor-header">
-                    <div class="editor-title">
+                    <div class="editor-title" id="editorTitleBlock">
+                        <!-- Champion portrait block: icon stacks with names below, VS in between -->
+                        <div class="matchup-portraits" id="matchupPortraits" style="display: none;">
+                            <div class="portrait-stack">
+                                <img id="myChampIcon" class="champion-portrait" src="" alt="">
+                                <span class="portrait-name" id="myChampName"></span>
+                            </div>
+                            <span class="vs-label">VS</span>
+                            <div class="portrait-stack">
+                                <img id="enemyChampIcon" class="champion-portrait" src="" alt="">
+                                <span class="portrait-name" id="enemyChampName"></span>
+                            </div>
+                        </div>
+                        <!-- Fallback text label for non-matchup files (e.g. General Notes) -->
                         <span id="currentFileLabel">No matchup loaded</span>
-                        <button id="starBtn" class="star-btn" onclick="toggleSaveMatchup()" style="display: none;" title="Save Matchup">
-                            <svg class="star-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                            </svg>
-                        </button>
                     </div>
+                    <!-- Star button positioned to the right of the whole title block -->
+                    <button id="starBtn" class="star-btn" onclick="toggleSaveMatchup()" style="display: none;" title="Save Matchup">
+                        <svg class="star-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                    </button>
                 </div>
 
 
@@ -112,14 +126,19 @@
                 <!-- Core Markdown Notepad Textarea -->
                 <textarea id="editor" placeholder="Select a matchup to start writing notes..." disabled></textarea>
 
-                <!-- Extracted URLs Mentions List -->
+                <!-- Extracted URLs Mentions List — Collapsible, open by default -->
                 <div id="detectedLinksContainer" class="detected-links-container">
-                    <div class="detected-links-title">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                        Links
+                    <div class="detected-links-header" onclick="toggleLinksPanel()">
+                        <div class="detected-links-title">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                            Links
+                        </div>
+                        <svg class="links-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </div>
                     <div id="detectedLinksList" class="detected-links-list"></div>
                 </div>
+
+                <!-- Footer Action Bar -->
                 <div class="editor-actions">
                     <div id="status" class="status-text">Status: Checking bridge connectivity...</div>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -158,5 +177,85 @@
     
     <!-- 4. editor.js: GUI orchestration, local drafts state loops, and textareas listeners -->
     <script src="editor.js"></script>
+
+    <!-- 5. UI enhancements: collapsible links + textarea height persistence + champion portraits -->
+    <script>
+        // --- Links Panel Toggle ---
+        function toggleLinksPanel() {
+            const container = document.getElementById('detectedLinksContainer');
+            container.classList.toggle('collapsed');
+        }
+
+        // --- Textarea Height Persistence ---
+        (function() {
+            const editor = document.getElementById('editor');
+            if (!editor) return;
+
+            // Restore saved height
+            const savedHeight = localStorage.getItem('matchup_editor_height');
+            if (savedHeight) {
+                editor.style.height = savedHeight;
+            }
+
+            // Observe resize via ResizeObserver
+            let resizeTimeout;
+            const observer = new ResizeObserver(() => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    localStorage.setItem('matchup_editor_height', editor.style.height);
+                }, 200);
+            });
+            observer.observe(editor);
+        })();
+
+        // --- Champion Portrait Icons ---
+        // Override the fileLabel update to also show champion portraits when a matchup is loaded.
+        // This hooks into the existing loadMatchupByPath by watching for activeMatchup changes.
+        const _origLoadMatchupByPath = typeof loadMatchupByPath === 'function' ? loadMatchupByPath : null;
+
+        function updateChampionPortraits() {
+            const portraits = document.getElementById('matchupPortraits');
+            const fileLabel = document.getElementById('currentFileLabel');
+            const myIcon = document.getElementById('myChampIcon');
+            const enemyIcon = document.getElementById('enemyChampIcon');
+            const myName = document.getElementById('myChampName');
+            const enemyName = document.getElementById('enemyChampName');
+
+            if (!portraits || !fileLabel) return;
+
+            // Check if we have a real matchup loaded (not General Notes)
+            if (typeof activeMatchup !== 'undefined' && activeMatchup && activeMatchup.myKey && activeMatchup.enemyKey) {
+                // Show portrait block, hide text label
+                portraits.style.display = 'flex';
+                fileLabel.style.display = 'none';
+
+                // Use DDragon for champion icons (latest patch)
+                const version = typeof ddragonVersion !== 'undefined' && ddragonVersion ? ddragonVersion : '14.13.1';
+                myIcon.src = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${activeMatchup.myKey}.png`;
+                myIcon.alt = activeMatchup.myKey;
+                enemyIcon.src = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${activeMatchup.enemyKey}.png`;
+                enemyIcon.alt = activeMatchup.enemyKey;
+
+                // Set names below icons
+                const myDisplayName = typeof getChampionNameByKey === 'function' ? getChampionNameByKey(activeMatchup.myKey) : activeMatchup.myKey;
+                const enemyDisplayName = typeof getChampionNameByKey === 'function' ? getChampionNameByKey(activeMatchup.enemyKey) : activeMatchup.enemyKey;
+                myName.textContent = myDisplayName;
+                enemyName.textContent = enemyDisplayName;
+            } else {
+                // No matchup — show text label, hide portraits
+                portraits.style.display = 'none';
+                fileLabel.style.display = 'inline';
+            }
+        }
+
+        // Observe DOM changes on the fileLabel to trigger portrait updates
+        const _fileLabelEl = document.getElementById('currentFileLabel');
+        if (_fileLabelEl) {
+            const _labelObserver = new MutationObserver(() => {
+                updateChampionPortraits();
+            });
+            _labelObserver.observe(_fileLabelEl, { childList: true, characterData: true, subtree: true });
+        }
+    </script>
 </body>
 </html>

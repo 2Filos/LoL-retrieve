@@ -35,6 +35,7 @@
     --danger: #ef4444;          /* Red for error/delete/discard prompts */
     --card-border: 1px solid #1d2f44;
     --gold-gradient: linear-gradient(135deg, #1d2f44 0%, #00bcab 50%, #1d2f44 100%);
+    --card-glow: 0 0 12px rgba(0, 188, 171, 0.06);
 }
 
 /*
@@ -69,7 +70,7 @@ body {
     max-width: 1200px;
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Space between header, main content, and banners */
+    gap: 16px; /* Tighter gap for Mockup A's compact feel */
 }
 
 /*
@@ -80,17 +81,17 @@ header {
     display: flex;
     justify-content: space-between; /* Pushes the title to the left, status badge to the right */
     align-items: center;            /* Vertically centers both header items */
-    padding: 15px 25px;
+    padding: 12px 22px;
     background: var(--bg-dark);
     border: 1px solid var(--gold-dark);
-    border-radius: 4px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), var(--card-glow);
     background-image: linear-gradient(to right, rgba(18, 27, 40, 0.9), rgba(12, 19, 29, 0.9));
 }
 
 h1 {
     font-family: 'Cinzel', Georgia, serif; /* Fantasy style font for League of Legends feel */
-    font-size: 24px;
+    font-size: 22px;
     letter-spacing: 2px;
     color: var(--text-primary);
     margin: 0;
@@ -133,14 +134,13 @@ h1 {
 }
 
 /*
- * 5. GRID PANELS LAYOUT
- * ---------------------
- * A 2-column grid layout: Sidebar (fixed at 320px) on the left, editor occupies the rest.
+ * 5. GRID PANELS LAYOUT — Mockup A: Narrow sidebar (250px)
+ * ---------------------------------------------------------
  */
 .main-layout {
     display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 20px;
+    grid-template-columns: 250px 1fr;
+    gap: 16px;
 }
 
 /* 
@@ -156,15 +156,20 @@ h1 {
 .card {
     background: var(--bg-dark);
     border: var(--card-border);
-    border-radius: 4px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), var(--card-glow);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 16px rgba(0, 188, 171, 0.08);
 }
 
 .sidebar {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 14px;
 }
 
 /*
@@ -174,12 +179,12 @@ h1 {
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 15px;
+    gap: 6px;
+    margin-bottom: 12px;
 }
 
 label {
-    font-size: 11px;
+    font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: var(--text-secondary);
@@ -190,9 +195,9 @@ input[type="text"] {
     background: var(--bg-darker);
     border: 1px solid var(--gold-dark);
     color: var(--text-primary);
-    padding: 10px 12px;
-    font-size: 14px;
-    border-radius: 3px;
+    padding: 8px 10px;
+    font-size: 13px;
+    border-radius: 4px;
     transition: all 0.3s;
     width: 100%;
 }
@@ -212,10 +217,10 @@ button {
     color: #0c131d;
     border: 1px solid var(--gold-accent);
     font-weight: bold;
-    padding: 10px 20px;
+    padding: 8px 16px;
     cursor: pointer;
-    font-size: 13px;
-    border-radius: 3px;
+    font-size: 12px;
+    border-radius: 4px;
     transition: all 0.3s;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -282,20 +287,20 @@ button:disabled {
  * ------------------------
  */
 .drafts-panel h3 {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: var(--text-gold);
     border-bottom: 1px solid var(--gold-dark);
-    padding-bottom: 8px;
+    padding-bottom: 6px;
 }
 
 .drafts-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     max-height: 350px;
     overflow-y: auto; /* Adds a scrollbar if there are too many local drafts saved */
 }
@@ -303,8 +308,8 @@ button:disabled {
 .draft-card {
     background: var(--bg-darker);
     border: 1px solid #111e2e;
-    padding: 10px;
-    border-radius: 3px;
+    padding: 8px 10px;
+    border-radius: 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -318,37 +323,37 @@ button:disabled {
 .draft-info {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 2px;
 }
 
 .draft-champ {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
 }
 
 .draft-tag {
-    font-size: 9px;
+    font-size: 8px;
     color: var(--gold-accent);
     text-transform: uppercase;
 }
 
 .draft-actions {
     display: flex;
-    gap: 5px;
+    gap: 4px;
 }
 
 .draft-actions button {
-    padding: 4px 8px;
-    font-size: 10px;
+    padding: 3px 7px;
+    font-size: 9px;
     width: auto;
 }
 
 .no-drafts {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
     font-style: italic;
     text-align: center;
-    padding: 20px 0;
+    padding: 16px 0;
 }
 
 /*
@@ -356,20 +361,24 @@ button:disabled {
  * --------------------------
  */
 .saved-panel h3 {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: var(--text-gold);
     border-bottom: 1px solid var(--gold-dark);
-    padding-bottom: 8px;
+    padding-bottom: 6px;
 }
 
+/*
+ * 8c. STAR / FAVORITE BUTTON
+ * --------------------------
+ */
 .star-btn {
     background: transparent;
     border: none;
-    padding: 0;
+    padding: 4px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -377,7 +386,7 @@ button:disabled {
     color: var(--text-secondary);
     transition: transform 0.2s ease, color 0.2s ease;
     width: auto;
-    margin-left: 8px;
+    flex-shrink: 0;
 }
 
 .star-btn:hover:not(:disabled) {
@@ -399,7 +408,7 @@ button:disabled {
 .editor-card {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
 .editor-header {
@@ -408,6 +417,7 @@ button:disabled {
     align-items: center;
     border-bottom: 1px solid var(--gold-dark);
     padding-bottom: 10px;
+    min-height: 75px;
 }
 
 .editor-title {
@@ -419,9 +429,58 @@ button:disabled {
     gap: 8px;
 }
 
+/* --- Champion Portrait Block (Mockup A) --- */
+.matchup-portraits {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.portrait-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.champion-portrait {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    object-fit: cover;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.champion-portrait:hover {
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 10px rgba(0, 188, 171, 0.3);
+}
+
+.portrait-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+.vs-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0 2px;
+    margin-top: -12px; /* Align with icons, not names */
+}
+
+/* --- Textarea: taller default + resizable --- */
 textarea {
     width: 100%;
-    height: 480px;
+    height: 580px;  /* Taller default for Mockup A */
+    min-height: 300px;
     background: var(--bg-light);
     border: 1px solid var(--gold-dark);
     color: var(--text-primary);
@@ -429,8 +488,9 @@ textarea {
     font-size: 14px;
     padding: 15px;
     box-sizing: border-box;
-    border-radius: 3px;
+    border-radius: 4px;
     resize: vertical; /* Allows resizing the height only, preventing layout disruption */
+    transition: border-color 0.3s ease;
 }
 
 textarea:focus {
@@ -439,10 +499,15 @@ textarea:focus {
     box-shadow: 0 0 5px rgba(0, 188, 171, 0.3);
 }
 
+/* --- Footer Action Bar --- */
 .editor-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 10px 14px;
+    background: var(--bg-darker);
+    border: 1px solid var(--gold-dark);
+    border-radius: 4px;
 }
 
 .status-text {
@@ -520,22 +585,33 @@ textarea:focus {
 }
 
 /*
- * 11. AUTOMATICALLY EXTRACTED LINKS SECTION
- * ------------------------------------------
+ * 11. AUTOMATICALLY EXTRACTED LINKS SECTION — Collapsible
+ * --------------------------------------------------------
  */
 .detected-links-container {
     display: flex;
-    flex-wrap: nowrap;
-    gap: 12px;
-    padding: 10px 14px;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
     background: var(--bg-darker);
     border: 1px solid var(--gold-dark);
     border-radius: 4px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    align-items: flex-start;
     transition: all 0.3s ease;
-    min-height: 48px;
+    overflow: hidden;
+}
+
+.detected-links-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.detected-links-header:hover {
+    background: rgba(0, 188, 171, 0.04);
 }
 
 .detected-links-title {
@@ -547,11 +623,21 @@ textarea:focus {
     display: flex;
     align-items: center;
     gap: 6px;
-    border-right: 1px solid var(--gold-dark);
-    padding-right: 12px;
-    margin-right: 2px;
-    height: 26px;
     flex-shrink: 0;
+}
+
+.links-chevron {
+    color: var(--text-secondary);
+    transition: transform 0.3s ease;
+}
+
+/* When collapsed, rotate chevron and hide list */
+.detected-links-container.collapsed .links-chevron {
+    transform: rotate(-90deg);
+}
+
+.detected-links-container.collapsed .detected-links-list {
+    display: none;
 }
 
 .detected-links-list {
@@ -560,6 +646,7 @@ textarea:focus {
     gap: 8px;
     align-items: flex-start;
     flex-grow: 1;
+    padding: 4px 14px 10px 14px;
 }
 
 .link-badge {

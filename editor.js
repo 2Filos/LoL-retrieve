@@ -18,6 +18,7 @@
 let currentSha = null;        // Cryptographic revision tracker returned from GitHub to prevent edit collisions
 let CHAMPIONS = [];           // Array of objects { key, name } loaded from Riot Games' champion catalog
 let githubTextCache = null;   // Cached text of the last loaded document straight from GitHub (used to resolve conflicts)
+let ddragonVersion = null;    // Latest DDragon patch version string (e.g. "14.13.1") for champion icon URLs
 let activeMatchup = {         // Active loaded matchup metadata
     path: null,
     label: null,
@@ -331,6 +332,7 @@ async function loadChampionsList() {
         // Fetch latest patch list from Riot DDragon
         const versions = await fetchDirectOrBridge('https://ddragon.leagueoflegends.com/api/versions.json');
         const latestVersion = versions[0];
+        ddragonVersion = latestVersion; // Expose globally for champion portrait icons
         
         // Check if cache patch is current
         if (cache && cache.version === latestVersion && cache.champions && cache.champions.length > 0) {
