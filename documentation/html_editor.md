@@ -27,7 +27,9 @@ When the page loads:
     *   If missing or outdated, it fetches patch versions from Riot Games Data Dragon (`versions.json`) and pulls down the complete list of champion IDs and display names.
     *   The champion objects are stored in cache and populated into the search autocomplete lists.
 3.  **Authentication**: Checks the token validity against the GitHub API `/user` endpoint. If valid, the online sync actions are unlocked.
-4.  **Auto-Load Restore (F5)**: If the browser reloads and restores values in the "Enemy Champion" and "My Champion" input fields from a previous session, the script automatically triggers `loadMatchup()` to restore the edit session status, update the title, and show the Mobalytics link.
+4.  **Auto-Load Restore & URL Navigation**: 
+    *   If the browser reloads and restores values in the "Enemy Champion" and "My Champion" input fields from a previous session, the script automatically triggers `loadMatchup()` to restore the edit session status.
+    *   The editor checks for URL query parameters or hash values to automatically select a matchup on load (e.g., `?enemy=Garen&my=Darius`, `#GarenvsDarius`, `?Garen-vs-Darius`). It uses `utils.js` helpers to resolve champion names case-insensitively and populate the inputs before triggering `loadMatchup()`.
 
 ### B. Loading a Matchup (`loadMatchup`)
 1.  Resolves inputs using helper functions in `utils.js` (e.g. mapping `Dr. Mundo` to `dr-mundo` or `MonkeyKing` to `wukong` for Mobalytics).

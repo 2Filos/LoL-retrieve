@@ -15,6 +15,13 @@ A lightweight, local, browser-based text editor designed to manage and synchroni
 2.  **Tampermonkey**: Install the [bridge.js](file:///c:/Users/User/Documents/VSC/LoL-retrieve/bridge.js) script in your Tampermonkey extension (see [documentation/tampermonkey_bridge.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation/tampermonkey_bridge.md)).
 3.  **Run**: Double-click or open [matchups.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html) in your browser, and start editing.
 
+### URL Navigation
+
+You can select a matchup directly on load by appending it to your local file URL:
+*   **Query Parameters:** `matchups.html?enemy=Garen&my=Darius`
+*   **Shorthand (vs):** `matchups.html?GarenvsDarius` or `matchups.html#GarenvsDarius`
+*   **Hyphenated:** `matchups.html?Garen-vs-Darius` or `matchups.html#Garen-vs-Darius`
+
 ---
 
 For detailed documentation, please refer to the [GEMINI.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/GEMINI.md) file and the [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation) folder.

@@ -271,7 +271,42 @@ window.onload = async () => {
     // Render saved matchups
     renderSavedMatchups();
 
-    // 4. Auto-restore search inputs or default to General Notes
+    // 4. Auto-restore search inputs, check URL parameters, or default to General Notes
+    let urlEnemy = null;
+    let urlMy = null;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('enemy') && urlParams.has('my')) {
+        urlEnemy = urlParams.get('enemy');
+        urlMy = urlParams.get('my');
+    } else {
+        // Parse from hash or raw search string (e.g. #GarenvsDarius, ?GarenvsDarius)
+        let rawParams = window.location.hash.substring(1) || window.location.search.substring(1);
+        if (rawParams) {
+            // Try to match variations of "vs" like "GarenvsDarius" or "Garen-vs-Darius"
+            const vsRegex = /^(.*?)(?:-vs-|vs)(.*)$/i;
+            const match = rawParams.match(vsRegex);
+            if (match) {
+                urlMy = decodeURIComponent(match[1]).trim();
+                urlEnemy = decodeURIComponent(match[2]).trim();
+            } else if (rawParams.includes('-')) {
+                const parts = rawParams.split('-');
+                if (parts.length === 2) {
+                    urlMy = decodeURIComponent(parts[0]).trim();
+                    urlEnemy = decodeURIComponent(parts[1]).trim();
+                }
+            }
+        }
+    }
+
+    if (urlEnemy && urlMy) {
+        // Update input fields using utils.js helpers to ensure proper formatting
+        const enemyKey = getChampionKeyByName(urlEnemy) || urlEnemy;
+        const myKey = getChampionKeyByName(urlMy) || urlMy;
+        document.getElementById('enemyChamp').value = getChampionNameByKey(enemyKey);
+        document.getElementById('myChamp').value = getChampionNameByKey(myKey);
+    }
+
     const enemyVal = document.getElementById('enemyChamp').value;
     const myVal = document.getElementById('myChamp').value;
     if (enemyVal && myVal) {
