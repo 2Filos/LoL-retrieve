@@ -17,10 +17,9 @@ vs Zaheen/Trundle/Tryndamere (lack of respect for turnaround, low HP is not low 
 Garen vs Nasus - watch VOD for wave control
 I let him over-stack Q
 
-> Focus Herald more
-> Focus Baron more?
-Lane consistency only bad one (makes sense)
-Champion pool too small, fair enough. 2 and half champions online at most.
-I need to experiment with Camille and Mundo (in normal)
+> Skirmishes!
+> Focus Grubs/Herald more!
+Lane consistency bad one (makes sense)
+Champion pool too small, fair enough. Need to experiment Camille/Mundo (in normal)
 Aggression is the main stat that falls behind. Why? Scores are... evenly spread.
 Maybe just a consequence of heavy splitting? High movement macro? A teamfighter... Sett?
