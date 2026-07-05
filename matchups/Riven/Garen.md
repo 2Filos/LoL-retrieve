@@ -22,6 +22,7 @@ VOD perma-proxy > certainly enlightening (though needs heavy jungle tracking), c
 Let's move to DM - stormsurge specifically denies full Q dmg with ultra-short trades - flash ghost too
 I'm not a fan of this playstile, doesn't seem needed for this matchup (maybe makes sense high-elo)
 
-!
+He uses Q ONCE on a minion.
+Riven gets a good trade and a big HP lead. ALWAYS Q first.
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783249699413","display":"5mo ago","url":"https://www.youtube.com/watch?v=CQsi1z4moSg&list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO&index=14"},{"customId":"custom_1783260770310","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGp8LNxK0bL6ju57CWt3BBT2"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGp8LNxK0bL6ju57CWt3BBT2","https://www.youtube.com/watch?v=CQsi1z4moSg&list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO&index=14"]} -->
