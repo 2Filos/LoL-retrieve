@@ -324,15 +324,14 @@ async function saveToGitHub() {
 
             // === YOUTUBE LINK GLOBAL INDEX SYNC ===
             let ytLink = null;
-            const metaMatch = fullText.match(/<!-- METADATA: (.*?) -->/);
-            if (metaMatch) {
-                try {
-                    const meta = JSON.parse(metaMatch[1]);
-                    if (meta.customLinks && Array.isArray(meta.customLinks)) {
-                        const yt = meta.customLinks.find(l => l.url.includes('youtube.com') || l.url.includes('youtu.be'));
-                        if (yt) ytLink = yt.url;
-                    }
-                } catch (e) { }
+            if (typeof activeMetadata !== 'undefined' && activeMetadata) {
+                if (activeMetadata.linkOrder && Array.isArray(activeMetadata.linkOrder)) {
+                    ytLink = activeMetadata.linkOrder.find(url => typeof url === 'string' && (url.includes('youtube.com') || url.includes('youtu.be')));
+                }
+                if (!ytLink && activeMetadata.customLinks && Array.isArray(activeMetadata.customLinks)) {
+                    const yt = activeMetadata.customLinks.find(l => l.url && (l.url.includes('youtube.com') || l.url.includes('youtu.be')));
+                    if (yt) ytLink = yt.url;
+                }
             }
             if (!ytLink) {
                 const ytRegex = /https?:\/\/(www\.)?(youtube\.com|youtu\.be)[^\s\)]+/;
@@ -347,6 +346,13 @@ async function saveToGitHub() {
             } catch (e) { }
 
             const existingYtLink = globalLinks[matchupKey] || null;
+
+            // If saving a sub-page (Plan/VOD) and no youtube link was found in it,
+            // do not delete the global link as it's likely maintained in the main notes page.
+            const isSubPage = activeMatchup.path.endsWith('-plan.md') || activeMatchup.path.endsWith('-vod.md');
+            if (isSubPage && !ytLink && existingYtLink) {
+                ytLink = existingYtLink; // Prevent deletion
+            }
 
             if (ytLink !== existingYtLink) {
                 console.log(`[DEBUG] YouTube link changed from ${existingYtLink} to ${ytLink}. Syncing index...`);
@@ -369,11 +375,38 @@ async function saveToGitHub() {
                 }
 
                 try {
-                    const ytResponse = await bridgeFetch(config.url + 'youtube_links.json', {
+                    let ytResponse = await bridgeFetch(config.url + 'youtube_links.json', {
                         method: 'PUT',
                         headers: config.headers,
                         body: JSON.stringify(ytBodyData)
                     });
+
+                    if (ytResponse.status === 409 || ytResponse.status === 422) {
+                        console.log("[DEBUG] YouTube index SHA mismatch, fetching latest and retrying...");
+                        const getRes = await bridgeFetch(config.url + 'youtube_links.json', { method: 'GET', headers: config.headers });
+                        if (getRes.ok) {
+                            const getData = getRes.json();
+                            const latestSha = getData.sha;
+                            const latestLinks = JSON.parse(decodeURIComponent(escape(atob(getData.content))));
+                            
+                            if (ytLink) {
+                                latestLinks[matchupKey] = ytLink;
+                            } else {
+                                delete latestLinks[matchupKey];
+                            }
+                            
+                            const retryContent = JSON.stringify(latestLinks, null, 2);
+                            localStorage.setItem('youtube_links_index', retryContent);
+                            ytBodyData.content = btoa(unescape(encodeURIComponent(retryContent)));
+                            ytBodyData.sha = latestSha;
+                            
+                            ytResponse = await bridgeFetch(config.url + 'youtube_links.json', {
+                                method: 'PUT',
+                                headers: config.headers,
+                                body: JSON.stringify(ytBodyData)
+                            });
+                        }
+                    }
 
                     if (ytResponse.ok) {
                         const ytResult = ytResponse.json();

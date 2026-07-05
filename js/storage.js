@@ -394,8 +394,11 @@ function renderSavedMatchups() {
             if (match) {
                 try {
                     const meta = JSON.parse(match[1]);
-                    if (meta.customLinks) {
-                        const yt = meta.customLinks.find(l => l.url.includes('youtube.com') || l.url.includes('youtu.be'));
+                    if (meta.linkOrder && Array.isArray(meta.linkOrder)) {
+                        ytLink = meta.linkOrder.find(url => typeof url === 'string' && (url.includes('youtube.com') || url.includes('youtu.be')));
+                    }
+                    if (!ytLink && meta.customLinks) {
+                        const yt = meta.customLinks.find(l => l.url && (l.url.includes('youtube.com') || l.url.includes('youtu.be')));
                         if (yt) ytLink = yt.url;
                     }
                 } catch (e) { }
