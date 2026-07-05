@@ -42,6 +42,12 @@ saved matchups scrollbar is ugly
 saved matchup area should be vertically wider, give me variable location i'll tweak myself.
 pending local drafts seems bugged. any draft that hasn't been synced and is NOT the currently open draft should be displayed there.
 
-UNSYNCED data conflict should appear INSIDE the matchup row.
-Unsynced data conflict: button A button B
-all the way to the rigth in the row with icon a vs icon b + star (or Notes)
+---
+
+update documentation. 
+new .css system
+new .js system
+new unsynced banner for local vs github
+new youtube stuff
+
+then the only thing left i think might be to move .js and .css to dedicated folders and update references? it's quite cluttery in root? probably leave the .html in root though. does that sound good? professional? how things are done properly'
