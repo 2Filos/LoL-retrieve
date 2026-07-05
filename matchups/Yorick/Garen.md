@@ -13,13 +13,12 @@ Of course, the other thing is to move erratically proccing stormsurge
 This is meant to increase your chances of not being locked inside W
 
 ... so why do I lose at times?
-Cause Yorick is just a bitch?
+Cause Yorick is just a bitch? Don't play enough around grasp?
 Need external VOD and personal VOD
 
 Second Wind for sure
 Conqueror and SS are both fine but different?
-Presumably Conqueror you want to snowball sooner
-SS lets you zoom around more
+Presumably Conqueror you want to snowball sooner - SS lets you zoom around more
 VOD with CQ :
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783251369543","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGoHbr6U_8oreMVovmZpY1fp"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGoHbr6U_8oreMVovmZpY1fp"]} -->
