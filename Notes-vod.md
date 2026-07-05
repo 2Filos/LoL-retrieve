@@ -7,3 +7,6 @@
 [Garen vs Nasus] - watch VOD for wave control
 - issue that's obvious vs ranged too
 - Maybe wave control for ganks? Bounces?
+
+- Current
+Garen vs Riven, watching VODs and taking Notes
