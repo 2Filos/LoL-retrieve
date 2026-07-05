@@ -1,3 +1,9 @@
+[Garen vs Yorick] is TECHNICALLY the better matchup, historically I suck, in ranked I win?
+[Yorick vs Garen] is TECHNICALLY the worse matchup, but I win it historically.
+BUT feels unplayable recently? WTF? No actually, feels bad, but I won both recent games?
+
+---
+
 The point is to zone him early and whenever you can to avoid him stacking graves
 That's of course kinda obvious, like killing maiden if you have the chance
 
