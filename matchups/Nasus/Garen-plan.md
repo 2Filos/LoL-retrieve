@@ -13,3 +13,5 @@ My main concern is better wave control
 You can then let him push and thus deny more stacks
 The more you deny stacks the more he falls behind the curve, thus you can play aggro and take risks
 His Q has a 7-3-less CD, meaning early every time he uses it he's super vulnerable
+And if you run at him with Q FIRST, he cannot slow you fast enough to win the trade
+Then you just disengage before his Q is back online
