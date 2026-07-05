@@ -6,4 +6,6 @@ UNTIL you intend to fucking GO in, at which point, even if he locks you, you hav
 Of course, the other thing is to move erratically proccing stormsurge
 This is meant to increase your chances of not being locked inside W
 
+... so why do I lose?
+
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783251369543","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGoHbr6U_8oreMVovmZpY1fp"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGoHbr6U_8oreMVovmZpY1fp"]} -->
