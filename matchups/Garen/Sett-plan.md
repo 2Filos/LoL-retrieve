@@ -10,4 +10,13 @@ Worst case scenario he stormsurges toward your tower and waits for W to run off
 If you are ahead he's probably dead
 If you are behind it's sus
 If your jungler's in the area he's dead either way
+You want to hit him with W, meaning EW
+He doesn't want that, meaning he tries to Q and away
+PARTICULARLY so that there's no minion on your other side (stun)
+Which you instead want
+
+So, core LATE E with minion positioning awareness and consideration of QR (meaning early EW to be safe)
+And of course, auto him, just auto him.
+Presumably your R might let you reposition him so you can stun him, push him away from tower from ganks
+Or act as another option instead of E for making his Q run out
 
