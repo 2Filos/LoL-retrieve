@@ -15,4 +15,4 @@ Thus [Garen vs Yorick] >
 - Maybe wave control for ganks? Bounces?
 
 - Current
-Garen vs Riven, watching VODs and taking Notes
+Garen vs Yorick, watching VODs and taking Notes
