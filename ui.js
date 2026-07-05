@@ -508,3 +508,59 @@ function saveLinkEditModal() {
 
     closeLinkEditModal();
 }
+
+// --- Auto-fill Matchup Input ---
+window.addEventListener('DOMContentLoaded', () => {
+    const quickInput = document.getElementById('quickMatchup');
+    if (quickInput) {
+        quickInput.addEventListener('input', (e) => {
+            const val = e.target.value.trim();
+            const match = val.match(/^(.+?)\s+vs\s+(.+?)(?:\s+(top|jungle|jng|mid|adc|support|sup))?$/i);
+            
+            if (match) {
+                const champA_raw = match[1].trim();
+                const champB_raw = match[2].trim();
+                const roleInput = match[3] ? match[3].toLowerCase() : null;
+
+                // Validate if both inputs are fully typed known champions
+                const isChampA = typeof getChampionKeyByName === 'function' ? getChampionKeyByName(champA_raw) : CHAMPIONS.find(c => c.name.toLowerCase() === champA_raw.toLowerCase());
+                const isChampB = typeof getChampionKeyByName === 'function' ? getChampionKeyByName(champB_raw) : CHAMPIONS.find(c => c.name.toLowerCase() === champB_raw.toLowerCase());
+
+                if (isChampA && isChampB) {
+                    const myChampEl = document.getElementById('myChamp');
+                    const enemyChampEl = document.getElementById('enemyChamp');
+                    
+                    if (myChampEl && enemyChampEl) {
+                        const capitalize = (s) => s.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+                        myChampEl.value = (typeof getChampionNameByKey === 'function') ? (getChampionNameByKey(isChampA) || capitalize(champA_raw)) : capitalize(champA_raw);
+                        enemyChampEl.value = (typeof getChampionNameByKey === 'function') ? (getChampionNameByKey(isChampB) || capitalize(champB_raw)) : capitalize(champB_raw);
+                    }
+
+                    if (roleInput) {
+                        const roleSelect = document.getElementById('roleSelect');
+                        if (roleSelect) {
+                            let roleVal = roleInput;
+                            if (roleInput === 'jng') roleVal = 'jungle';
+                            if (roleInput === 'sup') roleVal = 'support';
+                            
+                            Array.from(roleSelect.options).forEach(opt => {
+                                if (opt.value === roleVal) {
+                                    roleSelect.value = roleVal;
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+
+        quickInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const loadBtn = document.getElementById('loadBtn');
+                if (loadBtn && !loadBtn.disabled) {
+                    loadBtn.click();
+                }
+            }
+        });
+    }
+});
