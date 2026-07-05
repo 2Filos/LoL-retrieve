@@ -1,4 +1,3 @@
-- Challenger VODS - [Challenger - Garen](https://www.youtube.com/playlist?list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO)
 - Something off
 Garen vs Riven (why lose?) - 
 Garen/Yorick vs Teemo (what do I do wrong? with Yorick in particular, Garen fair enough)
