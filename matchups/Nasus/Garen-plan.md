@@ -15,3 +15,6 @@ The more you deny stacks the more he falls behind the curve, thus you can play a
 His Q has a 7-3-less CD, meaning early every time he uses it he's super vulnerable
 And if you run at him with Q FIRST, he cannot slow you fast enough to win the trade
 Then you just disengage before his Q is back online
+
+Seems like it's less a "Learn WC" and more of "Play aggro" thing
+Except I had a few holes for the HOW that SHOULD now be patched
