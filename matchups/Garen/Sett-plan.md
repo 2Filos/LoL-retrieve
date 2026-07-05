@@ -1,4 +1,4 @@
-Early you win off AA - skill order QWE
+Early you win off AA - skill order QWE or (non existent PR) EQW (why though?)
 The E is more like Darius' E, meaning you use it to grab him back in
 This is the core skill-trade here
 
