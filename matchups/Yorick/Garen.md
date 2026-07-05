@@ -4,12 +4,13 @@ BUT feels unplayable recently? WTF? No actually, feels bad, but I won both recen
 
 ---
 
-The point is to zone him early and whenever you can to avoid him stacking graves
-That's of course kinda obvious, like killing maiden if you have the chance
+Zone him early! Avoid him stacking graves! Play around GRASP!
+Killing maiden if you have the chance, but target yorick if he's not running
 
-But the ACTUAL win win is simply playing carefully, not getting locked down by his W
-UNTIL you intend to fucking GO in, at which point, even if he locks you, you have FLASH just ONCE
-Of course, the other thing is to move erratically proccing stormsurge
+WIN not getting locked down by his W
+You have FLASH, you want to kill him but getting out garanteed of W with flash ONCE
+He wins HP before that? Fuck you
+Move erratically - stormsurge
 This is meant to increase your chances of not being locked inside W
 
 ... so why do I lose at times?
