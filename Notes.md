@@ -9,7 +9,7 @@ Garen vs Sett (how to?)
 Sett vs Garen (correct way to play it, need VOD)
 Garen vs Yorick (have a theory already written, but maybe VOD?)
 Garen/Yorick vs Camille (VOD to see it)
-a
+
 - Medium issues (draintanks)
 vs Zaheen/Trundle/Tryndamere 
 lack of respect for turnaround? low HP is not low HP
