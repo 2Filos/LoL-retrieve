@@ -17,3 +17,5 @@ Thus [Garen vs Yorick] > kinda SEEN
 
 - Current
 Plan to watch vs Camille and vs Teemo
+Then... vs Zaahen?
+Probably vs Ornn after that
