@@ -8,7 +8,7 @@ Garen vs Sett not seen but understood indirectly? still need VOD
 [Garen vs Yorick] is TECHNICALLY the better matchup, historically I suck, in ranked I win?
 [Yorick vs Garen] is TECHNICALLY the worse matchup, but I win it historically.
 BUT feels unplayable recently? WTF? No actually, feels bad, but I won both recent games?
-Thus [Garen vs Yorick] >
+Thus [Garen vs Yorick] > kinda SEEN
 
 [Garen/Yorick vs Camille] (VOD to see it)
 [Yorick vs Teemo] - he kills Maiden maybe?
@@ -16,4 +16,4 @@ Thus [Garen vs Yorick] >
 - Maybe wave control for ganks? Bounces?
 
 - Current
-Garen vs Yorick, watching VODs and taking Notes
+Plan to watch vs Camille and vs Teemo
