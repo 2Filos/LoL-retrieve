@@ -1,7 +1,10 @@
 - VODS lookup
 [Garen vs Riven] > SEEN
-[Garen vs Nasus] - SEEN
+[Garen vs Nasus] > SEEN
+[Sett vs Garen] > SEEN
 [Garen vs Sett] (how to?) and viceversa [Sett vs Garen] (correct way to play it, need VOD)
+Garen vs Sett not seen but understood indirectly?
+
 [Garen vs Yorick] and viceversa [Yorick vs Garen] (have a theory already written, but maybe VOD?)
 [Garen/Yorick vs Camille] (VOD to see it)
 [Yorick vs Teemo] - he kills Maiden maybe?
