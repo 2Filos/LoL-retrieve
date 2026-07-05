@@ -20,4 +20,7 @@ Plates and proxy do this with different levels of risk
 The better scenario is to leave SOME prio so that second wave doesn't end up over-pushed
 This way you have the margin to shove on wave 3? Wave 3 crash, demolish > time to sustain off passive
 
+... he takes risks to deny stack using the Q silence.
+Certainly makes sense to trade stance on cannons like this!
+
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783251573217","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGpSOMbK56VJYmTxqbF0y428"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGpSOMbK56VJYmTxqbF0y428"]} -->
