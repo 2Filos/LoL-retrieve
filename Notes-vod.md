@@ -19,3 +19,5 @@ Thus [Garen vs Yorick] > kinda SEEN
 Plan to watch vs Camille and vs Teemo
 Then... vs Zaahen?
 Probably vs Ornn after that
+
+NEED Garen vs Trynda - i got wasted
