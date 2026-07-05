@@ -23,4 +23,8 @@ He doesn't W cause he doesn't know when you use it? Makes sense
 Vs stormsurge the point is probably to stand between him and his tower like Darius does
 If he cannot get out you fuck him
 
+Viceversa if you get a Sett that plays like he's Darius you just gotta respect him
+Trade for farm with W ready to get out and that's it, let him push?
+Or, if he's standing between you and tower go behind him, if you get out of his W range you can go back in after? If Sett's ahead that risks feeding though, which is why this is a hard matchup.
+
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783251861044","display":"KR - 1 (5m)","url":"https://www.youtube.com/watch?v=Uul4sZNLzdU&list=PLPUygacvheSMHOUBzkC8QDvz5N9AU-z7b&index=13"},{"customId":"custom_1783251869869","display":"KR - 2 (5m)","url":"https://www.youtube.com/watch?v=GmffBZl-pQU&list=PLPUygacvheSMHOUBzkC8QDvz5N9AU-z7b&index=16"},{"customId":"custom_1783251959172","display":"NA - 1 (1m)","url":"https://www.youtube.com/watch?v=HB7z5gK6Ak4"},{"customId":"custom_1783251976992","display":"NA - 2 (1m)","url":"https://www.youtube.com/watch?v=XHgml-lQgdI"}],"linkOrder":["https://www.youtube.com/watch?v=XHgml-lQgdI","https://www.youtube.com/watch?v=HB7z5gK6Ak4","https://www.youtube.com/watch?v=Uul4sZNLzdU&list=PLPUygacvheSMHOUBzkC8QDvz5N9AU-z7b&index=13","https://www.youtube.com/watch?v=GmffBZl-pQU&list=PLPUygacvheSMHOUBzkC8QDvz5N9AU-z7b&index=16"]} -->
