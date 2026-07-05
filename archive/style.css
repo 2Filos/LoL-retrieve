@@ -347,8 +347,10 @@ button:disabled {
     flex-direction: column;
     gap: 8px;
     max-height: 350px;
-    overflow-y: overlay; /* Allows scrollbar to hover over content instead of pushing it */
-    padding-right: 4px; /* Stop scrollbar from overlapping text */
+    overflow-y: auto;
+    /* Forces scrollbar to take up physical space rather than overlaying content */
+    padding-right: 8px;
+    /* Adds breathing room between the cards and the scrollbar */
 }
 
 .saved-panel .drafts-list {
@@ -365,6 +367,8 @@ button:disabled {
     justify-content: space-between;
     align-items: center;
     transition: border-color 0.3s;
+    margin-right: 8px;
+    /* Force gap between card and the scrollbar */
 }
 
 .draft-card:hover {

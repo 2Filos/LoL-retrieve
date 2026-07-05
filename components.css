@@ -125,6 +125,12 @@ button:disabled {
     gap: 8px;
     max-height: 350px;
     overflow-y: auto;
+    padding-right: 8px;
+}
+
+.saved-panel .drafts-list {
+    max-height: none;
+    height: var(--saved-matchups-height);
 }
 
 .draft-card {
@@ -136,6 +142,7 @@ button:disabled {
     justify-content: space-between;
     align-items: center;
     transition: border-color 0.3s;
+    margin-right: 8px;
 }
 
 .draft-card:hover {
