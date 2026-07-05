@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>LoL Matchup Portal</title>
     <!-- Favicon configuration -->
-    <link rel="icon" href="https://external-preview.redd.it/cI-jnDO5fH2eGT-Id68L-0XyXGypFuKJJ6E5LU3r1Wc.jpg?auto=webp&s=a7ca39677084b498403806a655465c81d9ef6085" type="image/x-icon">
-    
+    <link rel="icon"
+        href="https://external-preview.redd.it/cI-jnDO5fH2eGT-Id68L-0XyXGypFuKJJ6E5LU3r1Wc.jpg?auto=webp&s=a7ca39677084b498403806a655465c81d9ef6085"
+        type="image/x-icon">
+
     <!-- Load fonts (Cinzel for headers, Inter for normal text, Fira Code for editor markdown) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
     <!-- Extracted External CSS Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div class="app-container">
@@ -21,7 +27,9 @@
         <header>
             <h1>LoL Matchup Portal</h1>
             <div style="display: flex; align-items: center; gap: 10px;">
-                <div id="vsmPairBadge" class="status-badge" style="display: none; padding: 4px 8px; font-weight: bold; border-radius: 4px; font-size: 11px; box-shadow: 0 1px 3px rgba(0,0,0,0.5); color: #fff;"></div>
+                <div id="vsmPairBadge" class="status-badge"
+                    style="display: none; padding: 4px 8px; font-weight: bold; border-radius: 4px; font-size: 11px; box-shadow: 0 1px 3px rgba(0,0,0,0.5); color: #fff;">
+                </div>
                 <div id="connectionStatus" class="status-badge pinging">
                     Pinging GitHub API...
                 </div>
@@ -31,23 +39,29 @@
         <!-- Dynamic Error & Alert Banners -->
         <!-- 1. Config missing warning banner -->
         <div id="configError" class="error-banner" style="display: none;">
-            <strong>Missing Configuration:</strong> `config.js` was not detected locally. Please check your folder structure.
+            <strong>Missing Configuration:</strong> `config.js` was not detected locally. Please check your folder
+            structure.
         </div>
-        
+
         <!-- 2. CORS Bridge inactive warning banner -->
         <div id="bridgeError" class="error-banner" style="display: none;">
-            <strong>Tampermonkey Bridge Inactive:</strong> The CORS bridge script is not responding. Please check the following settings:
+            <strong>Tampermonkey Bridge Inactive:</strong> The CORS bridge script is not responding. Please check the
+            following settings:
             <ol style="margin: 5px 0; padding-left: 20px;">
                 <li>Verify that the **Tampermonkey** extension is enabled in your browser.</li>
                 <li>Make sure that **`bridge.js`** is active in the Tampermonkey dashboard.</li>
-                <li>**IMPORTANT (Chrome/Edge):** You must check **"Allow access to file URLs"** in the Tampermonkey details settings (visit `chrome://extensions`, click **Details** on Tampermonkey, and toggle the switch).</li>
-                <li>**Firefox Users:** Make sure you are loading this page inside **Firefox** (since your active Tampermonkey extension is located there). The updated script will hook in automatically.</li>
+                <li>**IMPORTANT (Chrome/Edge):** You must check **"Allow access to file URLs"** in the Tampermonkey
+                    details settings (visit `chrome://extensions`, click **Details** on Tampermonkey, and toggle the
+                    switch).</li>
+                <li>**Firefox Users:** Make sure you are loading this page inside **Firefox** (since your active
+                    Tampermonkey extension is located there). The updated script will hook in automatically.</li>
             </ol>
         </div>
 
         <!-- 3. Invalid credentials/token expired banner -->
         <div id="tokenExpiredError" class="error-banner" style="display: none;">
-            <strong>Token Expired or Invalid:</strong> GitHub rejected your token. Please verify or update your personal access token in `config.js`.
+            <strong>Token Expired or Invalid:</strong> GitHub rejected your token. Please verify or update your personal
+            access token in `config.js`.
         </div>
 
         <!-- Portal Workspaces Grid Layout -->
@@ -63,6 +77,16 @@
                     <div class="form-group">
                         <label for="enemyChamp">Enemy Champion</label>
                         <input type="text" id="enemyChamp" list="championList" placeholder="e.g. Ahri" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="roleSelect">Role</label>
+                        <select id="roleSelect">
+                            <option value="top">Top</option>
+                            <option value="jungle">Jungle</option>
+                            <option value="mid">Mid</option>
+                            <option value="adc">ADC</option>
+                            <option value="support">Support</option>
+                        </select>
                     </div>
                     <button id="loadBtn" onclick="loadMatchup()" disabled>Load Matchup</button>
                 </div>
@@ -105,9 +129,13 @@
                         <span id="currentFileLabel">No matchup loaded</span>
                     </div>
                     <!-- Star button positioned to the right of the whole title block -->
-                    <button id="starBtn" class="star-btn" onclick="toggleSaveMatchup()" style="display: none;" title="Save Matchup">
-                        <svg class="star-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    <button id="starBtn" class="star-btn" onclick="toggleSaveMatchup()" style="display: none;"
+                        title="Save Matchup">
+                        <svg class="star-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon
+                                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                            </polygon>
                         </svg>
                     </button>
                 </div>
@@ -115,7 +143,8 @@
 
                 <div id="conflictBanner" class="warning-banner" style="display: none;">
                     <div style="flex: 1;">
-                        <strong>Unsynced Draft Conflict:</strong> You have edited this matchup locally, but a different version exists on GitHub.
+                        <strong>Unsynced Draft Conflict:</strong> You have edited this matchup locally, but a different
+                        version exists on GitHub.
                     </div>
                     <div class="banner-buttons">
                         <button onclick="resolveConflict('local')" class="btn-gold-sm">Use Local Draft</button>
@@ -130,10 +159,17 @@
                 <div id="detectedLinksContainer" class="detected-links-container">
                     <div class="detected-links-header" onclick="toggleLinksPanel()">
                         <div class="detected-links-title">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                            </svg>
                             Links
                         </div>
-                        <svg class="links-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        <svg class="links-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
                     </div>
                     <div id="detectedLinksList" class="detected-links-list"></div>
                 </div>
@@ -142,21 +178,42 @@
                 <div class="editor-actions">
                     <div id="status" class="status-text">Status: Checking bridge connectivity...</div>
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <a id="mobalyticsLink" href="#" target="_blank" class="btn-outline-sm" style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 10px 15px; font-size: 13px; font-weight: bold; width: auto; font-family: sans-serif; border-radius: 3px; height: 38px; line-height: 1; justify-content: center; box-sizing: border-box;">
+                        <a id="lolaLink" href="#" target="_blank" class="btn-outline-sm"
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 10px 15px; font-size: 13px; font-weight: bold; width: auto; font-family: sans-serif; border-radius: 3px; height: 38px; line-height: 1; justify-content: center; box-sizing: border-box;">
+                            <img src="https://lolalytics.com/favicon.ico" width="14" height="14"
+                                style="border-radius: 2px;" onerror="this.style.display='none'">
+                            Lolalytics
+                        </a>
+                        <a id="opggLink" href="#" target="_blank" class="btn-outline-sm"
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 10px 15px; font-size: 13px; font-weight: bold; width: auto; font-family: sans-serif; border-radius: 3px; height: 38px; line-height: 1; justify-content: center; box-sizing: border-box;">
+                            <img src="https://www.op.gg/favicon.ico" width="14" height="14" style="border-radius: 2px;"
+                                onerror="this.style.display='none'">
+                            OPGG
+                        </a>
+                        <a id="mobalyticsLink" href="#" target="_blank" class="btn-outline-sm"
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 10px 15px; font-size: 13px; font-weight: bold; width: auto; font-family: sans-serif; border-radius: 3px; height: 38px; line-height: 1; justify-content: center; box-sizing: border-box;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="#5f3bf4" style="border-radius: 2px;">
                                 <polygon points="12 2 22 7 22 17 12 22 2 17 2 7" fill="#5f3bf4" />
-                                <path d="M7 17V10L12 14L17 10V17" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                                <path d="M7 17V10L12 14L17 10V17" stroke="white" stroke-width="2.5"
+                                    stroke-linecap="round" stroke-linejoin="round" fill="none" />
                             </svg>
-                            Mobalytics Counters
+                            Mobalytics
                         </a>
-                        <button id="discardBtn" class="btn-discard" onclick="showDiscardConfirm()" disabled style="padding: 10px 15px; font-size: 12px; width: auto;">Discard Draft</button>
-                        <button id="syncBtn" class="btn-gold-sm" onclick="saveToGitHub()" disabled style="width: auto; display: inline-flex; opacity: 0.6; cursor: not-allowed;">Sync to GitHub</button>
+                        <button id="discardBtn" class="btn-discard" onclick="showDiscardConfirm()" disabled
+                            style="padding: 10px 15px; font-size: 12px; width: auto;">Discard</button>
+                        <button id="syncBtn" class="btn-gold-sm" onclick="saveToGitHub()" disabled
+                            style="width: auto; display: inline-flex; opacity: 0.6; cursor: not-allowed;">Sync
+                            GitHub</button>
                     </div>
                 </div>
                 <div id="discardConfirmGroup" style="display: none; align-items: center; gap: 6px; margin-top: 8px;">
-                    <span style="font-size: 12px; color: var(--danger); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">Are you sure?</span>
-                    <button id="confirmDiscardYes" class="btn-discard" onclick="discardCurrentDraft()" style="padding: 6px 12px; font-size: 11px; width: auto; text-transform: uppercase;">Yes</button>
-                    <button id="confirmDiscardNo" class="btn-secondary" onclick="hideDiscardConfirm()" style="padding: 6px 12px; font-size: 11px; width: auto; text-transform: uppercase; border: 1px solid var(--gold-dark); background: transparent; color: var(--text-secondary);">No</button>
+                    <span
+                        style="font-size: 12px; color: var(--danger); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">Are
+                        you sure?</span>
+                    <button id="confirmDiscardYes" class="btn-discard" onclick="discardCurrentDraft()"
+                        style="padding: 6px 12px; font-size: 11px; width: auto; text-transform: uppercase;">Yes</button>
+                    <button id="confirmDiscardNo" class="btn-secondary" onclick="hideDiscardConfirm()"
+                        style="padding: 6px 12px; font-size: 11px; width: auto; text-transform: uppercase; border: 1px solid var(--gold-dark); background: transparent; color: var(--text-secondary);">No</button>
                 </div>
             </div>
         </div>
@@ -168,13 +225,13 @@
     <!-- Core Script references -->
     <!-- 1. utils.js: Champion name mappings & Mobalytics slug formatters -->
     <script src="utils.js"></script>
-    
+
     <!-- 2. api.js: Networking APIs & event message passing to the CORS bridge userscript -->
     <script src="api.js"></script>
-    
+
     <!-- 3. config.js: Personal Access tokens (PATs) & git configurations (loaded with fallback error listener) -->
     <script src="config.js" onerror="handleConfigMissing()"></script>
-    
+
     <!-- 4. editor.js: GUI orchestration, local drafts state loops, and textareas listeners -->
     <script src="editor.js"></script>
 
@@ -187,7 +244,7 @@
         }
 
         // --- Textarea Height Persistence ---
-        (function() {
+        (function () {
             const editor = document.getElementById('editor');
             if (!editor) return;
 
@@ -258,4 +315,5 @@
         }
     </script>
 </body>
+
 </html>

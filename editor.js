@@ -36,11 +36,11 @@ let activeMatchup = {         // Active loaded matchup metadata
  */
 function extractUrls(text) {
     if (!text) return [];
-    
+
     // Regular expression matching http://, https://, and www. links
     const regex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
     const matches = text.match(regex) || [];
-    
+
     // Clean trailing punctuation that regex accidentally catches (e.g. at the end of sentences)
     return matches.map(url => {
         let cleaned = url;
@@ -62,7 +62,7 @@ function getLinkIcon(url) {
     try {
         const parsed = new URL(url.startsWith('http') ? url : 'https://' + url);
         domain = parsed.hostname.toLowerCase();
-    } catch(e) {
+    } catch (e) {
         // Fallback default link icon if URL parsing fails
         return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
     }
@@ -90,37 +90,37 @@ function updateDetectedLinks() {
     const editorEl = document.getElementById('editor');
     const container = document.getElementById('detectedLinksContainer');
     const listEl = document.getElementById('detectedLinksList');
-    
+
     if (!editorEl || !container || !listEl) return;
-    
+
     const urls = extractUrls(editorEl.value);
-    
+
     listEl.innerHTML = '';
     if (urls.length === 0) {
         return; // Keep list area empty if no URLs found
     }
-    
+
     urls.forEach(url => {
         const cleanHref = url.startsWith('http') ? url : 'https://' + url;
         let displayUrl = url.replace(/https?:\/\/(www\.)?/, '');
         if (displayUrl.length > 30) {
             displayUrl = displayUrl.substring(0, 27) + '...'; // Truncate long URLs for display
         }
-        
+
         // Assemble link badge card
         const badge = document.createElement('div');
         badge.className = 'link-badge';
-        
+
         const iconSpan = document.createElement('span');
         iconSpan.className = 'link-icon';
         iconSpan.innerHTML = getLinkIcon(url);
-        
+
         const link = document.createElement('a');
         link.href = cleanHref;
         link.target = '_blank';
         link.textContent = displayUrl;
         link.title = url;
-        
+
         // Special "..." button allowing browser background tab opening (via bridge.js)
         const bgBtn = document.createElement('button');
         bgBtn.className = 'bg-tab-btn';
@@ -138,7 +138,7 @@ function updateDetectedLinks() {
                 window.open(cleanHref, '_blank');
             }
         };
-        
+
         badge.appendChild(iconSpan);
         badge.appendChild(link);
         badge.appendChild(bgBtn);
@@ -205,34 +205,39 @@ window.onload = async () => {
 
     // 1. Establish bridge connectivity status
     const bridgeOk = await checkBridgeStatus();
-    
-    // 2. Add listener to the Mobalytics link to support background tab opening via the bridge
-    const mobaLink = document.getElementById('mobalyticsLink');
-    if (mobaLink) {
-        mobaLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            const url = e.currentTarget.href;
-            if (url && url !== '#' && !url.endsWith('#')) {
-                if (bridgeActive) {
-                    window.dispatchEvent(new CustomEvent("OpenBackgroundTab", {
-                        detail: { url: url }
-                    }));
-                } else {
-                    window.open(url, '_blank');
+
+    // 2. Add listener to external links to support background tab opening via the bridge
+    const setupBgTabLink = (id) => {
+        const link = document.getElementById(id);
+        if (link) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = e.currentTarget.href;
+                if (url && url !== '#' && !url.endsWith('#')) {
+                    if (bridgeActive) {
+                        window.dispatchEvent(new CustomEvent("OpenBackgroundTab", {
+                            detail: { url: url }
+                        }));
+                    } else {
+                        window.open(url, '_blank');
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
+    };
+    setupBgTabLink('mobalyticsLink');
+    setupBgTabLink('opggLink');
+    setupBgTabLink('lolaLink');
 
     if (bridgeOk) {
         bridgeActive = true;
         // Hide bridge warnings if connected
         const bridgeErrEl = document.getElementById('bridgeError');
         if (bridgeErrEl) bridgeErrEl.style.display = 'none';
-        
+
         // Load Riot DDragon lists
         await loadChampionsList();
-        
+
         // Authorize with GitHub credentials
         if (typeof CONFIG !== 'undefined' && isConfigValid) {
             await checkTokenValidity();
@@ -249,33 +254,33 @@ window.onload = async () => {
         const bridgeErrEl = document.getElementById('bridgeError');
         const connStatusEl = document.getElementById('connectionStatus');
         const statusEl = document.getElementById('status');
-        
+
         if (bridgeErrEl) bridgeErrEl.style.display = 'block';
         if (connStatusEl) {
             connStatusEl.className = 'status-badge offline';
             connStatusEl.innerText = 'Bridge Offline';
         }
         if (statusEl) statusEl.innerText = 'Status: Bridge unavailable. Operating in local-only mode.';
-        
+
         // Populates UI using offline static backup catalogs
         await loadChampionsList();
-        
+
         // Enable select elements so they work in local-only storage cache mode
         document.getElementById('enemyChamp').disabled = false;
         document.getElementById('myChamp').disabled = false;
         document.getElementById('loadBtn').disabled = false;
     }
-    
+
     // 3. Render any draft objects stored in localStorage
     renderLocalDrafts();
-    
+
     // Render saved matchups
     renderSavedMatchups();
 
     // 4. Auto-restore search inputs, check URL parameters, or default to General Notes
     let urlEnemy = null;
     let urlMy = null;
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('enemy') && urlParams.has('my')) {
         urlEnemy = urlParams.get('enemy');
@@ -325,7 +330,7 @@ async function loadChampionsList() {
     const cachedData = localStorage.getItem('lol_champions_cache');
     let cache = null;
     if (cachedData) {
-        try { cache = JSON.parse(cachedData); } catch(e) {}
+        try { cache = JSON.parse(cachedData); } catch (e) { }
     }
 
     try {
@@ -333,7 +338,7 @@ async function loadChampionsList() {
         const versions = await fetchDirectOrBridge('https://ddragon.leagueoflegends.com/api/versions.json');
         const latestVersion = versions[0];
         ddragonVersion = latestVersion; // Expose globally for champion portrait icons
-        
+
         // Check if cache patch is current
         if (cache && cache.version === latestVersion && cache.champions && cache.champions.length > 0) {
             CHAMPIONS = cache.champions;
@@ -341,13 +346,13 @@ async function loadChampionsList() {
         } else {
             // Cache is missing or out-of-date: Fetch champion descriptions
             const data = await fetchDirectOrBridge(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/champion.json`);
-            
+
             // Map object keys to sorted lookup arrays
             CHAMPIONS = Object.values(data.data).map(c => ({
                 key: c.id,
                 name: c.name
             })).sort((a, b) => a.name.localeCompare(b.name));
-            
+
             // Write cache back to local storage
             localStorage.setItem('lol_champions_cache', JSON.stringify({
                 version: latestVersion,
@@ -421,7 +426,7 @@ async function loadChampionsList() {
             ];
         }
     }
-    
+
     // Bind catalog results to search dropdowns
     const dl = document.getElementById('championList');
     if (dl) {
@@ -446,11 +451,11 @@ async function loadChampionsList() {
 async function loadMatchup() {
     const enemyName = document.getElementById('enemyChamp').value;
     const myName = document.getElementById('myChamp').value;
-    
+
     // Resolve display names to keys using helpers in utils.js
     const enemyKey = getChampionKeyByName(enemyName);
     const myKey = getChampionKeyByName(myName);
-    
+
     if (!enemyKey || !myKey) {
         alert("Please select or enter valid champions from the list.");
         return;
@@ -462,6 +467,21 @@ async function loadMatchup() {
     if (mobaLink) {
         mobaLink.href = `https://mobalytics.gg/lol/champions/${slug}/counters`;
         mobaLink.style.display = 'inline-flex';
+    }
+
+    const roleSelect = document.getElementById('roleSelect');
+    const role = roleSelect ? roleSelect.value : 'top';
+
+    const opggLink = document.getElementById('opggLink');
+    if (opggLink) {
+        opggLink.href = `https://op.gg/lol/champions/${myKey.toLowerCase()}/counters/${role}?region=global&tier=platinum_plus&target_champion=${enemyKey.toLowerCase()}`;
+        opggLink.style.display = 'inline-flex';
+    }
+
+    const lolaLink = document.getElementById('lolaLink');
+    if (lolaLink) {
+        lolaLink.href = `https://lolalytics.com/lol/${myKey.toLowerCase()}/vs/${enemyKey.toLowerCase()}/build/?vslane=${role}&tier=platinum_plus&patch=30`;
+        lolaLink.style.display = 'inline-flex';
     }
 
     const path = `matchups/${enemyKey}/${myKey}.md`;
@@ -478,17 +498,27 @@ async function loadGeneralNotes() {
     // Clear inputs so user can easily search for matchups
     document.getElementById('enemyChamp').value = '';
     document.getElementById('myChamp').value = '';
-    
+
     // Hide Mobalytics counters link
     const mobaLink = document.getElementById('mobalyticsLink');
     if (mobaLink) {
         mobaLink.style.display = 'none';
     }
-    
+
+    const opggLink = document.getElementById('opggLink');
+    if (opggLink) {
+        opggLink.style.display = 'none';
+    }
+
+    const lolaLink = document.getElementById('lolaLink');
+    if (lolaLink) {
+        lolaLink.style.display = 'none';
+    }
+
     const path = 'Notes.md';
     const label = 'Notes';
     const draftKey = 'draft_matchup:Notes';
-    
+
     await loadMatchupByPath(path, label, draftKey, null, null);
 }
 
@@ -501,7 +531,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     const editorEl = document.getElementById('editor');
     const fileLabel = document.getElementById('currentFileLabel');
     const conflictBanner = document.getElementById('conflictBanner');
-    
+
     // Set global active matchup configuration
     activeMatchup = {
         path: path,
@@ -510,11 +540,11 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
         enemyKey: enemyKey,
         myKey: myKey
     };
-    
+
     statusEl.innerText = `Searching for ${label}...`;
     if (conflictBanner) conflictBanner.style.display = 'none';
     updateDiscardButtonState(false);
-    currentSha = null; 
+    currentSha = null;
     githubTextCache = null;
 
     // Check for local draft cache
@@ -536,7 +566,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     try {
         // Fetch files metadata from repository contents endpoint
         const response = await bridgeFetch(config.url + path, { headers: config.headers });
-        
+
         if (response.isExpired) {
             const tokenErrEl = document.getElementById('tokenExpiredError');
             if (tokenErrEl) tokenErrEl.style.display = 'block';
@@ -555,11 +585,11 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
             // File loaded successfully
             const data = response.json();
             currentSha = data.sha; // Save SHA to track current revision
-            
+
             // Decodes Base64 to UTF-8 text safely
             const decodedText = decodeURIComponent(escape(atob(data.content)));
             githubTextCache = decodedText; // Cache remote contents
-            
+
             // CONFLICT CHECK:
             // Compare local draft cache content with remote version loaded from GitHub.
             if (localDraft !== null && localDraft !== decodedText) {
@@ -592,7 +622,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
         updateDiscardButtonState(localDraft !== null);
         updateDetectedLinks();
     }
-    
+
     updateStarButtonUI();
 }
 
@@ -602,13 +632,13 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
  */
 document.getElementById('editor').addEventListener('input', () => {
     if (!activeMatchup.draftKey) return;
-    
+
     const textContent = document.getElementById('editor').value;
-    
+
     // Save current content to localStorage
     localStorage.setItem(activeMatchup.draftKey, textContent);
     renderLocalDrafts(); // Refresh list display
-    
+
     updateDiscardButtonState(true);
     document.getElementById('status').innerText = "Typing... saved draft locally.";
     updateDetectedLinks();
@@ -639,7 +669,7 @@ async function saveToGitHub() {
         message: `Sync: updated ${activeMatchup.label}`,
         content: encodedContent
     };
-    
+
     // Provide SHA checksum if updating an existing file, else GitHub throws 409 conflict
     if (currentSha) bodyData.sha = currentSha;
 
@@ -653,14 +683,14 @@ async function saveToGitHub() {
         if (response.ok) {
             const result = response.json();
             currentSha = result.content.sha; // Update currentSha with GitHub's new version reference
-            
+
             // Delete local draft cache
             localStorage.removeItem(activeMatchup.draftKey);
             renderLocalDrafts();
             updateDiscardButtonState(false);
             const conflictBanner = document.getElementById('conflictBanner');
             if (conflictBanner) conflictBanner.style.display = 'none';
-            
+
             statusEl.innerText = "Changes safely synced to GitHub!";
         } else {
             statusEl.innerText = `Sync failed (Status ${response.status}). Kept local draft.`;
@@ -677,9 +707,9 @@ async function saveToGitHub() {
  */
 function resolveConflict(decision) {
     if (!activeMatchup.draftKey) return;
-    
+
     const conflictBanner = document.getElementById('conflictBanner');
-    
+
     if (decision === 'local') {
         if (conflictBanner) conflictBanner.style.display = 'none';
         document.getElementById('status').innerText = "Using local draft. Save to push to GitHub.";
@@ -703,7 +733,7 @@ function discardCurrentDraft() {
 
     localStorage.removeItem(activeMatchup.draftKey);
     renderLocalDrafts();
-    
+
     // Reload original clean state
     loadMatchupByPath(activeMatchup.path, activeMatchup.label, activeMatchup.draftKey, activeMatchup.enemyKey, activeMatchup.myKey);
 }
@@ -746,16 +776,16 @@ function getLocalDrafts() {
 function renderLocalDrafts() {
     const container = document.getElementById('draftsList');
     if (!container) return;
-    
+
     const drafts = getLocalDrafts();
     const activeDraftKey = activeMatchup?.draftKey || null;
     const visibleDrafts = drafts.filter(d => activeDraftKey !== `draft_matchup:${d.path}`);
-    
+
     if (visibleDrafts.length === 0) {
         container.innerHTML = '<div class="no-drafts">No pending local drafts.</div>';
         return;
     }
-    
+
     container.innerHTML = '';
     visibleDrafts.forEach(d => {
         const card = document.createElement('div');
@@ -846,7 +876,7 @@ async function syncDraftDirectly(enemyKey, myKey) {
             // Delete local draft cache
             localStorage.removeItem(draftKey);
             renderLocalDrafts();
-            
+
             // Sync status feedback logic for loaded matchup matching
             if (activeMatchup.draftKey === draftKey) {
                 const putResult = syncResponse.json();
@@ -856,7 +886,7 @@ async function syncDraftDirectly(enemyKey, myKey) {
                 const conflictBanner = document.getElementById('conflictBanner');
                 if (conflictBanner) conflictBanner.style.display = 'none';
             }
-            
+
             statusEl.innerText = `${label} successfully synced to GitHub!`;
         } else {
             statusEl.innerText = `Sync failed for ${label} (Status ${syncResponse.status}).`;
@@ -894,10 +924,10 @@ function isMatchupSaved(enemyKey, myKey) {
 /** Toggles the saved status of the currently active matchup */
 function toggleSaveMatchup() {
     if (!activeMatchup.enemyKey || !activeMatchup.myKey) return;
-    
+
     let saved = getSavedMatchups();
     const index = saved.findIndex(m => m.enemyKey === activeMatchup.enemyKey && m.myKey === activeMatchup.myKey);
-    
+
     if (index > -1) {
         saved.splice(index, 1);
     } else {
@@ -906,7 +936,7 @@ function toggleSaveMatchup() {
             myKey: activeMatchup.myKey
         });
     }
-    
+
     saveMatchupsList(saved);
     updateStarButtonUI();
     renderSavedMatchups();
@@ -916,13 +946,13 @@ function toggleSaveMatchup() {
 function updateStarButtonUI() {
     const starBtn = document.getElementById('starBtn');
     if (!starBtn) return;
-    
+
     // Star button is only available for actual champion matchups, not general notes
     if (!activeMatchup.enemyKey || !activeMatchup.myKey) {
         starBtn.style.display = 'none';
         return;
     }
-    
+
     starBtn.style.display = 'inline-flex';
     const saved = isMatchupSaved(activeMatchup.enemyKey, activeMatchup.myKey);
     const svg = starBtn.querySelector('svg');
@@ -943,9 +973,9 @@ function updateStarButtonUI() {
 function renderSavedMatchups() {
     const container = document.getElementById('savedList');
     if (!container) return;
-    
+
     const saved = getSavedMatchups();
-    
+
     // General Notes is always at the top of the Saved Matchups panel
     let html = `
         <div class="draft-card permanent-card">
@@ -958,7 +988,7 @@ function renderSavedMatchups() {
             </div>
         </div>
     `;
-    
+
     saved.forEach(m => {
         const myName = getChampionNameByKey(m.myKey);
         const enemyName = getChampionNameByKey(m.enemyKey);
@@ -974,6 +1004,6 @@ function renderSavedMatchups() {
             </div>
         `;
     });
-    
+
     container.innerHTML = html;
 }

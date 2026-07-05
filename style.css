@@ -191,7 +191,7 @@ label {
     font-weight: bold;
 }
 
-input[type="text"] {
+input[type="text"], select {
     background: var(--bg-darker);
     border: 1px solid var(--gold-dark);
     color: var(--text-primary);
@@ -202,7 +202,7 @@ input[type="text"] {
     width: 100%;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, select:focus {
     border-color: var(--gold-accent);
     outline: none;
     box-shadow: 0 0 5px rgba(200, 155, 60, 0.3);
