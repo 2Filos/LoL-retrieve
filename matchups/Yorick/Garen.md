@@ -13,7 +13,7 @@ Of course, the other thing is to move erratically proccing stormsurge
 This is meant to increase your chances of not being locked inside W
 
 ... so why do I lose at times?
-Cause Yorick is just a bitch? Don't play enough around grasp?
+Cause Yorick is just a bitch? Don't play enough around grasp? As if Nasus Q?
 Need external VOD and personal VOD
 
 Second Wind for sure
