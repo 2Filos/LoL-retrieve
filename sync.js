@@ -112,7 +112,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     let localDraftText = null;
     if (localDraftRaw !== null) {
         console.log("[DEBUG] Local draft found. Length:", localDraftRaw.length);
-        localDraftText = extractMetadata(localDraftRaw); 
+        localDraftText = extractMetadata(localDraftRaw);
     } else {
         console.log("[DEBUG] No local draft found.");
         activeMetadata = { customLinks: [], linkOrder: [] };
@@ -134,14 +134,14 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     try {
         console.log(`[DEBUG] Fetching from GitHub: ${path}`);
         const cacheBusterUrl = `${config.url}${path}?t=${Date.now()}`;
-        
+
         // Force no-cache headers to ensure we get the absolute latest SHA
         const fetchHeaders = Object.assign({}, config.headers, {
             'Cache-Control': 'no-cache, no-store, must-revalidate',
             'Pragma': 'no-cache',
             'Expires': '0'
         });
-        
+
         const response = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
 
         if (response.isExpired) {
@@ -173,17 +173,17 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
                 console.log("[DEBUG] Conflict detected!");
                 console.log("[DEBUG] localDraftRaw length:", localDraftRaw.length);
                 console.log("[DEBUG] decodedTextRaw length:", decodedTextRaw.length);
-                
+
                 if (conflictBanner) conflictBanner.style.display = 'flex'; // reveal conflict warning banner
-                
+
                 // If there's a conflict, localDraftText (and activeMetadata) was already extracted above
-                editorEl.value = localDraftText; 
-                
+                editorEl.value = localDraftText;
+
                 // Cache the github remote text without overwriting our activeMetadata
                 const match = decodedTextRaw.match(/<!-- METADATA: (.*?) -->/);
                 githubTextCache = match ? decodedTextRaw.replace(match[0], '').trimEnd() : decodedTextRaw;
 
-                statusEl.innerText = "Conflict! Unsaved local edits differ from GitHub version.";
+                statusEl.innerText = "Conflict!\nUnsaved local edits differ from GitHub version.";
                 updateDiscardButtonState(true);
                 updateDetectedLinks();
             } else {
@@ -278,7 +278,7 @@ async function saveToGitHub() {
                         const yt = meta.customLinks.find(l => l.url.includes('youtube.com') || l.url.includes('youtu.be'));
                         if (yt) ytLink = yt.url;
                     }
-                } catch(e) {}
+                } catch (e) { }
             }
             if (!ytLink) {
                 const ytRegex = /https?:\/\/(www\.)?(youtube\.com|youtu\.be)[^\s\)]+/;
@@ -290,14 +290,14 @@ async function saveToGitHub() {
             let globalLinks = {};
             try {
                 globalLinks = JSON.parse(localStorage.getItem('youtube_links_index') || '{}');
-            } catch(e) {}
+            } catch (e) { }
 
             const existingYtLink = globalLinks[matchupKey] || null;
 
             if (ytLink !== existingYtLink) {
                 console.log(`[DEBUG] YouTube link changed from ${existingYtLink} to ${ytLink}. Syncing index...`);
                 statusEl.innerText = "Changes safely synced! Updating YouTube Links Index...";
-                
+
                 if (ytLink) {
                     globalLinks[matchupKey] = ytLink;
                 } else {
@@ -320,7 +320,7 @@ async function saveToGitHub() {
                         headers: config.headers,
                         body: JSON.stringify(ytBodyData)
                     });
-                    
+
                     if (ytResponse.ok) {
                         const ytResult = ytResponse.json();
                         youtubeLinksSha = ytResult.content.sha;
