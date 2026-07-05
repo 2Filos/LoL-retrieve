@@ -7,7 +7,7 @@ Garen vs Sett not seen but understood indirectly? still need VOD
 
 [Garen vs Yorick] is TECHNICALLY the better matchup, historically I suck, in ranked I win?
 [Yorick vs Garen] is TECHNICALLY the worse matchup, but I win it historically.
-BUT feels unplayable recently? WTF?
+BUT feels unplayable recently? WTF? No actually, feels bad, but I won both recent games?
 Thus [Garen vs Yorick] >
 
 [Garen/Yorick vs Camille] (VOD to see it)
