@@ -98,6 +98,9 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
         myKey: myKey
     };
 
+    // Re-render local drafts so the newly active matchup is hidden and previously active ones reappear
+    renderLocalDrafts();
+
     statusEl.innerText = `Searching for ${label}...`;
     if (conflictBanner) conflictBanner.style.display = 'none';
     updateDiscardButtonState(false);

@@ -146,17 +146,11 @@
                         <!-- Fallback text label for non-matchup files (e.g. General Notes) -->
                         <span id="currentFileLabel"></span>
                     </div>
-                </div>
 
-
-                <div id="conflictBanner" class="warning-banner" style="display: none;">
-                    <div style="flex: 1;">
-                        <strong>Unsynced Draft Conflict:</strong> You have edited this matchup locally, but a different
-                        version exists on GitHub.
-                    </div>
-                    <div class="banner-buttons">
-                        <button onclick="resolveConflict('local')" class="btn-gold-sm">Use Local Draft</button>
-                        <button onclick="resolveConflict('github')" class="btn-outline-sm">Use GitHub Version</button>
+                    <div id="conflictBanner" style="display: none; align-items: center; gap: 8px;">
+                        <strong style="color: #fca5a5; font-size: 11px; text-transform: uppercase;">Unsynced data conflict:</strong>
+                        <button onclick="resolveConflict('local')" class="btn-gold-sm" style="padding: 4px 8px; font-size: 10px;">Use Local</button>
+                        <button onclick="resolveConflict('github')" class="btn-outline-sm" style="padding: 4px 8px; font-size: 10px;">Use GitHub</button>
                     </div>
                 </div>
 
