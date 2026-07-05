@@ -17,5 +17,8 @@ First VOD isn't super useful > tries to proxy > meets jungler > eh
 To proxy with no lead and no knowledge of jungler position is sus
 Generally they all seem to want to gain a lead, makes sense
 Plates and proxy do this with different levels of risk
+The better scenario is to leave SOME prio so that second wave doesn't end up over-pushed
+This way you have the margin to shove on wave 3? Wave 3 crash, demolish > recall? 
+cause proxy lv3 is sus
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783251573217","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGpSOMbK56VJYmTxqbF0y428"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGpSOMbK56VJYmTxqbF0y428"]} -->
