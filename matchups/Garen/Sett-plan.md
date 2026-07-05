@@ -21,3 +21,4 @@ Build is Stride into HP or BC
 Naturally since low mobility, gank awareness is paramount - look at minimap
 Finally you win HARD full trades health (better long trades) cause he cannot get you to R with all-in
 Lots of stuff so, summary: E like Darius, EW, lots of AA, longer trades good, care immobile
+- 1 FAIL
