@@ -22,3 +22,6 @@ Lane consistency bad one (makes sense)
 Champion pool too small, fair enough. Need to experiment Camille/Mundo (in normal)
 Aggression is the main stat that falls behind. Why? Scores are... evenly spread.
 Maybe just a consequence of heavy splitting? High movement macro? A teamfighter... Sett?
+
+https://www.youtube.com/playlist?list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO
+https://www.youtube.com/playlist?list=PLPUygacvheSNq2eFpy4m7nEavOWcj6gvR
