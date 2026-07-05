@@ -43,31 +43,44 @@ function discardCurrentDraft() {
 
 /**
  * Searches localStorage keys to find drafts matches.
+ * Groups tab variants (-plan, -vod) under the same parent matchup.
  * 
- * @returns {Array<object>} List of matching draft definitions { enemy, mySide, isNotes, path }.
+ * @returns {Array<object>} List of matching draft definitions { enemy, mySide, isNotes, path, tabSuffix }.
  */
 function getLocalDrafts() {
     const drafts = [];
+    const seen = new Set(); // Track grouped matchup keys to avoid duplicates
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key.startsWith('draft_matchup:')) {
             const path = key.replace('draft_matchup:', '');
-            if (path === 'Notes') {
-                drafts.push({
-                    enemy: null,
-                    mySide: null,
-                    isNotes: true,
-                    path: path
-                });
+            if (path === 'Notes' || path === 'Notes-vod') {
+                // General notes variants — group under one entry
+                if (!seen.has('Notes')) {
+                    seen.add('Notes');
+                    drafts.push({
+                        enemy: null,
+                        mySide: null,
+                        isNotes: true,
+                        path: 'Notes'
+                    });
+                }
             } else {
                 const parts = path.split('/');
                 if (parts.length === 2) {
-                    drafts.push({
-                        enemy: parts[0],
-                        mySide: parts[1],
-                        isNotes: false,
-                        path: path
-                    });
+                    let mySide = parts[1];
+                    // Strip tab suffixes for grouping
+                    mySide = mySide.replace(/-plan$/, '').replace(/-vod$/, '');
+                    const groupKey = `${parts[0]}/${mySide}`;
+                    if (!seen.has(groupKey)) {
+                        seen.add(groupKey);
+                        drafts.push({
+                            enemy: parts[0],
+                            mySide: mySide,
+                            isNotes: false,
+                            path: groupKey
+                        });
+                    }
                 }
             }
         }
@@ -82,7 +95,15 @@ function renderLocalDrafts() {
 
     const drafts = getLocalDrafts();
     const activeDraftKey = activeMatchup?.draftKey || null;
-    const visibleDrafts = drafts.filter(d => activeDraftKey !== `draft_matchup:${d.path}`);
+    // For grouping: strip tab suffixes from active draft key to match against grouped drafts
+    let activeGroupPath = null;
+    if (activeDraftKey) {
+        activeGroupPath = activeDraftKey.replace('draft_matchup:', '')
+            .replace(/-plan$/, '').replace(/-vod$/, '');
+        // Normalize 'Notes-vod' to 'Notes'
+        if (activeGroupPath === 'Notes-vod') activeGroupPath = 'Notes';
+    }
+    const visibleDrafts = drafts.filter(d => activeGroupPath !== d.path);
 
     if (visibleDrafts.length === 0) {
         container.innerHTML = '<div class="no-drafts">No pending local drafts.</div>';
@@ -127,75 +148,95 @@ function loadDraft(enemyKey, myKey) {
     loadMatchup();
 }
 
-/** Syncs a specific local draft directly to GitHub in the background */
+/** Syncs a specific local draft directly to GitHub in the background.
+ *  Handles all tab variants (base, -plan, -vod) for the given matchup.
+ */
 async function syncDraftDirectly(enemyKey, myKey) {
-    let path, label, draftKey;
-    if (enemyKey === null && myKey === null) {
-        path = 'Notes.md';
-        label = 'Notes';
-        draftKey = 'draft_matchup:Notes';
-    } else {
-        path = `matchups/${enemyKey}/${myKey}.md`;
-        label = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
-        draftKey = `draft_matchup:${enemyKey}/${myKey}`;
-    }
-
-    const textContent = localStorage.getItem(draftKey);
-    if (!textContent) return;
-
     if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
         alert("Cannot sync: Bridge or Config is offline.");
         return;
     }
 
     const statusEl = document.getElementById('status');
-    statusEl.innerText = `Syncing ${label} directly to GitHub...`;
-
     const config = getAPIConfig();
-    try {
-        // Fetch current SHA checksum to prevent conflict collisions
-        let sha = null;
-        const response = await bridgeFetch(config.url + path, { headers: config.headers });
-        if (response.ok) {
-            const data = response.json();
-            sha = data.sha;
-        }
 
-        // Encode string safely resolving multibyte characters
-        const encodedContent = btoa(unescape(encodeURIComponent(textContent)));
-        const bodyData = {
-            message: `Sync: updated ${label}`,
-            content: encodedContent
-        };
-        if (sha) bodyData.sha = sha;
+    // Determine which draft keys to sync based on context
+    let draftEntries = [];
+    if (enemyKey === null && myKey === null) {
+        // General context — check both Notes and Notes-vod
+        draftEntries = [
+            { path: 'Notes.md', draftKey: 'draft_matchup:Notes', label: 'General (Notes)' },
+            { path: 'Notes-vod.md', draftKey: 'draft_matchup:Notes-vod', label: 'General (VODs)' }
+        ];
+    } else {
+        // Matchup context — check both base and -plan
+        const label = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
+        draftEntries = [
+            { path: `matchups/${enemyKey}/${myKey}.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}`, label: `${label} (Notes)` },
+            { path: `matchups/${enemyKey}/${myKey}-plan.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}-plan`, label: `${label} (Plan)` }
+        ];
+    }
 
-        const syncResponse = await bridgeFetch(config.url + path, {
-            method: 'PUT',
-            headers: config.headers,
-            body: JSON.stringify(bodyData)
-        });
+    // Filter to only entries that have actual drafts
+    const dirtyEntries = draftEntries.filter(e => localStorage.getItem(e.draftKey) !== null);
+    if (dirtyEntries.length === 0) return;
 
-        if (syncResponse.ok) {
-            // Delete local draft cache
-            localStorage.removeItem(draftKey);
-            renderLocalDrafts();
+    statusEl.innerText = `Syncing ${dirtyEntries.length} tab(s) to GitHub...`;
 
-            // Sync status feedback logic for loaded matchup matching
-            if (activeMatchup.draftKey === draftKey) {
-                const putResult = syncResponse.json();
-                currentSha = putResult.content.sha;
-                githubTextCache = textContent;
-                updateDiscardButtonState(false);
-                const conflictBanner = document.getElementById('conflictBanner');
-                if (conflictBanner) conflictBanner.style.display = 'none';
+    let allOk = true;
+    for (const entry of dirtyEntries) {
+        const textContent = localStorage.getItem(entry.draftKey);
+        if (!textContent) continue;
+
+        try {
+            // Fetch current SHA checksum to prevent conflict collisions
+            let sha = null;
+            const response = await bridgeFetch(config.url + entry.path, { headers: config.headers });
+            if (response.ok) {
+                const data = response.json();
+                sha = data.sha;
             }
 
-            statusEl.innerText = `${label} successfully synced to GitHub!`;
-        } else {
-            statusEl.innerText = `Sync failed for ${label} (Status ${syncResponse.status}).`;
+            // Encode string safely resolving multibyte characters
+            const encodedContent = btoa(unescape(encodeURIComponent(textContent)));
+            const bodyData = {
+                message: `Sync: updated ${entry.label}`,
+                content: encodedContent
+            };
+            if (sha) bodyData.sha = sha;
+
+            const syncResponse = await bridgeFetch(config.url + entry.path, {
+                method: 'PUT',
+                headers: config.headers,
+                body: JSON.stringify(bodyData)
+            });
+
+            if (syncResponse.ok) {
+                localStorage.removeItem(entry.draftKey);
+
+                // Sync status feedback logic for loaded matchup matching
+                if (activeMatchup.draftKey === entry.draftKey) {
+                    const putResult = syncResponse.json();
+                    currentSha = putResult.content.sha;
+                    githubTextCache = textContent;
+                    updateDiscardButtonState(false);
+                    const conflictBanner = document.getElementById('conflictBanner');
+                    if (conflictBanner) conflictBanner.style.display = 'none';
+                }
+            } else {
+                allOk = false;
+                statusEl.innerText = `Sync failed for ${entry.label} (Status ${syncResponse.status}).`;
+            }
+        } catch (err) {
+            allOk = false;
+            statusEl.innerText = `Sync error for ${entry.label}: ` + err.message;
         }
-    } catch (err) {
-        statusEl.innerText = `Sync error for ${label}: ` + err.message;
+    }
+
+    renderLocalDrafts();
+    if (allOk) {
+        const mainLabel = (enemyKey === null) ? 'General' : `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
+        statusEl.innerText = `${mainLabel} successfully synced to GitHub!`;
     }
 }
 
@@ -283,7 +324,7 @@ function renderSavedMatchups() {
     let html = `
         <div class="draft-card permanent-card">
             <div class="draft-info">
-                <span class="draft-champ">General Notes</span>
+                <span class="draft-champ">General</span>
                 <span class="draft-tag" style="color: var(--gold-accent);">Default</span>
             </div>
             <div class="draft-actions">

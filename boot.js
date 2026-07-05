@@ -19,9 +19,17 @@ let activeMetadata = {        // Invisible custom links and order metadata
     customLinks: [],
     linkOrder: []
 };
+let activePageSide = 'right'; // Which tab is active: 'left' or 'right'
+                              // Matchups: left=Plan, right=Notes
+                              // General:  left=Notes, right=VODs
 
 // --- Application Boot Loop ---
 window.onload = async () => {
+    // Restore last-active tab side from localStorage
+    const savedTabSide = localStorage.getItem('editor_active_tab_side');
+    if (savedTabSide && (savedTabSide === 'left' || savedTabSide === 'right')) {
+        activePageSide = savedTabSide;
+    }
     const editorEl = document.getElementById('editor');
     const fileLabel = document.getElementById('currentFileLabel');
     const statusEl = document.getElementById('status');

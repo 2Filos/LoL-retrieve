@@ -85,9 +85,9 @@ function getChampionNameByKey(key) {
 /**
  * Extracts the hidden JSON metadata block from the raw text.
  */
-function extractMetadata(rawText) {
+function extractMetadata(rawText, resetIfMissing = true) {
     if (!rawText) {
-        activeMetadata = { customLinks: [], linkOrder: [] };
+        if (resetIfMissing) activeMetadata = { customLinks: [], linkOrder: [] };
         return "";
     }
     const match = rawText.match(/<!-- METADATA: (.*?) -->/);
@@ -99,12 +99,14 @@ function extractMetadata(rawText) {
             if (!activeMetadata.linkOrder) activeMetadata.linkOrder = [];
         } catch(e) {
             console.error("[DEBUG] Failed to parse metadata JSON:", e);
-            activeMetadata = { customLinks: [], linkOrder: [] };
+            if (resetIfMissing) activeMetadata = { customLinks: [], linkOrder: [] };
         }
         return rawText.replace(match[0], '').trimEnd();
     }
-    activeMetadata = { customLinks: [], linkOrder: [] };
-    console.log("[DEBUG] No metadata found in rawText");
+    if (resetIfMissing) {
+        activeMetadata = { customLinks: [], linkOrder: [] };
+        console.log("[DEBUG] No metadata found in rawText");
+    }
     return rawText;
 }
 

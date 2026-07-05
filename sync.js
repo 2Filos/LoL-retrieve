@@ -47,15 +47,14 @@ async function loadMatchup() {
         lolaLink.style.display = 'inline-flex';
     }
 
-    const path = `matchups/${enemyKey}/${myKey}.md`;
     const label = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
-    const draftKey = `draft_matchup:${enemyKey}/${myKey}`;
+    const pathInfo = resolvePagePath({ enemyKey, myKey }, activePageSide);
 
-    await loadMatchupByPath(path, label, draftKey, enemyKey, myKey);
+    await loadMatchupByPath(pathInfo.path, label, pathInfo.draftKey, enemyKey, myKey);
 }
 
 /**
- * Loads the General Notes matchup from GitHub or local drafts.
+ * Loads the General Notes from GitHub or local drafts.
  */
 async function loadGeneralNotes() {
     // Clear inputs so user can easily search for matchups
@@ -72,11 +71,9 @@ async function loadGeneralNotes() {
     const lolaLink = document.getElementById('lolaLink');
     if (lolaLink) lolaLink.style.display = 'none';
 
-    const path = 'Notes.md';
-    const label = 'Notes';
-    const draftKey = 'draft_matchup:Notes';
+    const pathInfo = resolvePagePath({ enemyKey: null, myKey: null }, activePageSide);
 
-    await loadMatchupByPath(path, label, draftKey, null, null);
+    await loadMatchupByPath(pathInfo.path, 'General', pathInfo.draftKey, null, null);
 }
 
 /**
@@ -107,15 +104,67 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     currentSha = null;
     githubTextCache = null;
 
+    // Determine if we are loading the primary file
+    const isMatchup = enemyKey && myKey;
+    const isPrimaryFile = (isMatchup && activePageSide === 'right') || (!isMatchup && activePageSide === 'left');
+    const shouldResetMetadata = isPrimaryFile;
+
+    // Check if matchup changed (cross-tab navigation should not reset shared metadata)
+    const currentMatchupKey = `${enemyKey}_${myKey}`;
+    const matchupChanged = (window.lastMatchupKey !== currentMatchupKey);
+    if (matchupChanged) {
+        window.lastMatchupKey = currentMatchupKey;
+        activeMetadata = { customLinks: [], linkOrder: [] }; // start clean
+        
+        // 1. Try getting metadata from primary local draft
+        const primaryDraftKey = isMatchup ? `draft_matchup:${enemyKey}/${myKey}` : `draft_matchup:Notes`;
+        const primaryDraftRaw = localStorage.getItem(primaryDraftKey);
+        if (primaryDraftRaw) {
+            const match = primaryDraftRaw.match(/<!-- METADATA: (.*?) -->/);
+            if (match) {
+                try {
+                    const parsed = JSON.parse(match[1]);
+                    activeMetadata.customLinks = parsed.customLinks || [];
+                    activeMetadata.linkOrder = parsed.linkOrder || [];
+                } catch(e) {}
+            }
+        }
+        
+        // 2. If not a primary file and we have bridge, asynchronously fetch primary file to get links
+        if (!isPrimaryFile && typeof bridgeActive !== 'undefined' && bridgeActive && typeof CONFIG !== 'undefined' && isConfigValid) {
+            const config = getAPIConfig();
+            const primaryPath = isMatchup ? `matchups/${enemyKey}/${myKey}.md` : `Notes.md`;
+            bridgeFetch(`${config.url}${primaryPath}?t=${Date.now()}`, { headers: config.headers })
+                .then(res => { if (res.ok) return res.json(); })
+                .then(data => {
+                    if (data && data.content) {
+                        const decoded = decodeURIComponent(escape(atob(data.content)));
+                        const match = decoded.match(/<!-- METADATA: (.*?) -->/);
+                        if (match) {
+                            try {
+                                const parsed = JSON.parse(match[1]);
+                                activeMetadata.customLinks = parsed.customLinks || [];
+                                activeMetadata.linkOrder = parsed.linkOrder || [];
+                                updateDetectedLinks(); // Update UI
+                            } catch(e) {}
+                        }
+                    }
+                })
+                .catch(e => console.error("Failed async metadata fetch", e));
+        }
+    }
+
     // Check for local draft cache
     const localDraftRaw = localStorage.getItem(draftKey);
     let localDraftText = null;
     if (localDraftRaw !== null) {
         console.log("[DEBUG] Local draft found. Length:", localDraftRaw.length);
-        localDraftText = extractMetadata(localDraftRaw);
+        localDraftText = extractMetadata(localDraftRaw, shouldResetMetadata);
     } else {
         console.log("[DEBUG] No local draft found.");
-        activeMetadata = { customLinks: [], linkOrder: [] };
+        if (shouldResetMetadata) {
+            activeMetadata = { customLinks: [], linkOrder: [] };
+        }
     }
 
     // Fallback load in offline-only mode
@@ -194,7 +243,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
                     localStorage.removeItem(draftKey); // Clear redundant draft
                     renderLocalDrafts();
                 }
-                editorEl.value = extractMetadata(decodedTextRaw);
+                editorEl.value = extractMetadata(decodedTextRaw, shouldResetMetadata);
                 githubTextCache = editorEl.value;
                 statusEl.innerText = "Loaded successfully from GitHub!";
                 updateDiscardButtonState(false);
@@ -215,6 +264,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     }
 
     updateStarButtonUI();
+    updateTabLabels();
 }
 
 /**
@@ -237,7 +287,11 @@ async function saveToGitHub() {
     statusEl.innerText = "Syncing changes to GitHub...";
     console.log("[DEBUG] saveToGitHub triggered.");
 
-    const fullText = appendMetadata(textContent);
+    // Only append metadata to the primary file (Notes for matchups, Notes for General)
+    const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
+    const isPrimaryFile = (isMatchup && activePageSide === 'right') ||
+                          (!isMatchup && activePageSide === 'left');
+    const fullText = isPrimaryFile ? appendMetadata(textContent) : textContent;
 
     // Encode text to Base64 safely resolving UTF-8 multibyte characters
     const encodedContent = btoa(unescape(encodeURIComponent(fullText)));

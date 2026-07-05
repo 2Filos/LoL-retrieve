@@ -291,6 +291,111 @@ function toggleLinksPanel() {
     }
 }
 
+// --- Editor Page Tab System ---
+
+/**
+ * Resolves the correct file path and draft key based on the active matchup
+ * context and which tab side ('left' or 'right') is selected.
+ * 
+ * Matchups: left = Plan (-plan.md), right = Notes (.md)
+ * General:  left = Notes (Notes.md), right = VODs (Notes-vod.md)
+ */
+function resolvePagePath(matchup, side) {
+    const isMatchup = matchup.enemyKey && matchup.myKey;
+    if (!isMatchup) {
+        // General Notes context
+        if (side === 'right') {
+            return { path: 'Notes-vod.md', draftKey: 'draft_matchup:Notes-vod' };
+        }
+        return { path: 'Notes.md', draftKey: 'draft_matchup:Notes' };
+    }
+    // Matchup context
+    if (side === 'left') {
+        return {
+            path: `matchups/${matchup.enemyKey}/${matchup.myKey}-plan.md`,
+            draftKey: `draft_matchup:${matchup.enemyKey}/${matchup.myKey}-plan`
+        };
+    }
+    return {
+        path: `matchups/${matchup.enemyKey}/${matchup.myKey}.md`,
+        draftKey: `draft_matchup:${matchup.enemyKey}/${matchup.myKey}`
+    };
+}
+
+/**
+ * Updates the tab button labels and active states based on current context.
+ * Called after every matchup or general notes load.
+ */
+function updateTabLabels() {
+    const tabLeft = document.getElementById('tabLeft');
+    const tabRight = document.getElementById('tabRight');
+    const tabGroup = document.getElementById('editorTabs');
+    if (!tabLeft || !tabRight || !tabGroup) return;
+
+    const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
+    tabGroup.style.display = 'flex';
+
+    if (isMatchup) {
+        tabLeft.textContent = 'Plan';
+        tabRight.textContent = 'Notes';
+    } else {
+        tabLeft.textContent = 'Notes';
+        tabRight.textContent = 'VODs';
+    }
+
+    tabLeft.classList.toggle('active', activePageSide === 'left');
+    tabRight.classList.toggle('active', activePageSide === 'right');
+}
+
+/**
+ * Saves the current textarea content as a local draft before switching tabs,
+ * so edits aren't lost.
+ */
+function saveDraftBeforeSwitch() {
+    if (!activeMatchup.draftKey) return;
+    const editorEl = document.getElementById('editor');
+    if (!editorEl) return;
+
+    const textContent = editorEl.value;
+    // Only append metadata to the primary file
+    const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
+    const isPrimary = (isMatchup && activePageSide === 'right') ||
+                      (!isMatchup && activePageSide === 'left');
+    const fullText = isPrimary ? appendMetadata(textContent) : textContent;
+    localStorage.setItem(activeMatchup.draftKey, fullText);
+    renderLocalDrafts();
+}
+
+/**
+ * Handles clicking a tab button to switch between editor pages.
+ * Saves current draft, updates state, and reloads the appropriate file.
+ */
+function switchEditorTab(side) {
+    if (side === activePageSide) return;
+
+    // Save current content before switching
+    saveDraftBeforeSwitch();
+
+    activePageSide = side;
+    localStorage.setItem('editor_active_tab_side', side);
+
+    // Update button active states
+    const tabLeft = document.getElementById('tabLeft');
+    const tabRight = document.getElementById('tabRight');
+    if (tabLeft) tabLeft.classList.toggle('active', side === 'left');
+    if (tabRight) tabRight.classList.toggle('active', side === 'right');
+
+    // Compute new path and reload
+    const pathInfo = resolvePagePath(activeMatchup, side);
+
+    // Update activeMatchup path/draftKey for the new tab
+    activeMatchup.path = pathInfo.path;
+    activeMatchup.draftKey = pathInfo.draftKey;
+
+    loadMatchupByPath(pathInfo.path, activeMatchup.label, pathInfo.draftKey,
+                      activeMatchup.enemyKey, activeMatchup.myKey);
+}
+
 // --- Textarea Height Persistence ---
 (function () {
     // Wait for DOM to load if included in head, but usually runs at end of body.
