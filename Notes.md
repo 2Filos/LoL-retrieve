@@ -21,4 +21,4 @@ Champion pool too small, fair enough. Need to experiment Camille/Mundo (in norma
 Aggression is the main stat that falls behind. Why? Scores are... evenly spread.
 Maybe just a consequence of heavy splitting? High movement macro? A teamfighter... Sett?
 
-<!-- METADATA: {"customLinks":[{"customId":"custom_1783248452170","display":"a","url":"a"}],"linkOrder":["a"]} -->
+<!-- METADATA: {"customLinks":[{"customId":"custom_1783248452170","display":"a","url":"a"},{"customId":"custom_1783248640783","display":"Garen CH","url":"https://www.youtube.com/playlist?list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO"}],"linkOrder":["a","https://www.youtube.com/playlist?list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO"]} -->
