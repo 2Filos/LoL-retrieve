@@ -13,5 +13,9 @@ I either fail to snowball, or get greedy
 I generally let him overstack Q, that's for sure
 
 Should watch vod?
+First VOD isn't super useful > tries to proxy > meets jungler > eh
+To proxy with no lead and no knowledge of jungler position is sus
+Generally they all seem to want to gain a lead, makes sense
+Plates and proxy do this with different levels of risk
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783251573217","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGpSOMbK56VJYmTxqbF0y428"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGpSOMbK56VJYmTxqbF0y428"]} -->
