@@ -5,26 +5,62 @@
 
 /**
  * Parses and extracts all valid URLs (HTTP/HTTPS/www) from raw text.
- * Filters out trailing punctuation (commas, periods, parentheses).
+ * Also parses Markdown-formatted links [text](url).
  * 
  * @param {string} text - Matchup markdown content.
- * @returns {Array<string>} Unique list of matching URLs.
+ * @returns {Array<object>} Unique list of matching link objects {url, display, original}.
  */
 function extractUrls(text) {
     if (!text) return [];
-
-    // Regular expression matching http://, https://, and www. links
-    const regex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
-    const matches = text.match(regex) || [];
-
-    // Clean trailing punctuation that regex accidentally catches (e.g. at the end of sentences)
-    return matches.map(url => {
+    
+    const results = [];
+    
+    // First, find all markdown links [text](url)
+    const mdRegex = /\[([^\]]+)\]\((https?:\/\/[^\s\)]+|www\.[^\s\)]+)\)/gi;
+    let match;
+    const mdMatches = [];
+    while ((match = mdRegex.exec(text)) !== null) {
+        mdMatches.push({
+            display: match[1],
+            url: match[2],
+            original: match[0],
+            index: match.index
+        });
+    }
+    
+    // Then find raw URLs, but skip the ones that are inside the markdown links we already found
+    const rawRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+    while ((match = rawRegex.exec(text)) !== null) {
+        let url = match[0];
         let cleaned = url;
         while (/[.,;:!?)]$/.test(cleaned)) {
             cleaned = cleaned.slice(0, -1);
         }
-        return cleaned;
-    }).filter((url, index, self) => self.indexOf(url) === index); // deduplicate entries
+        
+        // Check if this raw URL is part of an already found markdown link
+        const isInsideMd = mdMatches.some(m => match.index >= m.index && match.index < m.index + m.original.length);
+        if (!isInsideMd) {
+            results.push({
+                display: null,
+                url: cleaned,
+                original: cleaned
+            });
+        }
+    }
+    
+    // Combine and deduplicate by URL (preferring Markdown links if duplicates exist)
+    const combined = [...mdMatches, ...results];
+    const unique = [];
+    const seen = new Set();
+    
+    for (const item of combined) {
+        if (!seen.has(item.url)) {
+            seen.add(item.url);
+            unique.push(item);
+        }
+    }
+    
+    return unique;
 }
 
 /**
@@ -76,11 +112,14 @@ function updateDetectedLinks() {
         return; // Keep list area empty if no URLs found
     }
 
-    urls.forEach(url => {
+    urls.forEach(item => {
+        const url = item.url;
         const cleanHref = url.startsWith('http') ? url : 'https://' + url;
         let displayUrl = url.replace(/https?:\/\/(www\.)?/, '');
-        if (displayUrl.length > 30) {
-            displayUrl = displayUrl.substring(0, 27) + '...'; // Truncate long URLs for display
+        
+        let linkText = item.display || displayUrl;
+        if (linkText.length > 30) {
+            linkText = linkText.substring(0, 27) + '...'; // Truncate long URLs for display
         }
 
         // Assemble link badge card
@@ -94,8 +133,19 @@ function updateDetectedLinks() {
         const link = document.createElement('a');
         link.href = cleanHref;
         link.target = '_blank';
-        link.textContent = displayUrl;
+        link.textContent = linkText;
         link.title = url;
+
+        // Custom Edit Button
+        const editBtn = document.createElement('button');
+        editBtn.className = 'bg-tab-btn';
+        editBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`;
+        editBtn.title = 'Edit Link Formatting';
+        editBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openLinkEditModal(item);
+        };
 
         // Special "..." button allowing browser background tab opening (via bridge.js)
         const bgBtn = document.createElement('button');
@@ -117,6 +167,7 @@ function updateDetectedLinks() {
 
         badge.appendChild(iconSpan);
         badge.appendChild(link);
+        badge.appendChild(editBtn);
         badge.appendChild(bgBtn);
         listEl.appendChild(badge);
     });
@@ -230,3 +281,58 @@ window.addEventListener('DOMContentLoaded', () => {
         _labelObserver.observe(_fileLabelEl, { childList: true, characterData: true, subtree: true });
     }
 });
+
+// --- Link Formatting Modal UI ---
+
+/** Opens the edit modal and populates it with the target link's metadata */
+function openLinkEditModal(item) {
+    const modal = document.getElementById('linkEditModal');
+    const displayInput = document.getElementById('linkEditDisplay');
+    const urlInput = document.getElementById('linkEditUrl');
+    const originalInput = document.getElementById('linkEditOriginalText');
+
+    if (!modal || !displayInput || !urlInput || !originalInput) return;
+
+    // Pre-fill inputs. If it was a raw URL without a display name, default display to empty.
+    displayInput.value = item.display || "";
+    urlInput.value = item.url;
+    originalInput.value = item.original;
+
+    modal.style.display = 'flex';
+    displayInput.focus();
+}
+
+/** Closes the link edit modal */
+function closeLinkEditModal() {
+    const modal = document.getElementById('linkEditModal');
+    if (modal) modal.style.display = 'none';
+}
+
+/** 
+ * Saves the edited link by performing a bulk string replacement across the entire text editor.
+ * Replaces the original raw URL (or original markdown link) with the newly formatted markdown string.
+ */
+function saveLinkEditModal() {
+    const displayInput = document.getElementById('linkEditDisplay').value.trim();
+    const urlInput = document.getElementById('linkEditUrl').value.trim();
+    const originalText = document.getElementById('linkEditOriginalText').value;
+
+    if (!urlInput || !originalText) {
+        alert("URL cannot be empty.");
+        return;
+    }
+
+    const editor = document.getElementById('editor');
+    if (!editor) return;
+
+    // Construct standard Markdown link format. If display is empty, fallback to raw URL format.
+    const newMarkdown = displayInput ? `[${displayInput}](${urlInput})` : urlInput;
+
+    // Replace all instances of the original string with the new markdown format in the text editor
+    editor.value = editor.value.split(originalText).join(newMarkdown);
+
+    // Trigger an input event to force the debounced autosave and re-render the Links list
+    editor.dispatchEvent(new Event('input'));
+
+    closeLinkEditModal();
+}

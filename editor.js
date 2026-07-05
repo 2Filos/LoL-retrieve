@@ -547,7 +547,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
             statusEl.innerText = `Searching for ${label}...`;
         }, 200);
     }
-    
+
     if (conflictBanner) conflictBanner.style.display = 'none';
     updateDiscardButtonState(false);
     currentSha = null;
@@ -572,7 +572,11 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     const config = getAPIConfig();
     try {
         // Fetch files metadata from repository contents endpoint
-        const response = await bridgeFetch(config.url + path, { headers: config.headers });
+        // Appending a timestamp query parameter forces the browser/Tampermonkey proxy
+        // to bypass the cache. This ensures we always get the latest 'sha' for the file, 
+        // preventing 409 Conflict errors when we later try to PUT/Sync changes.
+        const cacheBusterUrl = `${config.url}${path}?t=${Date.now()}`;
+        const response = await bridgeFetch(cacheBusterUrl, { headers: config.headers });
 
         if (searchTimer) clearTimeout(searchTimer);
 
