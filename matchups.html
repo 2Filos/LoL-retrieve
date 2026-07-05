@@ -17,7 +17,8 @@
         rel="stylesheet">
 
     <!-- Extracted External CSS Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="components.css">
 </head>
 
 <body>
@@ -223,97 +224,16 @@
     <datalist id="championList"></datalist>
 
     <!-- Core Script references -->
-    <!-- 1. utils.js: Champion name mappings & Mobalytics slug formatters -->
     <script src="utils.js"></script>
-
-    <!-- 2. api.js: Networking APIs & event message passing to the CORS bridge userscript -->
     <script src="api.js"></script>
-
-    <!-- 3. config.js: Personal Access tokens (PATs) & git configurations (loaded with fallback error listener) -->
     <script src="config.js" onerror="handleConfigMissing()"></script>
-
-    <!-- 4. editor.js: GUI orchestration, local drafts state loops, and textareas listeners -->
-    <script src="editor.js"></script>
-
-    <!-- 5. UI enhancements: collapsible links + textarea height persistence + champion portraits -->
-    <script>
-        // --- Links Panel Toggle ---
-        function toggleLinksPanel() {
-            const container = document.getElementById('detectedLinksContainer');
-            container.classList.toggle('collapsed');
-        }
-
-        // --- Textarea Height Persistence ---
-        (function () {
-            const editor = document.getElementById('editor');
-            if (!editor) return;
-
-            // Restore saved height
-            const savedHeight = localStorage.getItem('matchup_editor_height');
-            if (savedHeight) {
-                editor.style.height = savedHeight;
-            }
-
-            // Observe resize via ResizeObserver
-            let resizeTimeout;
-            const observer = new ResizeObserver(() => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    localStorage.setItem('matchup_editor_height', editor.style.height);
-                }, 200);
-            });
-            observer.observe(editor);
-        })();
-
-        // --- Champion Portrait Icons ---
-        // Override the fileLabel update to also show champion portraits when a matchup is loaded.
-        // This hooks into the existing loadMatchupByPath by watching for activeMatchup changes.
-        const _origLoadMatchupByPath = typeof loadMatchupByPath === 'function' ? loadMatchupByPath : null;
-
-        function updateChampionPortraits() {
-            const portraits = document.getElementById('matchupPortraits');
-            const fileLabel = document.getElementById('currentFileLabel');
-            const myIcon = document.getElementById('myChampIcon');
-            const enemyIcon = document.getElementById('enemyChampIcon');
-            const myName = document.getElementById('myChampName');
-            const enemyName = document.getElementById('enemyChampName');
-
-            if (!portraits || !fileLabel) return;
-
-            // Check if we have a real matchup loaded (not General Notes)
-            if (typeof activeMatchup !== 'undefined' && activeMatchup && activeMatchup.myKey && activeMatchup.enemyKey) {
-                // Show portrait block, hide text label
-                portraits.style.display = 'flex';
-                fileLabel.style.display = 'none';
-
-                // Use DDragon for champion icons (latest patch)
-                const version = typeof ddragonVersion !== 'undefined' && ddragonVersion ? ddragonVersion : '14.13.1';
-                myIcon.src = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${activeMatchup.myKey}.png`;
-                myIcon.alt = activeMatchup.myKey;
-                enemyIcon.src = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${activeMatchup.enemyKey}.png`;
-                enemyIcon.alt = activeMatchup.enemyKey;
-
-                // Set names below icons
-                const myDisplayName = typeof getChampionNameByKey === 'function' ? getChampionNameByKey(activeMatchup.myKey) : activeMatchup.myKey;
-                const enemyDisplayName = typeof getChampionNameByKey === 'function' ? getChampionNameByKey(activeMatchup.enemyKey) : activeMatchup.enemyKey;
-                myName.textContent = myDisplayName;
-                enemyName.textContent = enemyDisplayName;
-            } else {
-                // No matchup — show text label, hide portraits
-                portraits.style.display = 'none';
-                fileLabel.style.display = 'inline';
-            }
-        }
-
-        // Observe DOM changes on the fileLabel to trigger portrait updates
-        const _fileLabelEl = document.getElementById('currentFileLabel');
-        if (_fileLabelEl) {
-            const _labelObserver = new MutationObserver(() => {
-                updateChampionPortraits();
-            });
-            _labelObserver.observe(_fileLabelEl, { childList: true, characterData: true, subtree: true });
-        }
-    </script>
+    
+    <!-- Modularized Editor Components -->
+    <script src="ui.js"></script>
+    <script src="champions.js"></script>
+    <script src="storage.js"></script>
+    <script src="sync.js"></script>
+    <script src="boot.js"></script>
 </body>
 
 </html>

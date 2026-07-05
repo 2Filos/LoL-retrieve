@@ -1,0 +1,130 @@
+/*
+ * theme.css
+ * Core Variables, Typography, and Main Layout for the Matchup Portal
+ */
+
+:root {
+    --bg-darker: #0c131d;       /* Main window background (very dark blue/black) */
+    --bg-dark: #121b28;         /* Card and sidebar background */
+    --bg-light: #182535;        /* Input background and lighter panels */
+    --gold-dark: #1d2f44;       /* Slate border tone */
+    --gold-accent: #00bcab;     /* Neon teal/cyan accent color */
+    --gold-light: #e2e8f0;      /* Near-white for headers and highlight text */
+    --text-gold: #00bcab;       /* Cyan tone for special labels and subheaders */
+    --blue-accent: #1d2f44;
+    --blue-light: #00bcab;
+    --text-primary: #e2e8f0;    /* Default paragraph and primary text */
+    --text-secondary: #94a3b8;  /* Muted text for labels and details */
+    --success: #10b981;         /* Green for online/successful states */
+    --danger: #ef4444;          /* Red for error/delete/discard prompts */
+    --card-border: 1px solid #1d2f44;
+    --gold-gradient: linear-gradient(135deg, #1d2f44 0%, #00bcab 50%, #1d2f44 100%);
+    --card-glow: 0 0 12px rgba(0, 188, 171, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-darker);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+}
+
+header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;            
+    padding: 12px 22px;
+    background: var(--bg-dark);
+    border: 1px solid var(--gold-dark);
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), var(--card-glow);
+    background-image: linear-gradient(to right, rgba(18, 27, 40, 0.9), rgba(12, 19, 29, 0.9));
+}
+
+h1 {
+    font-family: 'Cinzel', Georgia, serif; 
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    margin: 0;
+    background: linear-gradient(to right, #e2e8f0, #00bcab); 
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid currentColor; 
+    transition: all 0.3s;
+}
+
+.status-badge.online {
+    color: var(--success);
+    background: rgba(70, 162, 84, 0.1);
+}
+
+.status-badge.offline {
+    color: var(--danger);
+    background: rgba(232, 64, 64, 0.1);
+}
+
+.status-badge.pinging {
+    color: var(--gold-accent);
+    background: rgba(200, 155, 60, 0.1);
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--bg-dark);
+    border: var(--card-border);
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), var(--card-glow);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 16px rgba(0, 188, 171, 0.08);
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}

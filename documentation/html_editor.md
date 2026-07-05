@@ -1,6 +1,7 @@
 # HTML Frontend & State Management
 
 This document details the structure, behavior, and lifecycle events of the frontend editor page ([matchups.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html)).
+For details on how the javascript is split into modules, please refer to [architecture.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation/architecture.md).
 
 ## 1. UI Elements & Layout
 

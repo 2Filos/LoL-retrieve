@@ -1,0 +1,238 @@
+/**
+ * ui.js
+ * DOM manipulation, URL extraction, and UI feedback states
+ */
+
+/**
+ * Parses and extracts all valid URLs (HTTP/HTTPS/www) from raw text.
+ * Filters out trailing punctuation (commas, periods, parentheses).
+ * 
+ * @param {string} text - Matchup markdown content.
+ * @returns {Array<string>} Unique list of matching URLs.
+ */
+function extractUrls(text) {
+    if (!text) return [];
+
+    // Regular expression matching http://, https://, and www. links
+    const regex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+    const matches = text.match(regex) || [];
+
+    // Clean trailing punctuation that regex accidentally catches (e.g. at the end of sentences)
+    return matches.map(url => {
+        let cleaned = url;
+        while (/[.,;:!?)]$/.test(cleaned)) {
+            cleaned = cleaned.slice(0, -1);
+        }
+        return cleaned;
+    }).filter((url, index, self) => self.indexOf(url) === index); // deduplicate entries
+}
+
+/**
+ * Returns matching domain icons or initials to overlay on links.
+ * 
+ * @param {string} url - Target URL.
+ * @returns {string} String containing SVG HTML or badge HTML.
+ */
+function getLinkIcon(url) {
+    let domain = "";
+    try {
+        const parsed = new URL(url.startsWith('http') ? url : 'https://' + url);
+        domain = parsed.hostname.toLowerCase();
+    } catch (e) {
+        // Fallback default link icon if URL parsing fails
+        return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
+    }
+
+    if (domain.includes('youtube.com') || domain.includes('youtu.be')) {
+        return `<svg width="12" height="12" viewBox="0 0 24 24" fill="#ef4444"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.508 9.388.508 9.388.508s7.518 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`;
+    }
+    if (domain.includes('op.gg')) {
+        return `<span style="font-size: 8px; font-weight: bold; background: #5383e8; color: white; padding: 1px 3px; border-radius: 2px; line-height: 1.2; font-family: sans-serif; display: inline-block;">OP</span>`;
+    }
+    if (domain.includes('mobalytics.gg')) {
+        return `<svg width="12" height="12" viewBox="0 0 24 24" fill="#5f3bf4"><polygon points="12 2 22 7 22 17 12 22 2 17 2 7"/></svg>`;
+    }
+    if (domain.includes('lolalytics.com')) {
+        return `<span style="font-size: 8px; font-weight: bold; background: #c8102e; color: white; padding: 1px 3px; border-radius: 2px; line-height: 1.2; font-family: sans-serif; display: inline-block;">LA</span>`;
+    }
+    return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
+}
+
+/**
+ * Scans the current editor text area, extracts URLs, and populates the 
+ * detected link badge list underneath the editor.
+ */
+function updateDetectedLinks() {
+    const editorEl = document.getElementById('editor');
+    const container = document.getElementById('detectedLinksContainer');
+    const listEl = document.getElementById('detectedLinksList');
+
+    if (!editorEl || !container || !listEl) return;
+
+    const urls = extractUrls(editorEl.value);
+
+    listEl.innerHTML = '';
+    if (urls.length === 0) {
+        return; // Keep list area empty if no URLs found
+    }
+
+    urls.forEach(url => {
+        const cleanHref = url.startsWith('http') ? url : 'https://' + url;
+        let displayUrl = url.replace(/https?:\/\/(www\.)?/, '');
+        if (displayUrl.length > 30) {
+            displayUrl = displayUrl.substring(0, 27) + '...'; // Truncate long URLs for display
+        }
+
+        // Assemble link badge card
+        const badge = document.createElement('div');
+        badge.className = 'link-badge';
+
+        const iconSpan = document.createElement('span');
+        iconSpan.className = 'link-icon';
+        iconSpan.innerHTML = getLinkIcon(url);
+
+        const link = document.createElement('a');
+        link.href = cleanHref;
+        link.target = '_blank';
+        link.textContent = displayUrl;
+        link.title = url;
+
+        // Special "..." button allowing browser background tab opening (via bridge.js)
+        const bgBtn = document.createElement('button');
+        bgBtn.className = 'bg-tab-btn';
+        bgBtn.textContent = '...';
+        bgBtn.title = 'Open in background tab';
+        bgBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (bridgeActive) {
+                // Route background tab opening request to bridge context
+                window.dispatchEvent(new CustomEvent("OpenBackgroundTab", {
+                    detail: { url: cleanHref }
+                }));
+            } else {
+                window.open(cleanHref, '_blank');
+            }
+        };
+
+        badge.appendChild(iconSpan);
+        badge.appendChild(link);
+        badge.appendChild(bgBtn);
+        listEl.appendChild(badge);
+    });
+}
+
+// --- Discard Draft UI Confirmation Helpers ---
+
+/** Shows the discard button when a matchup is active and disables it if there is no draft.
+ *  The button is rendered in the sync control row, but only enabled when a draft exists.
+ */
+function updateDiscardButtonState(hasDraft) {
+    const discardBtn = document.getElementById('discardBtn');
+    const discardConfirmGroup = document.getElementById('discardConfirmGroup');
+    if (!discardBtn || !discardConfirmGroup) return;
+
+    discardBtn.style.display = 'inline-block';
+    discardBtn.disabled = !hasDraft;
+    discardConfirmGroup.style.display = 'none';
+}
+
+/** Hides the confirmation controls and shows the main discard button.
+ *  The discard button stays visible at all times after editor load.
+ */
+function hideDiscardConfirm() {
+    const discardBtn = document.getElementById('discardBtn');
+    const discardConfirmGroup = document.getElementById('discardConfirmGroup');
+    if (!discardBtn || !discardConfirmGroup) return;
+
+    discardConfirmGroup.style.display = 'none';
+}
+
+/** Shows the confirmation row for the discard action if the button is enabled. */
+function showDiscardConfirm() {
+    const discardBtn = document.getElementById('discardBtn');
+    const discardConfirmGroup = document.getElementById('discardConfirmGroup');
+    if (!discardBtn || !discardConfirmGroup || discardBtn.disabled) return;
+
+    discardConfirmGroup.style.display = 'inline-flex';
+}
+
+// --- Links Panel Toggle ---
+function toggleLinksPanel() {
+    const container = document.getElementById('detectedLinksContainer');
+    if (container) {
+        container.classList.toggle('collapsed');
+    }
+}
+
+// --- Textarea Height Persistence ---
+(function () {
+    // Wait for DOM to load if included in head, but usually runs at end of body.
+    window.addEventListener('DOMContentLoaded', () => {
+        const editor = document.getElementById('editor');
+        if (!editor) return;
+
+        // Restore saved height
+        const savedHeight = localStorage.getItem('matchup_editor_height');
+        if (savedHeight) {
+            editor.style.height = savedHeight;
+        }
+
+        // Observe resize via ResizeObserver
+        let resizeTimeout;
+        const observer = new ResizeObserver(() => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                localStorage.setItem('matchup_editor_height', editor.style.height);
+            }, 200);
+        });
+        observer.observe(editor);
+    });
+})();
+
+// --- Champion Portrait Icons UI Update ---
+function updateChampionPortraits() {
+    const portraits = document.getElementById('matchupPortraits');
+    const fileLabel = document.getElementById('currentFileLabel');
+    const myIcon = document.getElementById('myChampIcon');
+    const enemyIcon = document.getElementById('enemyChampIcon');
+    const myName = document.getElementById('myChampName');
+    const enemyName = document.getElementById('enemyChampName');
+
+    if (!portraits || !fileLabel) return;
+
+    // Check if we have a real matchup loaded (not General Notes)
+    if (typeof activeMatchup !== 'undefined' && activeMatchup && activeMatchup.myKey && activeMatchup.enemyKey) {
+        // Show portrait block, hide text label
+        portraits.style.display = 'flex';
+        fileLabel.style.display = 'none';
+
+        // Use DDragon for champion icons (latest patch)
+        const version = typeof ddragonVersion !== 'undefined' && ddragonVersion ? ddragonVersion : '14.13.1';
+        myIcon.src = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${activeMatchup.myKey}.png`;
+        myIcon.alt = activeMatchup.myKey;
+        enemyIcon.src = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${activeMatchup.enemyKey}.png`;
+        enemyIcon.alt = activeMatchup.enemyKey;
+
+        // Set names below icons
+        const myDisplayName = typeof getChampionNameByKey === 'function' ? getChampionNameByKey(activeMatchup.myKey) : activeMatchup.myKey;
+        const enemyDisplayName = typeof getChampionNameByKey === 'function' ? getChampionNameByKey(activeMatchup.enemyKey) : activeMatchup.enemyKey;
+        myName.textContent = myDisplayName;
+        enemyName.textContent = enemyDisplayName;
+    } else {
+        // No matchup — show text label, hide portraits
+        portraits.style.display = 'none';
+        fileLabel.style.display = 'inline';
+    }
+}
+
+// Observe DOM changes on the fileLabel to trigger portrait updates automatically
+window.addEventListener('DOMContentLoaded', () => {
+    const _fileLabelEl = document.getElementById('currentFileLabel');
+    if (_fileLabelEl) {
+        const _labelObserver = new MutationObserver(() => {
+            updateChampionPortraits();
+        });
+        _labelObserver.observe(_fileLabelEl, { childList: true, characterData: true, subtree: true });
+    }
+});
