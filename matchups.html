@@ -12,13 +12,13 @@
     <!-- Load fonts (Cinzel for headers, Inter for normal text, Fira Code for editor markdown) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap"
-        rel="stylesheet">
+    <!-- Preconnect to DDragon for faster icon loading -->
+    <link rel="preconnect" href="https://ddragon.leagueoflegends.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Extracted External CSS Stylesheet -->
-    <link rel="stylesheet" href="theme.css">
-    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
 
 <body>
@@ -284,16 +284,14 @@
     </div>
 
     <!-- Core Script references -->
-    <script src="utils.js"></script>
     <script src="config.js" onerror="handleConfigMissing()"></script>
-
-    <!-- Modularized Editor Components -->
-    <script src="champions.js"></script>
-    <script src="storage.js"></script>
-    <script src="sync.js?v=4"></script>
-    <script src="api.js?v=4"></script>
-    <script src="ui.js?v=4"></script>
-    <script src="boot.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/champions.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/sync.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/boot.js"></script>
 </body>
 
 </html>
