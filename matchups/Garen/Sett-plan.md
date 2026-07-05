@@ -21,4 +21,5 @@ Presumably your R might let you reposition him so you can stun him, push him awa
 Or act as another option instead of E for making his Q run out
 
 Build is Stride into HP or BC
+Naturally since low mobility, gank awareness is paramount - look at minimap
 
