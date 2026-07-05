@@ -20,3 +20,5 @@ And of course, auto him, just auto him.
 Presumably your R might let you reposition him so you can stun him, push him away from tower from ganks
 Or act as another option instead of E for making his Q run out
 
+Build is Stride into HP or BC
+
