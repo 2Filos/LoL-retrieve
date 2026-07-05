@@ -21,6 +21,6 @@ Trades on QWE with E on CD, nearly dies for it.
 Riven's E means she lasts longer than you'd think on an all-in.
 
 I think the issue is that I think i cannot Q into her W, so I E instead, and she gets a full Q trade
-But I CAN start off with Q (he does) that's what I was missing
+But I CAN start off with Q (he does) that's what I was missing, I have to be ready for it though
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783249699413","display":"5mo ago","url":"https://www.youtube.com/watch?v=CQsi1z4moSg&list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO&index=14"}],"linkOrder":["https://www.youtube.com/watch?v=CQsi1z4moSg&list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO&index=14"]} -->
