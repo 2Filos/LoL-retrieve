@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>LoL Matchup Portal</title>
+    <!-- Favicon configuration -->
+    <link rel="icon"
+        href="https://external-preview.redd.it/cI-jnDO5fH2eGT-Id68L-0XyXGypFuKJJ6E5LU3r1Wc.jpg?auto=webp&s=a7ca39677084b498403806a655465c81d9ef6085"
+        type="image/x-icon">
+
+    <!-- Load fonts (Cinzel for headers, Inter for normal text, Fira Code for editor markdown) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preconnect to DDragon for faster icon loading -->
+    <link rel="preconnect" href="https://ddragon.leagueoflegends.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Extracted External CSS Stylesheet -->
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Main Header Bar -->
+        <header>
+            <h1>LoL Matchup Portal</h1>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div id="vsmPairBadge" class="status-badge"
+                    style="display: none; padding: 4px 8px; font-weight: bold; border-radius: 4px; font-size: 11px; box-shadow: 0 1px 3px rgba(0,0,0,0.5); color: #fff;">
+                </div>
+                <div id="connectionStatus" class="status-badge pinging">
+                    GitHub API: Pinging...
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Error & Alert Banners -->
+        <!-- 1. Config missing warning banner -->
+        <div id="configError" class="error-banner" style="display: none;">
+            <strong>Missing Configuration:</strong> `config.js` was not detected locally. Please check your folder
+            structure.
+        </div>
+
+        <!-- 2. CORS Bridge inactive warning banner -->
+        <div id="bridgeError" class="error-banner" style="display: none;">
+            <strong>Tampermonkey Bridge Inactive:</strong> The CORS bridge script is not responding. Please check the
+            following settings:
+            <ol style="margin: 5px 0; padding-left: 20px;">
+                <li>Verify that the **Tampermonkey** extension is enabled in your browser.</li>
+                <li>Make sure that **`bridge.js`** is active in the Tampermonkey dashboard.</li>
+                <li>**IMPORTANT (Chrome/Edge):** You must check **"Allow access to file URLs"** in the Tampermonkey
+                    details settings (visit `chrome://extensions`, click **Details** on Tampermonkey, and toggle the
+                    switch).</li>
+                <li>**Firefox Users:** Make sure you are loading this page inside **Firefox** (since your active
+                    Tampermonkey extension is located there). The updated script will hook in automatically.</li>
+            </ol>
+        </div>
+
+        <!-- 3. Invalid credentials/token expired banner -->
+        <div id="tokenExpiredError" class="error-banner" style="display: none;">
+            <strong>Token Expired or Invalid:</strong> GitHub rejected your token. Please verify or update your personal
+            access token in `config.js`.
+        </div>
+
+
+
+        <!-- Portal Workspaces Grid Layout -->
+        <div class="main-layout">
+            <!-- Sidebar: Controls and Pending Draft Items -->
+            <div class="sidebar">
+                <!-- Matchup Selection Form -->
+                <div class="card">
+                    <div class="form-group" style="margin-bottom: 8px;">
+                        <label for="quickMatchup">Matchup</label>
+                        <input type="text" id="quickMatchup" placeholder="Quick Search (~A vs B Top)">
+                    </div>
+                    <div style="display: flex; align-items: flex-end; gap: 8px; margin-bottom: 12px;">
+                        <div class="form-group" style="flex: 1.5; margin: 0;">
+                            <input type="text" id="myChamp" list="championList" placeholder="Garen" disabled>
+                        </div>
+                        <span
+                            style="font-size: 11px; font-weight: bold; color: var(--text-secondary); padding-bottom: 10px;">vs</span>
+                        <div class="form-group" style="flex: 1.5; margin: 0;">
+                            <input type="text" id="enemyChamp" list="championList" placeholder="Sett" disabled>
+                        </div>
+                        <div class="form-group" style="flex: 1; margin: 0;">
+                            <select id="roleSelect" style="padding: 8px 4px;">
+                                <option value="top">Top</option>
+                                <option value="jungle">Jng</option>
+                                <option value="mid">Mid</option>
+                                <option value="adc">ADC</option>
+                                <option value="support">Sup</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="loadBtn" onclick="loadMatchup()" disabled>Load Matchup</button>
+                </div>
+
+                <!-- Unsaved local drafts stack panel -->
+                <div class="card drafts-panel">
+                    <h3>Pending Local Drafts</h3>
+                    <div id="draftsList" class="drafts-list">
+                        <div class="no-drafts">Loading drafts...</div>
+                    </div>
+                </div>
+
+                <!-- Saved matchups stack panel -->
+                <div class="card saved-panel">
+                    <h3>Saved Matchups</h3>
+                    <div id="savedList" class="drafts-list">
+                        <div class="no-drafts">No saved matchups.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes Editor Main Panel -->
+            <div class="card editor-card">
+                <!-- Editor Meta Details Header — Champion Portraits + VS + Star -->
+                <div class="editor-header">
+                    <div class="editor-title" id="editorTitleBlock">
+                        <!-- Champion portrait block: icon stacks with names below, VS in between -->
+                        <div class="matchup-portraits" id="matchupPortraits" style="display: none;">
+                            <div class="portrait-stack">
+                                <img id="myChampIcon" class="champion-portrait" src="" alt="">
+                                <span class="portrait-name" id="myChampName"></span>
+                            </div>
+                            <span class="vs-label">VS</span>
+                            <div class="portrait-stack">
+                                <img id="enemyChampIcon" class="champion-portrait" src="" alt="">
+                                <span class="portrait-name" id="enemyChampName"></span>
+                            </div>
+                            <button id="starBtn" class="star-btn" onclick="toggleSaveMatchup()"
+                                style="display: none; margin-left: 10px;" title="Save Matchup">
+                                <svg class="star-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polygon
+                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                    </polygon>
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- Fallback text label for non-matchup files (e.g. General Notes) -->
+                        <span id="currentFileLabel"></span>
+                    </div>
+
+                    <!-- Page Tab Buttons — labels set dynamically by JS -->
+                    <div class="editor-tab-group" id="editorTabs" style="display: none;">
+                        <button class="tab-btn" data-page="left" id="tabLeft" onclick="switchEditorTab('left')">Plan</button>
+                        <button class="tab-btn active" data-page="right" id="tabRight" onclick="switchEditorTab('right')">Notes</button>
+                    </div>
+
+                    <div id="conflictBanner" style="display: none; align-items: center; gap: 8px; flex-wrap: nowrap; margin-left: 10px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 6px 12px;">
+                        <strong style="color: #fca5a5; font-size: 11px; text-transform: uppercase; white-space: nowrap; display: flex; align-items: center; gap: 4px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #ef4444;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            Unsynced conflict:
+                        </strong>
+                        <button onclick="resolveConflict('local')" class="btn-outline-sm" style="white-space: nowrap; width: auto;">Use Local</button>
+                        <button onclick="resolveConflict('github')" class="btn-gold-sm" style="white-space: nowrap; width: auto;">Use GitHub</button>
+                    </div>
+                </div>
+
+                <!-- Core Markdown Notepad Textarea -->
+                <textarea id="editor" placeholder="Select a matchup to start writing notes..." disabled></textarea>
+
+                <!-- Inline script to restore height immediately before the browser renders the layout, preventing flicker -->
+                <script>
+                    (function () {
+                        try {
+                            const savedHeight = localStorage.getItem('matchup_editor_height');
+                            if (savedHeight) {
+                                document.getElementById('editor').style.height = savedHeight;
+                            }
+                        } catch (e) { }
+                    })();
+                </script>
+
+                <!-- Extracted URLs Mentions List — Collapsible, open by default -->
+                <div class="detected-links-container" id="detectedLinksContainer">
+                    <div class="detected-links-header" onclick="toggleLinksPanel()">
+                        <div class="detected-links-title">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                            </svg>
+                            Links
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button class="btn-gold-sm" onclick="event.stopPropagation(); openLinkEditModal(null);"
+                                style="padding: 2px 8px; font-size: 10px; border-radius: 2px; text-transform: uppercase; letter-spacing: 0;">+
+                                Add Link</button>
+                            <svg class="links-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div id="detectedLinksList" class="detected-links-list"></div>
+                </div>
+
+                <!-- Footer Action Bar -->
+                <div class="editor-actions">
+                    <div id="status" class="status-text"></div>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <a id="lolaLink" href="#" target="_blank" class="btn-outline-sm"
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 8px 16px; font-size: 12px; font-weight: bold; width: auto; border-radius: 4px; justify-content: center; box-sizing: border-box;">
+                            <img src="https://lolalytics.com/favicon.ico" width="14" height="14"
+                                style="border-radius: 2px;" onerror="this.style.display='none'">
+                            Lolalytics
+                        </a>
+                        <a id="opggLink" href="#" target="_blank" class="btn-outline-sm"
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 8px 16px; font-size: 12px; font-weight: bold; width: auto; border-radius: 4px; justify-content: center; box-sizing: border-box;">
+                            <img src="https://www.op.gg/favicon.ico" width="14" height="14" style="border-radius: 2px;"
+                                onerror="this.style.display='none'">
+                            OPGG
+                        </a>
+                        <a id="mobalyticsLink" href="#" target="_blank" class="btn-outline-sm"
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 8px 16px; font-size: 12px; font-weight: bold; width: auto; border-radius: 4px; justify-content: center; box-sizing: border-box;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="#5f3bf4" style="border-radius: 2px;">
+                                <polygon points="12 2 22 7 22 17 12 22 2 17 2 7" fill="#5f3bf4" />
+                                <path d="M7 17V10L12 14L17 10V17" stroke="white" stroke-width="2.5"
+                                    stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            </svg>
+                            Mobalytics
+                        </a>
+                        <button id="discardBtn" class="btn-discard" onclick="showDiscardConfirm()" disabled
+                            style="padding: 10px 15px; font-size: 12px; width: auto;">Discard</button>
+                        <button id="syncBtn" class="btn-gold-sm" onclick="saveToGitHub()" disabled
+                            style="width: auto; display: inline-flex; opacity: 0.6; cursor: not-allowed;">Sync
+                            GitHub</button>
+                    </div>
+                </div>
+                <div id="discardConfirmGroup" style="display: none; align-items: center; gap: 6px; margin-top: 8px;">
+                    <span
+                        style="font-size: 12px; color: var(--danger); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-right: 4px;">Are
+                        you sure?</span>
+                    <button id="confirmDiscardYes" class="btn-discard" onclick="discardCurrentDraft()"
+                        style="padding: 6px 12px; font-size: 11px; width: auto; text-transform: uppercase;">Yes</button>
+                    <button id="confirmDiscardNo" class="btn-secondary" onclick="hideDiscardConfirm()"
+                        style="padding: 6px 12px; font-size: 11px; width: auto; text-transform: uppercase; border: 1px solid var(--gold-dark); background: transparent; color: var(--text-secondary);">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dropdown source cache container -->
+    <datalist id="championList"></datalist>
+
+    <!-- Link Edit Modal -->
+    <div id="linkEditModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; padding: 20px; box-sizing: border-box; backdrop-filter: blur(2px);">
+        <div class="card"
+            style="width: 100%; max-width: 450px; display: flex; flex-direction: column; gap: 16px; border: 1px solid var(--gold-accent); box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 20px rgba(0, 188, 171, 0.15);">
+            <h3
+                style="margin: 0; color: var(--gold-accent); font-family: 'Cinzel', serif; letter-spacing: 1px; border-bottom: 1px solid var(--gold-dark); padding-bottom: 10px;">
+                Edit Link</h3>
+
+            <!-- Hidden field to store the original text being replaced -->
+            <input type="hidden" id="linkEditOriginalText">
+
+            <div class="form-group">
+                <label for="linkEditDisplay">Display Text</label>
+                <input type="text" id="linkEditDisplay" placeholder="e.g. Challenger VODS - Garen">
+            </div>
+            <div class="form-group">
+                <label for="linkEditUrl">URL</label>
+                <input type="text" id="linkEditUrl" placeholder="https://...">
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: space-between; margin-top: 10px;">
+                <button class="btn-outline-sm" id="linkDeleteBtn" onclick="deleteLinkEditModal()"
+                    style="display: none; border-color: var(--danger); color: var(--danger); width: auto; padding: 8px 16px;">Delete</button>
+                <div style="display: flex; gap: 10px; margin-left: auto;">
+                    <button class="btn-secondary" onclick="closeLinkEditModal()" style="width: auto;">Cancel</button>
+                    <button class="btn-primary" onclick="saveLinkEditModal()"
+                        style="width: auto; padding: 8px 24px;">Save Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Script references -->
+    <script src="config.js" onerror="handleConfigMissing()"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/champions.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/sync.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/boot.js"></script>
+</body>
+
+</html>

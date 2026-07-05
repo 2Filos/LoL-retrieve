@@ -1,0 +1,777 @@
+/*
+ * style.css
+ * Core Stylesheet for the League of Legends Matchup Portal
+ * 
+ * DESIGN PHILOSOPHY:
+ * This stylesheet is built using Vanilla CSS for maximum speed and simplicity.
+ * It uses a cohesive, dark-themed fantasy/gaming aesthetic (inspired by League of Legends UI).
+ * It features dynamic transitions, flexbox and grid layouts, and custom-styled elements.
+ * 
+ * Reference for Vibe Coders:
+ * To learn more about modern CSS tricks, see the project files or read up on CSS custom properties (variables),
+ * CSS Grid, Flexbox, and CSS Media Queries for responsive interfaces.
+ */
+
+/* 
+ * 1. CSS VARIABLES (:root)
+ * ------------------------
+ * CSS Custom Properties let us store colors, border settings, and gradients in a central spot.
+ * If we want to change a color globally, we edit it here, and it updates everywhere.
+ * Prefix variables with double-dash `--`. Access them using `var(--variable-name)`.
+ */
+:root {
+    --bg-darker: #0c131d;
+    /* Main window background (very dark blue/black) */
+    --bg-dark: #121b28;
+    /* Card and sidebar background */
+    --bg-light: #182535;
+    /* Input background and lighter panels */
+    --gold-dark: #1d2f44;
+    /* Slate border tone */
+    --gold-accent: #00bcab;
+    /* Neon teal/cyan accent color */
+    --gold-light: #e2e8f0;
+    /* Near-white for headers and highlight text */
+    --text-gold: #00bcab;
+    /* Cyan tone for special labels and subheaders */
+    --blue-accent: #1d2f44;
+    --blue-light: #00bcab;
+    --text-primary: #e2e8f0;
+    /* Default paragraph and primary text */
+    --text-secondary: #94a3b8;
+    /* Muted text for labels and details */
+    --success: #10b981;
+    /* Green for online/successful states */
+    --danger: #ef4444;
+    /* Red for error/delete/discard prompts */
+    --card-border: 1px solid #1d2f44;
+    --gold-gradient: linear-gradient(135deg, #1d2f44 0%, #00bcab 50%, #1d2f44 100%);
+    --card-glow: 0 0 12px rgba(0, 188, 171, 0.06);
+    --saved-matchups-height: 700px;
+    /* Tweak this to make the saved matchups area vertically wider */
+}
+
+/*
+ * 2. LAYOUT DEFAULTS & GLOBAL RESETS
+ * -----------------------------------
+ */
+
+/* 
+ * Apply box-sizing: border-box to all elements.
+ * By default, browsers add borders and padding *outside* an element's specified width.
+ * `border-box` forces borders and padding to remain *inside* the width, preventing sizing bugs.
+ */
+* {
+    box-sizing: border-box;
+}
+
+/* Custom Scrollbar */
+.drafts-list::-webkit-scrollbar,
+textarea::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.drafts-list::-webkit-scrollbar-track,
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.drafts-list::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb {
+    background: var(--gold-dark);
+    border-radius: 3px;
+}
+
+.drafts-list::-webkit-scrollbar-thumb:hover,
+textarea::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-accent);
+}
+
+body {
+    background-color: var(--bg-darker);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* The parent wrapper of the entire portal UI, centering and capping the interface width */
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    /* Tighter gap for Mockup A's compact feel */
+}
+
+/*
+ * 3. HEADER & TITLE BRANDING
+ * --------------------------
+ */
+header {
+    display: flex;
+    justify-content: space-between;
+    /* Pushes the title to the left, status badge to the right */
+    align-items: center;
+    /* Vertically centers both header items */
+    padding: 12px 22px;
+    background: var(--bg-dark);
+    border: 1px solid var(--gold-dark);
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), var(--card-glow);
+    background-image: linear-gradient(to right, rgba(18, 27, 40, 0.9), rgba(12, 19, 29, 0.9));
+}
+
+h1 {
+    font-family: 'Cinzel', Georgia, serif;
+    /* Fantasy style font for League of Legends feel */
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    margin: 0;
+    background: linear-gradient(to right, #e2e8f0, #00bcab);
+    /* Multi-tone text color */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Makes background gradient shine through the text */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/*
+ * 4. PING STATUS BADGES
+ * --------------------
+ */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid currentColor;
+    /* border inherits the color property automatically */
+    transition: all 0.3s;
+}
+
+.status-badge.online {
+    color: var(--success);
+    background: rgba(70, 162, 84, 0.1);
+}
+
+.status-badge.offline {
+    color: var(--danger);
+    background: rgba(232, 64, 64, 0.1);
+}
+
+.status-badge.pinging {
+    color: var(--gold-accent);
+    background: rgba(200, 155, 60, 0.1);
+}
+
+/*
+ * 5. GRID PANELS LAYOUT — Mockup A: Narrow sidebar (250px)
+ * ---------------------------------------------------------
+ */
+.main-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 16px;
+}
+
+/* 
+ * MEDIA QUERY FOR MOBILE DEVICES:
+ * If the screen width is 900px or less, collapse the 2-column grid layout into a single column.
+ */
+@media (max-width: 900px) {
+    .main-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: var(--bg-dark);
+    border: var(--card-border);
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), var(--card-glow);
+    transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 16px rgba(0, 188, 171, 0.08);
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/*
+ * 6. FORM FIELDS & INPUT ELEMENTS
+ * ------------------------------
+ */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    font-weight: bold;
+}
+
+input[type="text"],
+select {
+    background: var(--bg-darker);
+    border: 1px solid var(--gold-dark);
+    color: var(--text-primary);
+    padding: 8px 10px;
+    font-size: 13px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: var(--gold-accent);
+    outline: none;
+    box-shadow: 0 0 5px rgba(200, 155, 60, 0.3);
+}
+
+/*
+ * 7. BUTTON STYLES & INTERACTIVE BEHAVIORS
+ * ----------------------------------------
+ */
+button {
+    background: var(--gold-accent);
+    color: #0c131d;
+    border: 1px solid var(--gold-accent);
+    font-weight: bold;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+button:hover:not(:disabled) {
+    background: #00e0cc;
+    color: #0c131d;
+    box-shadow: 0 0 10px rgba(0, 188, 171, 0.4);
+}
+
+button:disabled {
+    background: rgba(0, 188, 171, 0.1);
+    color: rgba(148, 163, 184, 0.4);
+    border-color: rgba(29, 47, 68, 0.8);
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--text-secondary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.btn-danger {
+    background: rgba(232, 64, 64, 0.2);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    width: auto;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: var(--danger);
+    color: var(--text-primary);
+}
+
+.btn-discard {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.45);
+    width: auto;
+}
+
+.btn-discard:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.25);
+    color: #f87171;
+}
+
+.btn-discard:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    background: rgba(239, 68, 68, 0.08);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+/*
+ * 8. LOCAL DRAFTS SIDEBAR
+ * ------------------------
+ */
+.drafts-panel h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--text-gold);
+    border-bottom: 1px solid var(--gold-dark);
+    padding-bottom: 6px;
+}
+
+.drafts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 350px;
+    overflow-y: auto;
+    /* Forces scrollbar to take up physical space rather than overlaying content */
+    padding-right: 8px;
+    /* Adds breathing room between the cards and the scrollbar */
+}
+
+.saved-panel .drafts-list {
+    max-height: none;
+    height: var(--saved-matchups-height);
+}
+
+.draft-card {
+    background: var(--bg-darker);
+    border: 1px solid #111e2e;
+    padding: 8px 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.3s;
+    margin-right: 8px;
+    /* Force gap between card and the scrollbar */
+}
+
+.draft-card:hover {
+    border-color: var(--gold-accent);
+}
+
+.draft-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.draft-champ {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.draft-tag {
+    font-size: 8px;
+    color: var(--gold-accent);
+    text-transform: uppercase;
+}
+
+.draft-actions {
+    display: flex;
+    gap: 4px;
+}
+
+.draft-actions button {
+    padding: 3px 7px;
+    font-size: 9px;
+    width: auto;
+}
+
+.no-drafts {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-style: italic;
+    text-align: center;
+    padding: 16px 0;
+}
+
+/*
+ * 8b. SAVED MATCHUPS SIDEBAR
+ * --------------------------
+ */
+.saved-panel h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--text-gold);
+    border-bottom: 1px solid var(--gold-dark);
+    padding-bottom: 6px;
+}
+
+/*
+ * 8c. STAR / FAVORITE BUTTON
+ * --------------------------
+ */
+.star-btn {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: transform 0.2s ease, color 0.2s ease;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.star-btn:hover:not(:disabled) {
+    transform: scale(1.2);
+    color: #ffb100;
+    background: transparent;
+    box-shadow: none;
+}
+
+.star-btn svg.filled {
+    fill: #ffb100;
+    stroke: #ffb100;
+}
+
+/*
+ * 9. TEXT EDITOR PANEL
+ * --------------------
+ */
+.editor-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gold-dark);
+    padding-bottom: 10px;
+    min-height: 75px;
+}
+
+.editor-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--gold-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- Champion Portrait Block (Mockup A) --- */
+.matchup-portraits {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.portrait-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.champion-portrait {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    object-fit: cover;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.champion-portrait:hover {
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 10px rgba(0, 188, 171, 0.3);
+}
+
+.portrait-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+.vs-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0 2px;
+    margin-top: -12px;
+    /* Align with icons, not names */
+}
+
+/* --- Textarea: taller default + resizable --- */
+textarea {
+    width: 100%;
+    height: 580px;
+    /* Taller default for Mockup A */
+    min-height: 300px;
+    background: var(--bg-light);
+    border: 1px solid var(--gold-dark);
+    color: var(--text-primary);
+    font-family: 'Fira Code', monospace;
+    /* Monospace block structure for coding notes */
+    font-size: 14px;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    resize: vertical;
+    /* Allows resizing the height only, preventing layout disruption */
+    transition: border-color 0.3s ease;
+}
+
+textarea:focus {
+    border-color: var(--gold-accent);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 188, 171, 0.3);
+}
+
+/* --- Footer Action Bar --- */
+.editor-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: var(--bg-darker);
+    border: 1px solid var(--gold-dark);
+    border-radius: 4px;
+}
+
+.status-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+/*
+ * 10. ERROR BANNERS & NOTIFICATIONS
+ * ----------------------------------
+ */
+.error-banner,
+.warning-banner {
+    background: rgba(232, 64, 64, 0.15);
+    border: 1px solid var(--danger);
+    color: #fca5a5;
+    padding: 12px 15px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.warning-banner {
+    background: rgba(200, 155, 60, 0.15);
+    border: 1px solid var(--gold-accent);
+    color: var(--gold-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.banner-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.banner-buttons button {
+    padding: 6px 12px;
+    font-size: 11px;
+    width: auto;
+}
+
+.btn-gold-sm {
+    background: var(--gold-accent);
+    color: var(--bg-darker);
+    border-color: var(--gold-light);
+}
+
+.btn-outline-sm {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--gold-dark);
+}
+
+.btn-outline-sm:hover {
+    border-color: var(--gold-accent);
+    background: rgba(200, 155, 60, 0.1);
+}
+
+.btn-sync-sm {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--gold-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+}
+
+.btn-sync-sm:hover {
+    border-color: var(--gold-accent);
+    color: var(--gold-accent);
+    background: rgba(0, 188, 171, 0.05);
+    box-shadow: none;
+}
+
+/*
+ * 11. AUTOMATICALLY EXTRACTED LINKS SECTION — Collapsible
+ * --------------------------------------------------------
+ */
+.detected-links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    background: var(--bg-darker);
+    border: 1px solid var(--gold-dark);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.detected-links-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.detected-links-header:hover {
+    background: rgba(0, 188, 171, 0.04);
+}
+
+.detected-links-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.links-chevron {
+    color: var(--text-secondary);
+    transition: transform 0.3s ease;
+}
+
+/* When collapsed, rotate chevron and hide list */
+.detected-links-container.collapsed .links-chevron {
+    transform: rotate(-90deg);
+}
+
+.detected-links-container.collapsed .detected-links-list {
+    display: none;
+}
+
+.detected-links-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+    flex-grow: 1;
+    padding: 4px 14px 10px 14px;
+}
+
+.link-badge {
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg-light);
+    border: 1px solid var(--gold-dark);
+    border-radius: 3px;
+    padding: 3px 3px 3px 8px;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    gap: 6px;
+    height: 26px;
+}
+
+.link-badge:hover {
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 5px rgba(0, 188, 171, 0.2);
+}
+
+.link-badge .link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.link-badge a {
+    color: var(--text-primary);
+    text-decoration: none;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+.link-badge a:hover {
+    color: var(--gold-accent);
+}
+
+.link-badge .bg-tab-btn {
+    background: rgba(0, 188, 171, 0.1);
+    border: 1px solid rgba(0, 188, 171, 0.3);
+    color: var(--gold-accent);
+    padding: 0 8px;
+    height: 18px;
+    line-height: 16px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 2px;
+    cursor: pointer;
+    width: auto;
+    text-transform: none;
+    letter-spacing: 0;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link-badge .bg-tab-btn:hover {
+    background: var(--gold-accent);
+    color: #0c131d;
+    box-shadow: 0 0 5px rgba(0, 188, 171, 0.4);
+}

@@ -7,7 +7,13 @@ This document explains how the matchup editor authenticates with GitHub using a 
 The editor is designed to pull files from and save files to a specific GitHub repository. By default, this is set to:
 `2Filos/LoL-retrieve`
 
-All matchup text files (e.g., `ryu-vs-ken.txt`) are stored at the root of this repository.
+### File Structure on GitHub
+All matchup files are organized in a directory structure:
+*   **Matchup Notes**: `matchups/{EnemyKey}/{MyKey}.md` — The primary notes file for a specific matchup.
+*   **Matchup Plans**: `matchups/{EnemyKey}/{MyKey}-plan.md` — An optional companion plan file for the same matchup (accessed via the "Plan" tab).
+*   **General Notes**: `Notes.md` — A standalone notes file at the repository root.
+*   **General VODs**: `Notes-vod.md` — A standalone VOD reference file at the repository root (accessed via the "VODs" tab on General Notes).
+*   **YouTube Index**: `youtube_links.json` — A global mapping of `{EnemyKey}_{MyKey}` to YouTube VOD URLs, auto-synced when saving matchups containing YouTube links.
 
 ## 2. Generating a GitHub Personal Access Token (PAT)
 
@@ -41,7 +47,16 @@ const CONFIG = {
 
 ## 4. Token Validity Verification
 
-When you open [matchups.html.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html.html), the editor performs a security and credentials check:
+When you open [matchups.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html), the editor performs a security and credentials check:
 1.  It sends a request to `https://api.github.com/user` using the provided token.
 2.  If the token is valid, the UI elements (input fields and buttons) are unlocked.
 3.  If the token is expired (e.g., after the expiration limit you set on GitHub) or invalid, the editor shows a warning banner and blocks input to prevent data loss.
+
+## 5. YouTube Links Index (`youtube_links.json`)
+
+The editor maintains a global YouTube links index file on GitHub at `youtube_links.json`. This file maps matchup keys to YouTube VOD URLs, enabling the Saved Matchups sidebar to show active YouTube icons even for matchups that haven't been opened recently.
+
+### How It Works
+1.  **On Boot**: The editor fetches `youtube_links.json` from GitHub, caches its content in `localStorage` (`youtube_links_index`), and stores its SHA for future updates.
+2.  **On Save**: After successfully saving a matchup to GitHub, the editor checks if a YouTube link exists in the saved content (from custom metadata links or raw markdown text). If the link is new or changed compared to the index, the editor automatically PUTs an updated `youtube_links.json` to GitHub.
+3.  **On Render**: The Saved Matchups sidebar reads from the cached index to determine which matchups should display active (red) vs inactive (grey) YouTube icons.

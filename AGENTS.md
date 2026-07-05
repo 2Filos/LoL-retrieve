@@ -1,4 +1,4 @@
-# Project Context & Agent Instructions (GEMINI.md)
+# Project Context & Agent Instructions (AGENTS.md)
 
 Welcome! This file serves as the core source of truth for the **LoL-retrieve** matchup editor project. It provides general project context and establishes rules for AI agents operating in this workspace.
 
@@ -59,7 +59,7 @@ The project maintains detailed guides inside the [documentation/](file:///c:/Use
 *   [github_contents_api.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/learning/github_contents_api.md): Educational deep-dive explaining Base64 multi-byte UTF-8 encoding/decoding and git SHAs revision rules.
 
 ### Standard Practices for Documentation Maintenance:
-1.  **Read First**: Before suggesting or implementing any feature, check this [GEMINI.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/GEMINI.md) file and read the relevant documentation files under [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation) to align with established patterns.
+1.  **Read First**: Before suggesting or implementing any feature, check this [AGENTS.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/AGENTS.md) file and read the relevant documentation files under [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation) to align with established patterns.
 2.  **Update on Change**: If you modify the codebase logic (e.g. adding new API options, changing the event bridge interface, or updating config properties), you must update the corresponding guides in [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation).
 3.  **Document New Workflows**: If a new module is introduced, create a new `.md` file inside the [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation) folder and link it here under the *Existing Documentation Files* list.
 4.  **Extend Agent Rules**: If you introduce a new architecture rule or standard workflow constraint, write it in the *Rules for Future AI Agents* list above to ensure next-generation agents follow it.

@@ -4,17 +4,27 @@ A lightweight, local, browser-based text editor designed to manage and synchroni
 
 ## Project Structure
 
-*   [matchups.html.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html.html) - The browser-based text editor user interface.
+*   [matchups.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html) - The browser-based text editor user interface.
+*   [js/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/js) - Frontend Javascript modules (API layer, state management, storage, syncing).
+*   [css/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/css) - Frontend stylesheets (design tokens and UI components).
 *   [bridge.js](file:///c:/Users/User/Documents/VSC/LoL-retrieve/bridge.js) - A Tampermonkey userscript that acts as a CORS proxy to bypass browser restrictions on the `file:///` protocol.
 *   [config.js](file:///c:/Users/User/Documents/VSC/LoL-retrieve/config.js) (ignored by git) - Contains GitHub repository credentials and Personal Access Token (PAT).
-*   [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation) - Folder containing detailed guides for the different parts of the system.
+*   [youtube_links.json](file:///c:/Users/User/Documents/VSC/LoL-retrieve/youtube_links.json) - Global YouTube links index.
+*   [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation) - Folder containing detailed architectural guides and documentation.
 
 ## Quick Start
 
 1.  **Configuration**: Create a [config.js](file:///c:/Users/User/Documents/VSC/LoL-retrieve/config.js) file containing your GitHub token and target repository (see [documentation/github_setup.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation/github_setup.md)).
 2.  **Tampermonkey**: Install the [bridge.js](file:///c:/Users/User/Documents/VSC/LoL-retrieve/bridge.js) script in your Tampermonkey extension (see [documentation/tampermonkey_bridge.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation/tampermonkey_bridge.md)).
-3.  **Run**: Double-click or open [matchups.html.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html.html) in your browser, and start editing.
+3.  **Run**: Double-click or open [matchups.html](file:///c:/Users/User/Documents/VSC/LoL-retrieve/matchups.html) in your browser, and start editing.
+
+### URL Navigation
+
+You can select a matchup directly on load by appending it to your local file URL:
+*   **Query Parameters:** `matchups.html?enemy=Garen&my=Darius`
+*   **Shorthand (vs):** `matchups.html?GarenvsDarius` or `matchups.html#GarenvsDarius`
+*   **Hyphenated:** `matchups.html?Garen-vs-Darius` or `matchups.html#Garen-vs-Darius`
 
 ---
 
-For detailed documentation, please refer to the [GEMINI.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/GEMINI.md) file and the [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation) folder.
+For detailed documentation, please refer to the [AGENTS.md](file:///c:/Users/User/Documents/VSC/LoL-retrieve/AGENTS.md) file and the [documentation/](file:///c:/Users/User/Documents/VSC/LoL-retrieve/documentation) folder.
