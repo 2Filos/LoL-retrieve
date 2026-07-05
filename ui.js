@@ -172,12 +172,6 @@ function toggleLinksPanel() {
         const editor = document.getElementById('editor');
         if (!editor) return;
 
-        // Restore saved height
-        const savedHeight = localStorage.getItem('matchup_editor_height');
-        if (savedHeight) {
-            editor.style.height = savedHeight;
-        }
-
         // Observe resize via ResizeObserver
         let resizeTimeout;
         const observer = new ResizeObserver(() => {

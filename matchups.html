@@ -32,7 +32,7 @@
                     style="display: none; padding: 4px 8px; font-weight: bold; border-radius: 4px; font-size: 11px; box-shadow: 0 1px 3px rgba(0,0,0,0.5); color: #fff;">
                 </div>
                 <div id="connectionStatus" class="status-badge pinging">
-                    Pinging GitHub API...
+                    GitHub API: Pinging...
                 </div>
             </div>
         </header>
@@ -127,7 +127,7 @@
                             </div>
                         </div>
                         <!-- Fallback text label for non-matchup files (e.g. General Notes) -->
-                        <span id="currentFileLabel">No matchup loaded</span>
+                        <span id="currentFileLabel"></span>
                     </div>
                     <!-- Star button positioned to the right of the whole title block -->
                     <button id="starBtn" class="star-btn" onclick="toggleSaveMatchup()" style="display: none;"
@@ -156,6 +156,18 @@
                 <!-- Core Markdown Notepad Textarea -->
                 <textarea id="editor" placeholder="Select a matchup to start writing notes..." disabled></textarea>
 
+                <!-- Inline script to restore height immediately before the browser renders the layout, preventing flicker -->
+                <script>
+                    (function () {
+                        try {
+                            const savedHeight = localStorage.getItem('matchup_editor_height');
+                            if (savedHeight) {
+                                document.getElementById('editor').style.height = savedHeight;
+                            }
+                        } catch (e) { }
+                    })();
+                </script>
+
                 <!-- Extracted URLs Mentions List — Collapsible, open by default -->
                 <div id="detectedLinksContainer" class="detected-links-container">
                     <div class="detected-links-header" onclick="toggleLinksPanel()">
@@ -177,22 +189,22 @@
 
                 <!-- Footer Action Bar -->
                 <div class="editor-actions">
-                    <div id="status" class="status-text">Status: Checking bridge connectivity...</div>
+                    <div id="status" class="status-text"></div>
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <a id="lolaLink" href="#" target="_blank" class="btn-outline-sm"
-                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 10px 15px; font-size: 13px; font-weight: bold; width: auto; font-family: sans-serif; border-radius: 3px; height: 38px; line-height: 1; justify-content: center; box-sizing: border-box;">
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 8px 16px; font-size: 12px; font-weight: bold; width: auto; border-radius: 4px; justify-content: center; box-sizing: border-box;">
                             <img src="https://lolalytics.com/favicon.ico" width="14" height="14"
                                 style="border-radius: 2px;" onerror="this.style.display='none'">
                             Lolalytics
                         </a>
                         <a id="opggLink" href="#" target="_blank" class="btn-outline-sm"
-                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 10px 15px; font-size: 13px; font-weight: bold; width: auto; font-family: sans-serif; border-radius: 3px; height: 38px; line-height: 1; justify-content: center; box-sizing: border-box;">
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 8px 16px; font-size: 12px; font-weight: bold; width: auto; border-radius: 4px; justify-content: center; box-sizing: border-box;">
                             <img src="https://www.op.gg/favicon.ico" width="14" height="14" style="border-radius: 2px;"
                                 onerror="this.style.display='none'">
                             OPGG
                         </a>
                         <a id="mobalyticsLink" href="#" target="_blank" class="btn-outline-sm"
-                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 10px 15px; font-size: 13px; font-weight: bold; width: auto; font-family: sans-serif; border-radius: 3px; height: 38px; line-height: 1; justify-content: center; box-sizing: border-box;">
+                            style="display: none; align-items: center; gap: 8px; text-decoration: none; padding: 8px 16px; font-size: 12px; font-weight: bold; width: auto; border-radius: 4px; justify-content: center; box-sizing: border-box;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="#5f3bf4" style="border-radius: 2px;">
                                 <polygon points="12 2 22 7 22 17 12 22 2 17 2 7" fill="#5f3bf4" />
                                 <path d="M7 17V10L12 14L17 10V17" stroke="white" stroke-width="2.5"
@@ -227,7 +239,7 @@
     <script src="utils.js"></script>
     <script src="api.js"></script>
     <script src="config.js" onerror="handleConfigMissing()"></script>
-    
+
     <!-- Modularized Editor Components -->
     <script src="ui.js"></script>
     <script src="champions.js"></script>

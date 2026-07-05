@@ -28,11 +28,11 @@ let bridgeActive = false;    // Will be set to true if the Tampermonkey bridge s
  */
 function handleConfigMissing() {
     isConfigValid = false;
-    
+
     // Update the DOM to reflect configuration status
     const configErrorEl = document.getElementById('configError');
     const connStatusEl = document.getElementById('connectionStatus');
-    
+
     if (configErrorEl) configErrorEl.style.display = 'block';
     if (connStatusEl) {
         connStatusEl.className = 'status-badge offline';
@@ -58,16 +58,16 @@ async function checkBridgeStatus() {
         let attempts = 0;
         const maxAttempts = 15;
         let interval;
-        
+
         // Listener for the extension response
         function onPong() {
             clearInterval(interval);
             resolve(true);
         }
-        
+
         // Register single-use listener
         window.addEventListener("PongTampermonkeyBridge", onPong, { once: true });
-        
+
         // Start ping loop
         interval = setInterval(() => {
             attempts++;
@@ -78,7 +78,7 @@ async function checkBridgeStatus() {
                 resolve(false);
             }
         }, 200);
-        
+
         // Dispatch initial ping immediately
         window.dispatchEvent(new CustomEvent("PingTampermonkeyBridge"));
     });
@@ -106,15 +106,15 @@ function bridgeFetch(url, options = {}) {
     return new Promise((resolve) => {
         // Create a unique identifier for this request (avoids mixing up concurrent calls)
         const requestId = Math.random().toString(36).substr(2, 9);
-        
+
         const responseHandler = (e) => {
             // Clean up the event listener immediately after receiving response
             window.removeEventListener(`FromTampermonkeyBridge_${requestId}`, responseHandler);
-            
+
             let parsedJson = null;
-            try { 
-                parsedJson = JSON.parse(e.detail.responseText); 
-            } catch(err) {
+            try {
+                parsedJson = JSON.parse(e.detail.responseText);
+            } catch (err) {
                 // Not JSON or empty body - ignore parsing error
             }
 
@@ -127,7 +127,7 @@ function bridgeFetch(url, options = {}) {
                 text: () => e.detail.responseText
             });
         };
-        
+
         // Register listener for this request's specific response channel
         window.addEventListener(`FromTampermonkeyBridge_${requestId}`, responseHandler);
 
@@ -179,10 +179,10 @@ async function fetchDirectOrBridge(url) {
         // Try direct fetch first
         const res = await fetch(url);
         if (res.ok) return await res.json();
-    } catch(e) {
+    } catch (e) {
         console.warn("Direct fetch failed or blocked by CORS, trying bridge fallback...", e);
     }
-    
+
     // If bridge is available, try bridge fetch
     if (bridgeActive) {
         const response = await bridgeFetch(url);
@@ -201,14 +201,21 @@ async function fetchDirectOrBridge(url) {
  */
 async function checkTokenValidity() {
     try {
-        document.getElementById('status').innerText = "Status: Authorizing with GitHub...";
-        
+        const statusEl = document.getElementById('status');
+        let authTimer;
+        if (statusEl) {
+            authTimer = setTimeout(() => {
+                statusEl.innerText = "Status: Authorizing with GitHub...";
+            }, 200);
+        }
+
         // Query the GitHub profile endpoint
         const response = await bridgeFetch("https://api.github.com/user", {
             headers: { "Authorization": `token ${CONFIG.GITHUB_TOKEN}` }
         });
 
-        const statusEl = document.getElementById('status');
+        if (authTimer) clearTimeout(authTimer);
+
         const connStatusEl = document.getElementById('connectionStatus');
         const tokenExpiredEl = document.getElementById('tokenExpiredError');
         const syncBtnEl = document.getElementById('syncBtn');
@@ -230,9 +237,8 @@ async function checkTokenValidity() {
             // Token is active and valid
             if (connStatusEl) {
                 connStatusEl.className = 'status-badge online';
-                connStatusEl.innerText = 'Connected';
+                connStatusEl.innerText = 'Github API: Connected';
             }
-            if (statusEl) statusEl.innerText = "Status: Authenticated & Ready.";
             if (syncBtnEl) {
                 syncBtnEl.disabled = false;
                 syncBtnEl.style.opacity = '1';

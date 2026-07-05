@@ -21,21 +21,70 @@ window.onload = async () => {
     const editorEl = document.getElementById('editor');
     const fileLabel = document.getElementById('currentFileLabel');
     const statusEl = document.getElementById('status');
-    if (editorEl && fileLabel && statusEl) {
-        const notesDraft = localStorage.getItem('draft_matchup:Notes');
-        fileLabel.innerText = 'Notes';
-        if (notesDraft !== null) {
-            editorEl.value = notesDraft;
-            editorEl.disabled = false;
-            statusEl.innerText = 'Status: Loading default notes...';
-            updateDiscardButtonState(true);
-        } else {
-            editorEl.value = 'Loading default notes...';
-            editorEl.disabled = true;
-            statusEl.innerText = 'Status: Loading default notes...';
-            updateDiscardButtonState(false);
+    // Check URL parameters early to prevent General Notes flicker if loading a specific matchup
+    let urlEnemy = null;
+    let urlMy = null;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('enemy') && urlParams.has('my')) {
+        urlEnemy = urlParams.get('enemy');
+        urlMy = urlParams.get('my');
+    } else {
+        let rawParams = window.location.hash.substring(1) || window.location.search.substring(1);
+        if (rawParams) {
+            const vsRegex = /^(.*?)(?:-vs-|vs)(.*)$/i;
+            const match = rawParams.match(vsRegex);
+            if (match) {
+                urlMy = decodeURIComponent(match[1]).trim();
+                urlEnemy = decodeURIComponent(match[2]).trim();
+            } else if (rawParams.includes('-')) {
+                const parts = rawParams.split('-');
+                if (parts.length === 2) {
+                    urlMy = decodeURIComponent(parts[0]).trim();
+                    urlEnemy = decodeURIComponent(parts[1]).trim();
+                }
+            }
         }
-        updateDetectedLinks();
+    }
+
+    const hasUrlMatchup = Boolean(urlEnemy && urlMy);
+    const prefilledEnemy = document.getElementById('enemyChamp')?.value;
+    const prefilledMy = document.getElementById('myChamp')?.value;
+    const hasFormMatchup = Boolean(prefilledEnemy && prefilledMy);
+    
+    const willLoadMatchup = hasUrlMatchup || hasFormMatchup;
+
+    if (editorEl && fileLabel && statusEl) {
+        if (!willLoadMatchup) {
+            // Delay the 'Notes' visual rendering by 100ms. 
+            // If the script finishes booting fast, loadGeneralNotes() naturally takes over.
+            // If the bridge check hangs, this provides the offline fallback gracefully without an instant snap.
+            window.notesFallbackTimer = setTimeout(() => {
+                const notesDraft = localStorage.getItem('draft_matchup:Notes');
+                fileLabel.innerText = 'Notes';
+                if (notesDraft !== null) {
+                    editorEl.value = notesDraft;
+                    editorEl.disabled = false;
+                    statusEl.innerText = 'Status: Loading default notes...';
+                    updateDiscardButtonState(true);
+                } else {
+                    editorEl.value = 'Loading default notes...';
+                    editorEl.disabled = true;
+                    statusEl.innerText = 'Status: Loading default notes...';
+                    updateDiscardButtonState(false);
+                }
+                updateDetectedLinks();
+            }, 100);
+        } else {
+            // Delay the 'Loading Matchup' visual rendering by 200ms to avoid flicker on fast loads.
+            window.matchupFallbackTimer = setTimeout(() => {
+                fileLabel.innerText = 'Loading Matchup...';
+                editorEl.value = 'Fetching requested matchup...';
+                editorEl.disabled = true;
+                statusEl.innerText = 'Status: Booting bridge and loading requested matchup...';
+                updateDiscardButtonState(false);
+            }, 200);
+        }
     }
 
     // 1. Establish bridge connectivity status
@@ -112,35 +161,8 @@ window.onload = async () => {
     // Render saved matchups
     renderSavedMatchups();
 
-    // 4. Auto-restore search inputs, check URL parameters, or default to General Notes
-    let urlEnemy = null;
-    let urlMy = null;
-
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('enemy') && urlParams.has('my')) {
-        urlEnemy = urlParams.get('enemy');
-        urlMy = urlParams.get('my');
-    } else {
-        // Parse from hash or raw search string (e.g. #GarenvsDarius, ?GarenvsDarius)
-        let rawParams = window.location.hash.substring(1) || window.location.search.substring(1);
-        if (rawParams) {
-            // Try to match variations of "vs" like "GarenvsDarius" or "Garen-vs-Darius"
-            const vsRegex = /^(.*?)(?:-vs-|vs)(.*)$/i;
-            const match = rawParams.match(vsRegex);
-            if (match) {
-                urlMy = decodeURIComponent(match[1]).trim();
-                urlEnemy = decodeURIComponent(match[2]).trim();
-            } else if (rawParams.includes('-')) {
-                const parts = rawParams.split('-');
-                if (parts.length === 2) {
-                    urlMy = decodeURIComponent(parts[0]).trim();
-                    urlEnemy = decodeURIComponent(parts[1]).trim();
-                }
-            }
-        }
-    }
-
-    if (urlEnemy && urlMy) {
+    // 4. Set inputs and trigger final load based on URL or defaults
+    if (hasUrlMatchup) {
         // Update input fields using utils.js helpers to ensure proper formatting
         const enemyKey = getChampionKeyByName(urlEnemy) || urlEnemy;
         const myKey = getChampionKeyByName(urlMy) || urlMy;
@@ -150,6 +172,11 @@ window.onload = async () => {
 
     const enemyVal = document.getElementById('enemyChamp').value;
     const myVal = document.getElementById('myChamp').value;
+    
+    // Clear the fallback timers if they haven't executed yet, since we are doing the real load now
+    if (window.notesFallbackTimer) clearTimeout(window.notesFallbackTimer);
+    if (window.matchupFallbackTimer) clearTimeout(window.matchupFallbackTimer);
+
     if (enemyVal && myVal) {
         loadMatchup();
     } else {

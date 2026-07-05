@@ -541,7 +541,13 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
         myKey: myKey
     };
 
-    statusEl.innerText = `Searching for ${label}...`;
+    let searchTimer = null;
+    if (statusEl) {
+        searchTimer = setTimeout(() => {
+            statusEl.innerText = `Searching for ${label}...`;
+        }, 200);
+    }
+    
     if (conflictBanner) conflictBanner.style.display = 'none';
     updateDiscardButtonState(false);
     currentSha = null;
@@ -552,6 +558,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
 
     // Fallback load in offline-only mode
     if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
+        if (searchTimer) clearTimeout(searchTimer);
         fileLabel.innerText = `${label} (Local Draft)`;
         editorEl.value = localDraft || "";
         editorEl.disabled = false;
@@ -566,6 +573,8 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     try {
         // Fetch files metadata from repository contents endpoint
         const response = await bridgeFetch(config.url + path, { headers: config.headers });
+
+        if (searchTimer) clearTimeout(searchTimer);
 
         if (response.isExpired) {
             const tokenErrEl = document.getElementById('tokenExpiredError');
@@ -615,6 +624,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
             statusEl.innerText = `Error code: ${response.status}`;
         }
     } catch (err) {
+        if (searchTimer) clearTimeout(searchTimer);
         statusEl.innerText = "Bridge fetch error: " + err.message;
         fileLabel.innerText = `${label} (Offline)`;
         editorEl.value = localDraft || "";
