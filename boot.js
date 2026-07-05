@@ -15,6 +15,10 @@ let activeMatchup = {         // Active loaded matchup metadata
     enemyKey: null,
     myKey: null
 };
+let activeMetadata = {        // Invisible custom links and order metadata
+    customLinks: [],
+    linkOrder: []
+};
 
 // --- Application Boot Loop ---
 window.onload = async () => {
@@ -125,6 +129,8 @@ window.onload = async () => {
         // Authorize with GitHub credentials
         if (typeof CONFIG !== 'undefined' && isConfigValid) {
             await checkTokenValidity();
+            await fetchYoutubeLinksIndex();
+            renderSavedMatchups();
         } else {
             const connStatusEl = document.getElementById('connectionStatus');
             if (connStatusEl) {
@@ -188,16 +194,21 @@ window.onload = async () => {
  * Dynamic event handler triggered on textarea inputs.
  * Auto-saves drafts locally immediately upon user typing.
  */
+let autosaveTimeoutId;
 document.getElementById('editor').addEventListener('input', () => {
-    if (!activeMatchup.draftKey) return;
+    clearTimeout(autosaveTimeoutId);
+    autosaveTimeoutId = setTimeout(() => {
+        if (!activeMatchup.draftKey) return;
 
-    const textContent = document.getElementById('editor').value;
+        const textContent = document.getElementById('editor').value;
 
-    // Save current content to localStorage
-    localStorage.setItem(activeMatchup.draftKey, textContent);
-    renderLocalDrafts(); // Refresh list display
+        // Save current content appended with hidden metadata to localStorage
+        const fullText = appendMetadata(textContent);
+        localStorage.setItem(activeMatchup.draftKey, fullText);
+        renderLocalDrafts(); // Refresh list display
 
-    updateDiscardButtonState(true);
-    document.getElementById('status').innerText = "Typing... saved draft locally.";
-    updateDetectedLinks();
+        updateDiscardButtonState(true);
+        document.getElementById('status').innerText = "Typing... saved draft locally.";
+        updateDetectedLinks();
+    }, 500); // 500ms debounce
 });

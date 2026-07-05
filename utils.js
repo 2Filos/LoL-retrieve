@@ -81,3 +81,42 @@ function getChampionNameByKey(key) {
     const found = CHAMPIONS.find(c => c.key === key);
     return found ? found.name : key;
 }
+
+/**
+ * Extracts the hidden JSON metadata block from the raw text.
+ */
+function extractMetadata(rawText) {
+    if (!rawText) {
+        activeMetadata = { customLinks: [], linkOrder: [] };
+        return "";
+    }
+    const match = rawText.match(/<!-- METADATA: (.*?) -->/);
+    if (match) {
+        try {
+            activeMetadata = JSON.parse(match[1]);
+            console.log("[DEBUG] Extracted metadata successfully:", activeMetadata);
+            if (!activeMetadata.customLinks) activeMetadata.customLinks = [];
+            if (!activeMetadata.linkOrder) activeMetadata.linkOrder = [];
+        } catch(e) {
+            console.error("[DEBUG] Failed to parse metadata JSON:", e);
+            activeMetadata = { customLinks: [], linkOrder: [] };
+        }
+        return rawText.replace(match[0], '').trimEnd();
+    }
+    activeMetadata = { customLinks: [], linkOrder: [] };
+    console.log("[DEBUG] No metadata found in rawText");
+    return rawText;
+}
+
+/**
+ * Appends the hidden JSON metadata block to the clean text.
+ */
+function appendMetadata(cleanText) {
+    if (!activeMetadata || (activeMetadata.customLinks.length === 0 && activeMetadata.linkOrder.length === 0)) {
+        return cleanText;
+    }
+    const safeText = cleanText.trimEnd();
+    const metaStr = JSON.stringify(activeMetadata);
+    console.log("[DEBUG] Appending metadata to text:", metaStr);
+    return safeText + `\n\n<!-- METADATA: ${metaStr} -->`;
+}

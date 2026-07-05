@@ -262,3 +262,38 @@ async function checkTokenValidity() {
         if (statusEl) statusEl.innerText = "Status Check Failed: " + err.message;
     }
 }
+
+// Global state for youtube links index SHA
+let youtubeLinksSha = null;
+
+/**
+ * Fetches the global youtube_links.json file from GitHub.
+ * This ensures the sidebar has active VOD icons even for matchups without local drafts.
+ */
+async function fetchYoutubeLinksIndex() {
+    if (!bridgeActive || !isConfigValid) return;
+    try {
+        const config = getAPIConfig();
+        const response = await bridgeFetch(config.url + 'youtube_links.json', {
+            headers: config.headers
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            youtubeLinksSha = data.sha;
+            
+            // Decode the Base64 content
+            const textContent = decodeURIComponent(escape(atob(data.content)));
+            
+            // Store it in localStorage for immediate sync-less rendering
+            localStorage.setItem('youtube_links_index', textContent);
+            console.log("[DEBUG] Successfully fetched and cached youtube_links.json", youtubeLinksSha);
+        } else if (response.status === 404) {
+            console.log("[DEBUG] youtube_links.json does not exist yet.");
+        } else {
+            console.warn("[DEBUG] Failed to fetch youtube_links.json:", response.status);
+        }
+    } catch (err) {
+        console.error("[DEBUG] Error fetching youtube_links.json:", err);
+    }
+}

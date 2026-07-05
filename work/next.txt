@@ -9,3 +9,29 @@ also, move discard draft under sync github
 and have it displayed by default, even with no edits
 and tone down its color to a less disturbing tone of red
 perhaps a more muted red to indicate a less important action
+
+---
+
+we are running low on usage we have available, be thrifty on reading files
+modify matchup layout in the html page to be more horizontal
+
+Select matchup
+Input A vs Input B [Role Select (dropdown)
+Add a fcuntion that, if i manually write in input A somthing like
+Garen vs Sett Top it autoselects garen vs sett top
+Load matchup button below
+
+Probably need to make the column where selection is located a tad wider.
+
+---
+
+Garen vs Sett [YT]
+the icon should be gray if there are no links saved for that matchup yes, but also
+red/active if there are any, by clicking on it you open the first link for that matchup
+
+the red/active thing is the missing feature still to be implemented in regards to youtube
+the rest is done already
+note that the youtube icon should act like the ... icon for a youtube link
+
+see file in work folder: ui_and_links_overhaul.md
+contains work done recently

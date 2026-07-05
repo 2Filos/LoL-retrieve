@@ -101,15 +101,46 @@ function getLinkIcon(url) {
 function updateDetectedLinks() {
     const editorEl = document.getElementById('editor');
     const container = document.getElementById('detectedLinksContainer');
-    const listEl = document.getElementById('detectedLinksList');
+    let listEl = document.getElementById('detectedLinksList');
 
     if (!editorEl || !container || !listEl) return;
 
-    const urls = extractUrls(editorEl.value);
+    let urls = extractUrls(editorEl.value);
+
+    // Merge in custom hidden metadata links
+    if (typeof activeMetadata !== 'undefined' && activeMetadata.customLinks) {
+        activeMetadata.customLinks.forEach(cl => {
+            const existing = urls.find(u => u.url === cl.url);
+            if (!existing) {
+                urls.push({
+                    url: cl.url,
+                    display: cl.display,
+                    original: "", // Empty string means it's a custom invisible link
+                    customId: cl.customId
+                });
+            }
+        });
+    }
+
+    // Reset old drag listeners on the container by replacing it with a fresh clone BEFORE adding items
+    const freshList = listEl.cloneNode(false);
+    listEl.parentNode.replaceChild(freshList, listEl);
+    listEl = freshList; // update our reference to the new active DOM element
 
     listEl.innerHTML = '';
     if (urls.length === 0) {
         return; // Keep list area empty if no URLs found
+    }
+
+    // Sort by user's dragged order
+    if (typeof activeMetadata !== 'undefined' && activeMetadata.linkOrder && activeMetadata.linkOrder.length > 0) {
+        urls.sort((a, b) => {
+            let idxA = activeMetadata.linkOrder.indexOf(a.url);
+            let idxB = activeMetadata.linkOrder.indexOf(b.url);
+            if (idxA === -1) idxA = 999;
+            if (idxB === -1) idxB = 999;
+            return idxA - idxB;
+        });
     }
 
     urls.forEach(item => {
@@ -125,6 +156,8 @@ function updateDetectedLinks() {
         // Assemble link badge card
         const badge = document.createElement('div');
         badge.className = 'link-badge';
+        badge.draggable = true;
+        badge.dataset.url = url;
 
         const iconSpan = document.createElement('span');
         iconSpan.className = 'link-icon';
@@ -170,6 +203,48 @@ function updateDetectedLinks() {
         badge.appendChild(editBtn);
         badge.appendChild(bgBtn);
         listEl.appendChild(badge);
+    });
+
+    // Drag and Drop HTML5 Event Handlers for Reordering (attach to listEl)
+    let draggedItem = null;
+
+    listEl.addEventListener('dragstart', function(e) {
+        const target = e.target.closest('.link-badge');
+        if (!target) return;
+        draggedItem = target;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', ''); // Required for Firefox drag
+        setTimeout(() => target.style.opacity = '0.4', 0);
+    });
+
+    listEl.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        const target = e.target.closest('.link-badge');
+        if (target && target !== draggedItem) {
+            const rect = target.getBoundingClientRect();
+            // Next determines if we insert before or after the target based on mouse Y position
+            const next = (e.clientY - rect.top)/(rect.bottom - rect.top) > 0.5;
+            listEl.insertBefore(draggedItem, next && target.nextSibling || target);
+        }
+    });
+
+    listEl.addEventListener('dragend', function(e) {
+        const target = e.target.closest('.link-badge');
+        if (target) target.style.opacity = '1';
+        draggedItem = null;
+        
+        // Save the new visual order to the hidden activeMetadata
+        if (typeof activeMetadata !== 'undefined') {
+            const newOrder = [];
+            listEl.querySelectorAll('.link-badge').forEach(b => {
+                if (b.dataset.url) newOrder.push(b.dataset.url);
+            });
+            activeMetadata.linkOrder = newOrder;
+            
+            // Trigger auto-save immediately to cache order
+            const editor = document.getElementById('editor');
+            if (editor) editor.dispatchEvent(new Event('input'));
+        }
     });
 }
 
@@ -286,20 +361,51 @@ window.addEventListener('DOMContentLoaded', () => {
 
 /** Opens the edit modal and populates it with the target link's metadata */
 function openLinkEditModal(item) {
-    const modal = document.getElementById('linkEditModal');
-    const displayInput = document.getElementById('linkEditDisplay');
-    const urlInput = document.getElementById('linkEditUrl');
-    const originalInput = document.getElementById('linkEditOriginalText');
+    try {
+        const modal = document.getElementById('linkEditModal');
+        const displayInput = document.getElementById('linkEditDisplay');
+        const urlInput = document.getElementById('linkEditUrl');
+        const originalInput = document.getElementById('linkEditOriginalText');
 
-    if (!modal || !displayInput || !urlInput || !originalInput) return;
+        const deleteBtn = document.getElementById('linkDeleteBtn');
 
-    // Pre-fill inputs. If it was a raw URL without a display name, default display to empty.
-    displayInput.value = item.display || "";
-    urlInput.value = item.url;
-    originalInput.value = item.original;
+        if (!modal) { alert("Missing linkEditModal"); return; }
+        if (!displayInput) { alert("Missing linkEditDisplay"); return; }
+        if (!urlInput) { alert("Missing linkEditUrl"); return; }
+        if (!originalInput) { alert("Missing linkEditOriginalText"); return; }
 
-    modal.style.display = 'flex';
-    displayInput.focus();
+        if (item) {
+            // We are EDITING an existing link (either text-extracted or custom)
+            displayInput.value = item.display || "";
+            urlInput.value = item.url;
+            originalInput.value = item.original || "";
+            
+            // Auto-migrate old custom links that lack a customId
+            if (item.original === "" && !item.customId) {
+                item.customId = "custom_" + Date.now() + Math.floor(Math.random() * 1000);
+                if (typeof activeMetadata !== 'undefined' && activeMetadata.customLinks) {
+                    const legacyLink = activeMetadata.customLinks.find(l => l.url === item.url && l.display === item.display);
+                    if (legacyLink) legacyLink.customId = item.customId;
+                }
+            }
+            
+            modal.dataset.customId = item.customId || "";
+            if (deleteBtn) deleteBtn.style.display = 'inline-block'; // Show delete for existing links
+        } else {
+            // We are CREATING a brand new invisible custom metadata link
+            displayInput.value = "";
+            urlInput.value = "";
+            originalInput.value = "";
+            modal.dataset.customId = "custom_" + Date.now();
+            if (deleteBtn) deleteBtn.style.display = 'none'; // Hide delete for new links
+        }
+
+        modal.style.display = 'flex';
+        displayInput.focus();
+    } catch (err) {
+        alert("Edit Modal Error: " + err.message);
+        console.error(err);
+    }
 }
 
 /** Closes the link edit modal */
@@ -309,30 +415,96 @@ function closeLinkEditModal() {
 }
 
 /** 
- * Saves the edited link by performing a bulk string replacement across the entire text editor.
- * Replaces the original raw URL (or original markdown link) with the newly formatted markdown string.
+ * Deletes the currently opened link.
+ */
+function deleteLinkEditModal() {
+    const modal = document.getElementById('linkEditModal');
+    const customId = modal.dataset.customId;
+    const originalText = document.getElementById('linkEditOriginalText').value;
+    const editor = document.getElementById('editor');
+
+    if (customId && typeof activeMetadata !== 'undefined' && activeMetadata.customLinks) {
+        // Delete invisible custom link
+        const idx = activeMetadata.customLinks.findIndex(l => l.customId === customId);
+        if (idx > -1) {
+            const oldUrl = activeMetadata.customLinks[idx].url;
+            activeMetadata.customLinks.splice(idx, 1);
+            activeMetadata.linkOrder = activeMetadata.linkOrder.filter(u => u !== oldUrl);
+        }
+    } else if (originalText && editor) {
+        // Delete in-text markdown link by removing it entirely
+        editor.value = editor.value.split(originalText).join("");
+    }
+
+    // Trigger auto-save and update links
+    if (editor) editor.dispatchEvent(new Event('input'));
+    updateDetectedLinks();
+    closeLinkEditModal();
+}
+
+/** 
+ * Saves the edited link by updating custom metadata or modifying text content.
  */
 function saveLinkEditModal() {
+    const modal = document.getElementById('linkEditModal');
     const displayInput = document.getElementById('linkEditDisplay').value.trim();
     const urlInput = document.getElementById('linkEditUrl').value.trim();
     const originalText = document.getElementById('linkEditOriginalText').value;
-
-    if (!urlInput || !originalText) {
-        alert("URL cannot be empty.");
-        return;
-    }
+    const customId = modal.dataset.customId;
 
     const editor = document.getElementById('editor');
     if (!editor) return;
 
-    // Construct standard Markdown link format. If display is empty, fallback to raw URL format.
-    const newMarkdown = displayInput ? `[${displayInput}](${urlInput})` : urlInput;
+    if (!urlInput) {
+        if (customId) {
+            // Delete existing custom link or discard new one
+            if (typeof activeMetadata !== 'undefined' && activeMetadata.customLinks) {
+                const idx = activeMetadata.customLinks.findIndex(l => l.customId === customId);
+                if (idx > -1) {
+                    const oldUrl = activeMetadata.customLinks[idx].url;
+                    activeMetadata.customLinks.splice(idx, 1);
+                    activeMetadata.linkOrder = activeMetadata.linkOrder.filter(u => u !== oldUrl);
+                }
+            }
+        } else {
+            alert("URL cannot be empty.");
+            return;
+        }
+    } else if (customId) {
+        // Route 1: It's a Custom Invisible Link (Metadata-only)
+        if (typeof activeMetadata === 'undefined') window.activeMetadata = { customLinks: [], linkOrder: [] };
+        
+        const idx = activeMetadata.customLinks.findIndex(l => l.customId === customId);
+        if (idx > -1) {
+            // Update existing custom link
+            const oldUrl = activeMetadata.customLinks[idx].url;
+            if (oldUrl !== urlInput) {
+                // Update order array if url changed
+                const orderIdx = activeMetadata.linkOrder.indexOf(oldUrl);
+                if (orderIdx > -1) activeMetadata.linkOrder[orderIdx] = urlInput;
+            }
+            activeMetadata.customLinks[idx].display = displayInput;
+            activeMetadata.customLinks[idx].url = urlInput;
+        } else {
+            // Add brand new custom link
+            activeMetadata.customLinks.push({
+                customId: customId,
+                display: displayInput,
+                url: urlInput
+            });
+            activeMetadata.linkOrder.push(urlInput);
+        }
+    } else if (originalText) {
+        // Route 2: It's a Text-Extracted Link
+        const newMarkdown = displayInput ? `[${displayInput}](${urlInput})` : urlInput;
+        editor.value = editor.value.split(originalText).join(newMarkdown);
+    }
 
-    // Replace all instances of the original string with the new markdown format in the text editor
-    editor.value = editor.value.split(originalText).join(newMarkdown);
-
-    // Trigger an input event to force the debounced autosave and re-render the Links list
+    // Trigger an input event to force the debounced autosave
     editor.dispatchEvent(new Event('input'));
+    
+    // Instantly refresh the UI so the user doesn't have to wait 500ms
+    updateDetectedLinks();
 
     closeLinkEditModal();
 }

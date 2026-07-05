@@ -26,6 +26,49 @@ let activeMatchup = {         // Active loaded matchup metadata
     enemyKey: null,
     myKey: null
 };
+let activeMetadata = {        // Invisible metadata block attached to the current matchup
+    customLinks: [],
+    linkOrder: []
+};
+
+/**
+ * Extracts the hidden JSON metadata block from the raw text.
+ */
+function extractMetadata(rawText) {
+    if (!rawText) {
+        activeMetadata = { customLinks: [], linkOrder: [] };
+        return "";
+    }
+    const match = rawText.match(/<!-- METADATA: (.*?) -->/);
+    if (match) {
+        try {
+            activeMetadata = JSON.parse(match[1]);
+            console.log("[DEBUG] Extracted metadata successfully:", activeMetadata);
+            if (!activeMetadata.customLinks) activeMetadata.customLinks = [];
+            if (!activeMetadata.linkOrder) activeMetadata.linkOrder = [];
+        } catch(e) {
+            console.error("[DEBUG] Failed to parse metadata JSON:", e);
+            activeMetadata = { customLinks: [], linkOrder: [] };
+        }
+        return rawText.replace(match[0], '').trimEnd();
+    }
+    activeMetadata = { customLinks: [], linkOrder: [] };
+    console.log("[DEBUG] No metadata found in rawText");
+    return rawText;
+}
+
+/**
+ * Appends the hidden JSON metadata block to the clean text.
+ */
+function appendMetadata(cleanText) {
+    if (!activeMetadata || (activeMetadata.customLinks.length === 0 && activeMetadata.linkOrder.length === 0)) {
+        return cleanText;
+    }
+    const safeText = cleanText.trimEnd();
+    const metaStr = JSON.stringify(activeMetadata);
+    console.log("[DEBUG] Appending metadata to text:", metaStr);
+    return safeText + `\n\n<!-- METADATA: ${metaStr} -->`;
+}
 
 /**
  * Parses and extracts all valid URLs (HTTP/HTTPS/www) from raw text.
@@ -554,16 +597,24 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     githubTextCache = null;
 
     // Check for local draft cache
-    const localDraft = localStorage.getItem(draftKey);
+    const localDraftRaw = localStorage.getItem(draftKey);
+    let localDraftText = null;
+    if (localDraftRaw !== null) {
+        console.log("[DEBUG] Local draft found. Length:", localDraftRaw.length);
+        localDraftText = extractMetadata(localDraftRaw); 
+    } else {
+        console.log("[DEBUG] No local draft found.");
+        activeMetadata = { customLinks: [], linkOrder: [] };
+    }
 
     // Fallback load in offline-only mode
     if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
         if (searchTimer) clearTimeout(searchTimer);
         fileLabel.innerText = `${label} (Local Draft)`;
-        editorEl.value = localDraft || "";
+        editorEl.value = localDraftText || "";
         editorEl.disabled = false;
         statusEl.innerText = "Offline Mode: Draft active.";
-        updateDiscardButtonState(localDraft !== null);
+        updateDiscardButtonState(localDraftRaw !== null);
         updateDetectedLinks();
         updateStarButtonUI();
         return;
@@ -571,26 +622,33 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
 
     const config = getAPIConfig();
     try {
-        // Fetch files metadata from repository contents endpoint
-        // Appending a timestamp query parameter forces the browser/Tampermonkey proxy
-        // to bypass the cache. This ensures we always get the latest 'sha' for the file, 
-        // preventing 409 Conflict errors when we later try to PUT/Sync changes.
+        console.log(`[DEBUG] Fetching from GitHub: ${path}`);
         const cacheBusterUrl = `${config.url}${path}?t=${Date.now()}`;
-        const response = await bridgeFetch(cacheBusterUrl, { headers: config.headers });
+        
+        // Force no-cache headers to ensure we get the absolute latest SHA
+        const fetchHeaders = Object.assign({}, config.headers, {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+        });
+        
+        const response = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
 
         if (searchTimer) clearTimeout(searchTimer);
 
         if (response.isExpired) {
+            console.log("[DEBUG] Token expired");
             const tokenErrEl = document.getElementById('tokenExpiredError');
             if (tokenErrEl) tokenErrEl.style.display = 'block';
             return;
         }
 
         if (response.status === 404) {
+            console.log("[DEBUG] File 404 - Not found on GitHub.");
             // File does not exist on GitHub yet
             statusEl.innerText = `${label} not found on GitHub.\n Ready to create new file.`;
             fileLabel.innerText = `New File: ${label}`;
-            editorEl.value = localDraft || "";
+            editorEl.value = localDraftText || "";
             editorEl.disabled = false;
             updateDiscardButtonState(true);
             updateDetectedLinks();
@@ -598,26 +656,40 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
             // File loaded successfully
             const data = response.json();
             currentSha = data.sha; // Save SHA to track current revision
+            console.log(`[DEBUG] Loaded from GitHub. currentSha is now: ${currentSha}`);
 
             // Decodes Base64 to UTF-8 text safely
-            const decodedText = decodeURIComponent(escape(atob(data.content)));
-            githubTextCache = decodedText; // Cache remote contents
+            const decodedTextRaw = decodeURIComponent(escape(atob(data.content)));
 
             // CONFLICT CHECK:
             // Compare local draft cache content with remote version loaded from GitHub.
-            if (localDraft !== null && localDraft !== decodedText) {
+            if (localDraftRaw !== null && localDraftRaw !== decodedTextRaw) {
+                console.log("[DEBUG] Conflict detected!");
+                console.log("[DEBUG] localDraftRaw length:", localDraftRaw.length);
+                console.log("[DEBUG] decodedTextRaw length:", decodedTextRaw.length);
+                
                 if (conflictBanner) conflictBanner.style.display = 'flex'; // reveal conflict warning banner
-                editorEl.value = localDraft; // Default display local edits
+                
+                // If there's a conflict, localDraftText (and activeMetadata) was already extracted above
+                editorEl.value = localDraftText; 
+                
+                // Cache the github remote text without overwriting our activeMetadata
+                const match = decodedTextRaw.match(/<!-- METADATA: (.*?) -->/);
+                githubTextCache = match ? decodedTextRaw.replace(match[0], '').trimEnd() : decodedTextRaw;
+
                 statusEl.innerText = "Conflict! Unsaved local edits differ from GitHub version.";
                 updateDiscardButtonState(true);
                 updateDetectedLinks();
             } else {
                 // Synced state: No local variations
-                if (localDraft !== null) {
+                console.log("[DEBUG] No conflict detected.");
+                if (localDraftRaw !== null) {
+                    console.log("[DEBUG] Clearing redundant local draft.");
                     localStorage.removeItem(draftKey); // Clear redundant draft
                     renderLocalDrafts();
                 }
-                editorEl.value = decodedText;
+                editorEl.value = extractMetadata(decodedTextRaw);
+                githubTextCache = editorEl.value;
                 statusEl.innerText = "Loaded successfully from GitHub!";
                 updateDiscardButtonState(false);
                 updateDetectedLinks();
@@ -649,8 +721,9 @@ document.getElementById('editor').addEventListener('input', () => {
 
     const textContent = document.getElementById('editor').value;
 
-    // Save current content to localStorage
-    localStorage.setItem(activeMatchup.draftKey, textContent);
+    // Save current content appended with hidden metadata to localStorage
+    const fullText = appendMetadata(textContent);
+    localStorage.setItem(activeMatchup.draftKey, fullText);
     renderLocalDrafts(); // Refresh list display
 
     updateDiscardButtonState(true);
@@ -676,16 +749,24 @@ async function saveToGitHub() {
     const statusEl = document.getElementById('status');
 
     statusEl.innerText = "Syncing changes to GitHub...";
+    console.log("[DEBUG] saveToGitHub triggered.");
+
+    const fullText = appendMetadata(textContent);
 
     // Encode text to Base64 safely resolving UTF-8 multibyte characters
-    const encodedContent = btoa(unescape(encodeURIComponent(textContent)));
+    const encodedContent = btoa(unescape(encodeURIComponent(fullText)));
     const bodyData = {
         message: `Sync: updated ${activeMatchup.label}`,
         content: encodedContent
     };
 
     // Provide SHA checksum if updating an existing file, else GitHub throws 409 conflict
-    if (currentSha) bodyData.sha = currentSha;
+    if (currentSha) {
+        bodyData.sha = currentSha;
+        console.log(`[DEBUG] Included SHA in PUT request: ${currentSha}`);
+    } else {
+        console.log(`[DEBUG] No currentSha available. Creating new file.`);
+    }
 
     try {
         const response = await bridgeFetch(config.url + path, {
@@ -694,9 +775,12 @@ async function saveToGitHub() {
             body: JSON.stringify(bodyData)
         });
 
+        console.log(`[DEBUG] GitHub PUT response status: ${response.status}`);
+
         if (response.ok) {
             const result = response.json();
             currentSha = result.content.sha; // Update currentSha with GitHub's new version reference
+            console.log(`[DEBUG] Sync successful! Updated currentSha to: ${currentSha}`);
 
             // Delete local draft cache
             localStorage.removeItem(activeMatchup.draftKey);
@@ -730,13 +814,13 @@ function resolveConflict(decision) {
         updateDetectedLinks();
     } else if (decision === 'github') {
         if (githubTextCache !== null) {
-            document.getElementById('editor').value = githubTextCache;
             localStorage.removeItem(activeMatchup.draftKey); // Delete local conflicting edits
             renderLocalDrafts();
             updateDiscardButtonState(false);
             if (conflictBanner) conflictBanner.style.display = 'none';
             document.getElementById('status').innerText = "Loaded GitHub version. Local draft deleted.";
-            updateDetectedLinks();
+            // Reload cleanly to correctly extract metadata from github remote
+            loadMatchupByPath(activeMatchup.path, activeMatchup.label, activeMatchup.draftKey, activeMatchup.enemyKey, activeMatchup.myKey);
         }
     }
 }

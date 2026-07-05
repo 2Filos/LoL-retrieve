@@ -292,14 +292,100 @@ function renderSavedMatchups() {
         </div>
     `;
 
-    saved.forEach(m => {
-        const myName = getChampionNameByKey(m.myKey);
-        const enemyName = getChampionNameByKey(m.enemyKey);
+    // Prepare enriched data for sorting
+    const enrichedSaved = saved.map(m => {
+        return {
+            ...m,
+            myName: getChampionNameByKey(m.myKey),
+            enemyName: getChampionNameByKey(m.enemyKey)
+        };
+    });
+
+    // Sort alphabetically by myName, then by enemyName
+    enrichedSaved.sort((a, b) => {
+        const nameA = a.myName.toLowerCase();
+        const nameB = b.myName.toLowerCase();
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+        const enemyA = a.enemyName.toLowerCase();
+        const enemyB = b.enemyName.toLowerCase();
+        if (enemyA < enemyB) return -1;
+        if (enemyA > enemyB) return 1;
+        return 0;
+    });
+
+    let prevMyName = null;
+
+    enrichedSaved.forEach(m => {
+        const myName = m.myName;
+        const enemyName = m.enemyName;
+
+        let displayMyName = myName;
+        if (myName === prevMyName) {
+            displayMyName = '...';
+        } else if (myName.length > 6) {
+            displayMyName = myName.substring(0, 6);
+        }
+        prevMyName = myName;
+
+        let displayEnemyName = enemyName;
+        if (enemyName.length > 6) {
+            displayEnemyName = enemyName.substring(0, 6);
+        }
+
+        let ytLink = null;
+        const matchupKey = `${m.enemyKey}_${m.myKey}`;
+
+        // 1. Check global index first (enables icons without needing a local draft)
+        try {
+            const globalLinks = JSON.parse(localStorage.getItem('youtube_links_index') || '{}');
+            if (globalLinks[matchupKey]) {
+                ytLink = globalLinks[matchupKey];
+            }
+        } catch (e) { }
+
+        // 2. Fallback to parsing local draft if it exists
+        const draftKey = `draft_${m.enemyKey}_${m.myKey}`;
+        const localDraft = localStorage.getItem(draftKey);
+        if (!ytLink && localDraft) {
+            // Check for metadata first
+            const match = localDraft.match(/<!-- METADATA: (.*?) -->/);
+            if (match) {
+                try {
+                    const meta = JSON.parse(match[1]);
+                    if (meta.customLinks) {
+                        const yt = meta.customLinks.find(l => l.url.includes('youtube.com') || l.url.includes('youtu.be'));
+                        if (yt) ytLink = yt.url;
+                    }
+                } catch (e) { }
+            }
+            if (!ytLink) {
+                // regex search in text
+                const ytMatch = localDraft.match(/https?:\/\/(www\.)?(youtube\.com|youtu\.be)[^\s\)]+/);
+                if (ytMatch) ytLink = ytMatch[0];
+            }
+        }
+
+        let ytIconHtml = '';
+        if (ytLink) {
+            ytIconHtml = `<a href="${ytLink}" title="Watch VOD in background" style="cursor: pointer; color: var(--danger); text-decoration: none; transform: translateY(1px); display: inline-block;" onclick="event.preventDefault(); event.stopPropagation(); if(typeof bridgeActive !== 'undefined' && bridgeActive) { window.dispatchEvent(new CustomEvent('OpenBackgroundTab', {detail: {url: '${ytLink}'}})); } else { window.open('${ytLink}', '_blank'); }">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>`;
+        } else {
+            ytIconHtml = `<span style="color: var(--text-secondary); opacity: 0.5; transform: translateY(1px); display: inline-block;" title="No YouTube link found">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </span>`;
+        }
+
         html += `
             <div class="draft-card">
                 <div class="draft-info">
-                    <span class="draft-champ">${myName} vs ${enemyName}</span>
-                    <span class="draft-tag" style="color: var(--text-secondary);">Saved Matchup</span>
+                    <div style="display: grid; grid-template-columns: 40px 16px 42px auto; align-items: center; gap: 4px; font-size: 12px; font-weight: bold;">
+                        <span style="text-align: left; ${myName === prevMyName ? 'opacity: 0.5;' : ''}" title="${myName}">${displayMyName}</span>
+                        <span style="text-align: center; opacity: 0.6; font-size: 10px; font-weight: normal;">vs</span>
+                        <span style="text-align: left; white-space: nowrap;" title="${enemyName}">${displayEnemyName}</span>
+                        <span style="display: flex; align-items: center;">${ytIconHtml}</span>
+                    </div>
                 </div>
                 <div class="draft-actions">
                     <button class="btn-outline-sm" onclick="loadDraft('${m.enemyKey}', '${m.myKey}')">Edit</button>

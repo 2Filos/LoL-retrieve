@@ -105,7 +105,15 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     githubTextCache = null;
 
     // Check for local draft cache
-    const localDraft = localStorage.getItem(draftKey);
+    const localDraftRaw = localStorage.getItem(draftKey);
+    let localDraftText = null;
+    if (localDraftRaw !== null) {
+        console.log("[DEBUG] Local draft found. Length:", localDraftRaw.length);
+        localDraftText = extractMetadata(localDraftRaw); 
+    } else {
+        console.log("[DEBUG] No local draft found.");
+        activeMetadata = { customLinks: [], linkOrder: [] };
+    }
 
     // Fallback load in offline-only mode
     if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
@@ -121,8 +129,17 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
 
     const config = getAPIConfig();
     try {
-        // Fetch files metadata from repository contents endpoint
-        const response = await bridgeFetch(config.url + path, { headers: config.headers });
+        console.log(`[DEBUG] Fetching from GitHub: ${path}`);
+        const cacheBusterUrl = `${config.url}${path}?t=${Date.now()}`;
+        
+        // Force no-cache headers to ensure we get the absolute latest SHA
+        const fetchHeaders = Object.assign({}, config.headers, {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+        });
+        
+        const response = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
 
         if (response.isExpired) {
             const tokenErrEl = document.getElementById('tokenExpiredError');
@@ -142,26 +159,40 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
             // File loaded successfully
             const data = response.json();
             currentSha = data.sha; // Save SHA to track current revision
+            console.log(`[DEBUG] Loaded from GitHub. currentSha is now: ${currentSha}`);
 
             // Decodes Base64 to UTF-8 text safely
-            const decodedText = decodeURIComponent(escape(atob(data.content)));
-            githubTextCache = decodedText; // Cache remote contents
+            const decodedTextRaw = decodeURIComponent(escape(atob(data.content)));
 
             // CONFLICT CHECK:
             // Compare local draft cache content with remote version loaded from GitHub.
-            if (localDraft !== null && localDraft !== decodedText) {
+            if (localDraftRaw !== null && localDraftRaw !== decodedTextRaw) {
+                console.log("[DEBUG] Conflict detected!");
+                console.log("[DEBUG] localDraftRaw length:", localDraftRaw.length);
+                console.log("[DEBUG] decodedTextRaw length:", decodedTextRaw.length);
+                
                 if (conflictBanner) conflictBanner.style.display = 'flex'; // reveal conflict warning banner
-                editorEl.value = localDraft; // Default display local edits
+                
+                // If there's a conflict, localDraftText (and activeMetadata) was already extracted above
+                editorEl.value = localDraftText; 
+                
+                // Cache the github remote text without overwriting our activeMetadata
+                const match = decodedTextRaw.match(/<!-- METADATA: (.*?) -->/);
+                githubTextCache = match ? decodedTextRaw.replace(match[0], '').trimEnd() : decodedTextRaw;
+
                 statusEl.innerText = "Conflict! Unsaved local edits differ from GitHub version.";
                 updateDiscardButtonState(true);
                 updateDetectedLinks();
             } else {
                 // Synced state: No local variations
-                if (localDraft !== null) {
+                console.log("[DEBUG] No conflict detected.");
+                if (localDraftRaw !== null) {
+                    console.log("[DEBUG] Clearing redundant local draft.");
                     localStorage.removeItem(draftKey); // Clear redundant draft
                     renderLocalDrafts();
                 }
-                editorEl.value = decodedText;
+                editorEl.value = extractMetadata(decodedTextRaw);
+                githubTextCache = editorEl.value;
                 statusEl.innerText = "Loaded successfully from GitHub!";
                 updateDiscardButtonState(false);
                 updateDetectedLinks();
@@ -174,9 +205,9 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     } catch (err) {
         statusEl.innerText = "Bridge fetch error: " + err.message;
         fileLabel.innerText = `${label} (Offline)`;
-        editorEl.value = localDraft || "";
+        editorEl.value = localDraftText || "";
         editorEl.disabled = false;
-        updateDiscardButtonState(localDraft !== null);
+        updateDiscardButtonState(localDraftRaw !== null);
         updateDetectedLinks();
     }
 
@@ -201,16 +232,24 @@ async function saveToGitHub() {
     const statusEl = document.getElementById('status');
 
     statusEl.innerText = "Syncing changes to GitHub...";
+    console.log("[DEBUG] saveToGitHub triggered.");
+
+    const fullText = appendMetadata(textContent);
 
     // Encode text to Base64 safely resolving UTF-8 multibyte characters
-    const encodedContent = btoa(unescape(encodeURIComponent(textContent)));
+    const encodedContent = btoa(unescape(encodeURIComponent(fullText)));
     const bodyData = {
         message: `Sync: updated ${activeMatchup.label}`,
         content: encodedContent
     };
 
     // Provide SHA checksum if updating an existing file, else GitHub throws 409 conflict
-    if (currentSha) bodyData.sha = currentSha;
+    if (currentSha) {
+        bodyData.sha = currentSha;
+        console.log(`[DEBUG] Included SHA in PUT request: ${currentSha}`);
+    } else {
+        console.log(`[DEBUG] No currentSha available. Creating new file.`);
+    }
 
     try {
         const response = await bridgeFetch(config.url + path, {
@@ -219,9 +258,79 @@ async function saveToGitHub() {
             body: JSON.stringify(bodyData)
         });
 
+        console.log(`[DEBUG] GitHub PUT response status: ${response.status}`);
+
         if (response.ok) {
             const result = response.json();
             currentSha = result.content.sha; // Update currentSha with GitHub's new version reference
+            console.log(`[DEBUG] Sync successful! Updated currentSha to: ${currentSha}`);
+
+            // === YOUTUBE LINK GLOBAL INDEX SYNC ===
+            let ytLink = null;
+            const metaMatch = fullText.match(/<!-- METADATA: (.*?) -->/);
+            if (metaMatch) {
+                try {
+                    const meta = JSON.parse(metaMatch[1]);
+                    if (meta.customLinks && Array.isArray(meta.customLinks)) {
+                        const yt = meta.customLinks.find(l => l.url.includes('youtube.com') || l.url.includes('youtu.be'));
+                        if (yt) ytLink = yt.url;
+                    }
+                } catch(e) {}
+            }
+            if (!ytLink) {
+                const ytRegex = /https?:\/\/(www\.)?(youtube\.com|youtu\.be)[^\s\)]+/;
+                const match = fullText.match(ytRegex);
+                if (match) ytLink = match[0];
+            }
+
+            const matchupKey = `${activeMatchup.enemyKey}_${activeMatchup.myKey}`;
+            let globalLinks = {};
+            try {
+                globalLinks = JSON.parse(localStorage.getItem('youtube_links_index') || '{}');
+            } catch(e) {}
+
+            const existingYtLink = globalLinks[matchupKey] || null;
+
+            if (ytLink !== existingYtLink) {
+                console.log(`[DEBUG] YouTube link changed from ${existingYtLink} to ${ytLink}. Syncing index...`);
+                statusEl.innerText = "Changes safely synced! Updating YouTube Links Index...";
+                
+                if (ytLink) {
+                    globalLinks[matchupKey] = ytLink;
+                } else {
+                    delete globalLinks[matchupKey];
+                }
+                const newIndexContent = JSON.stringify(globalLinks, null, 2);
+                localStorage.setItem('youtube_links_index', newIndexContent);
+
+                const ytBodyData = {
+                    message: `Sync: updated youtube links index for ${matchupKey}`,
+                    content: btoa(unescape(encodeURIComponent(newIndexContent)))
+                };
+                if (typeof youtubeLinksSha !== 'undefined' && youtubeLinksSha) {
+                    ytBodyData.sha = youtubeLinksSha;
+                }
+
+                try {
+                    const ytResponse = await bridgeFetch(config.url + 'youtube_links.json', {
+                        method: 'PUT',
+                        headers: config.headers,
+                        body: JSON.stringify(ytBodyData)
+                    });
+                    
+                    if (ytResponse.ok) {
+                        const ytResult = ytResponse.json();
+                        youtubeLinksSha = ytResult.content.sha;
+                        console.log(`[DEBUG] YouTube index synced. New SHA: ${youtubeLinksSha}`);
+                        renderSavedMatchups();
+                    } else {
+                        console.warn(`[DEBUG] YouTube index sync failed: ${ytResponse.status}`);
+                    }
+                } catch (e) {
+                    console.error("[DEBUG] Error syncing youtube_links.json", e);
+                }
+            }
+            // === END YOUTUBE LINK GLOBAL INDEX SYNC ===
 
             // Delete local draft cache
             localStorage.removeItem(activeMatchup.draftKey);
