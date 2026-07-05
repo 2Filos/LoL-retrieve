@@ -31,15 +31,19 @@ async function loadMatchup() {
     const roleSelect = document.getElementById('roleSelect');
     const role = roleSelect ? roleSelect.value : 'top';
 
+    let lolaRole = role;
+    if (role === 'mid') lolaRole = 'middle';
+    if (role === 'adc') lolaRole = 'bottom';
+
     const opggLink = document.getElementById('opggLink');
     if (opggLink) {
-        opggLink.href = `https://op.gg/lol/champions/${myKey.toLowerCase()}/counters/${role}?region=global&tier=platinum_plus&target_champion=${enemyKey.toLowerCase()}`;
+        opggLink.href = `https://op.gg/lol/champions/${myKey.toLowerCase()}/counters/${role}?region=global&type=ranked&tier=platinum_plus&target_champion=${enemyKey.toLowerCase()}`;
         opggLink.style.display = 'inline-flex';
     }
 
     const lolaLink = document.getElementById('lolaLink');
     if (lolaLink) {
-        lolaLink.href = `https://lolalytics.com/lol/${myKey.toLowerCase()}/vs/${enemyKey.toLowerCase()}/build/?vslane=${role}&tier=platinum_plus&patch=30`;
+        lolaLink.href = `https://lolalytics.com/lol/${myKey.toLowerCase()}/vs/${enemyKey.toLowerCase()}/build/?lane=${lolaRole}&tier=platinum_plus&vslane=${lolaRole}&patch=30`;
         lolaLink.style.display = 'inline-flex';
     }
 
