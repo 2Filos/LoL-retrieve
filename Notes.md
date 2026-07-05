@@ -1,7 +1,5 @@
-This is for overall notes.
-
 High pick rate
-Garen vs Riven (why lose?)
+Garen vs Riven (why lose?) - 
 Garen/Yorick vs Teemo (what do I do wrong? with Yorick in particular, Garen fair enough)
 I have a wave control issue that's particularly shines vs ranged, but also vs Nasus
 Maybe wave control for ganks? Bounces?
