@@ -13,3 +13,5 @@ I either fail to snowball, or get greedy
 I generally let him overstack Q, that's for sure
 
 Should watch vod?
+
+<!-- METADATA: {"customLinks":[{"customId":"custom_1783251573217","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGpSOMbK56VJYmTxqbF0y428"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGpSOMbK56VJYmTxqbF0y428"]} -->
