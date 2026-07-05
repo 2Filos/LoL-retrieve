@@ -14,7 +14,7 @@ Garen/Yorick vs Camille (VOD to see it)
 - Medium issues (draintanks)
 vs Zaheen/Trundle/Tryndamere 
 lack of respect for turnaround? low HP is not low HP
-
+a
 
 > Skirmishes!
 > Focus Grubs/Herald more!
