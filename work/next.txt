@@ -4,20 +4,6 @@ saved matchups scrollbar is ugly
 
 ---
 
-update documentation. 
-new .css system
-new .js system
-new unsynced banner for local vs github
-new youtube stuff
-
-then the only thing left i think might be to move .js and .css to dedicated folders and update references? it's quite cluttery in root? probably leave the .html in root though. does that sound good? professional? how things are done properly'
-
---- 
-
-youtube icons in sidebars don't always look right.
-icon should open LEFTMOST youtube link (position depends on it being dragged there possibly, since I can shuffle them manually)
-and sometimes icon's outright grey as if there's some issue with SYNC, though it resolved itself eventually?
-
----
-
 given AI always works in this workspace and that GEMINI.md is for AI to read (same AGENTS.md) what's the purpose of the links like  ([js/boot.js](file:///c:/Users/User/Documents/VSC/LoL-retrieve/js/boot.js)): ?
+does it make sense to repeat file:///c:/Users/User/Documents/VSC/LoL-retrieve/ every single time, bloating context?
+I don't care for links, i read the files in editor mode and don't need clickable links
