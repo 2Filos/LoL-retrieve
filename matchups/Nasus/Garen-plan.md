@@ -12,4 +12,4 @@ My main concern is better wave control
 ... seems like it's just > ZONE HIM HARD > he no Q stack
 You can then let him push and thus deny more stacks
 The more you deny stacks the more he falls behind the curve, thus you can play aggro and take risks
-
+His Q has a 7-3-less CD, meaning early every time he uses it he's super vulnerable
