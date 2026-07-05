@@ -1,5 +1,7 @@
+This is for overall notes.
+
 High pick rate
-Garen vs Riven (why lose?) - 
+Garen vs Riven (why lose?)
 Garen/Yorick vs Teemo (what do I do wrong? with Yorick in particular, Garen fair enough)
 I have a wave control issue that's particularly shines vs ranged, but also vs Nasus
 Maybe wave control for ganks? Bounces?
@@ -21,3 +23,5 @@ Lane consistency bad one (makes sense)
 Champion pool too small, fair enough. Need to experiment Camille/Mundo (in normal)
 Aggression is the main stat that falls behind. Why? Scores are... evenly spread.
 Maybe just a consequence of heavy splitting? High movement macro? A teamfighter... Sett?
+
+Challenger VODS - https://www.youtube.com/playlist?list=PLPUygacvheSPS2e31JJpv4PfYtzm230TO
