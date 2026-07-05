@@ -9,5 +9,7 @@ Not trading with Q first is the error I kept making
 
 
 NEVER waste Q on wave
+No Q? She gets a good trade and might even kill you
+That's all there is to it
 Will try that
 
