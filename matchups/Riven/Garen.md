@@ -2,16 +2,12 @@ I often end up losing this matchup, even though it's a 56-57% win rate matchup w
 My stats are currently 2-4 and 57:43
 
 My theory was:
-E against QW (like vs any stun)
-W against her biggest damage presumably - her R after 6?
-I didn't think that much, only used W to reduce trade damage
+E against QW (like vs any stun)  -  W start of trade (reduction) 
+> might make sense to save it after 6, specifically for an all-in though (on my side)
 
-But it makes sense to save it after 6, specifically for an all-in though (on my side)
 Her Q has the same dmg on every hit, so the main dmg source is the QaaWQ etc moment, her burst...
-
 The main problem is how to use Q I think, the silence denies her kit's damage in a specific way?
-But when to use it? How?
-Let's look at VOD...
+But when to use it? How? Let's look at VOD...
 
 Lv1 trade won (cause BP) - carefully stack while avoiding dmg+push from Riven
 New meta is the same for everyone, you push and second wave ends up under tower, I hate it
