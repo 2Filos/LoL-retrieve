@@ -7,5 +7,7 @@ Always Q first, if you Q in first good
 If she gets you with W, you Q and block her Q combo and even out the trade
 Not trading with Q first is the error I kept making
 
+
+NEVER waste Q on wave
 Will try that
 
