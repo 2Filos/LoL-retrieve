@@ -20,6 +20,6 @@ Need external VOD and personal VOD
 Second Wind for sure
 Conqueror and SS are both fine but different?
 Presumably Conqueror you want to snowball sooner - SS lets you zoom around more
-VOD with CQ :
+VOD with CQ : Super aggro early, play around grasp - aaE
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783251369543","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGoHbr6U_8oreMVovmZpY1fp"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGoHbr6U_8oreMVovmZpY1fp"]} -->
