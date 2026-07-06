@@ -21,3 +21,4 @@ Then... vs Zaahen?
 Probably vs Ornn after that
 
 NEED Garen vs Trynda - i got wasted
+NEED Garen vs Volibear - i got wasted and don't get how to win this AT ALL
