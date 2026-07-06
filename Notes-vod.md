@@ -4,8 +4,7 @@
 [Garen vs Sett] (how to?) and viceversa [Sett vs Garen]
 Garen vs Sett not seen but understood indirectly? still need VOD
 
-[Garen vs Yorick] is TECHNICALLY the better matchup, historically I suck, in ranked I win?
-[Yorick vs Garen] is TECHNICALLY the worse matchup, but I win it historically.
+[Garen vs Yorick] (easier) and [Yorick vs Garen] (harder) but in reality feeling varies A LOT
 Basically both require heavy thinking and awareness > [Garen vs Yorick] > kinda SEEN
 
 [Garen/Yorick vs Camille] (VOD to see it)
