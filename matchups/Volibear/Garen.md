@@ -19,4 +19,8 @@ SS seems a reasonable alternative for to more comfortably handle a tricky/risky 
 Trades seem to consistently start off E
 To Q and get out and avoid second proc of his W maybe?
 
+Vods 1-2-3 consistently struggle early, which is at odds (a bit) with LKR
+BUT, considering it's 50% LKR, it's probably > He's stronger pre-6, you stronger post-6
+Either that or first item
+
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783350198803","display":"Garen vs Voli Playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGoXaUSOQ3PftAddjYo5umGK"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGoXaUSOQ3PftAddjYo5umGK"]} -->
