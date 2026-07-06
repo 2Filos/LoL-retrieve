@@ -15,4 +15,8 @@ Demolish seems particularly bad, best sorcery secondary (empowered R) to deal wi
 VS lethal tempo you just give I think
 SS seems a reasonable alternative for to more comfortably handle a tricky/risky matchup too
 
+
+Trades seem to consistently start off E
+To Q and get out and avoid second proc of his W maybe?
+
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783350198803","display":"Garen vs Voli Playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGoXaUSOQ3PftAddjYo5umGK"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGoXaUSOQ3PftAddjYo5umGK"]} -->
