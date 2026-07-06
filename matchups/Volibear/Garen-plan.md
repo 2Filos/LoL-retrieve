@@ -12,7 +12,7 @@ And if he wants to snowball he can snowball hard off R
 So requires care
 Realistically SUPER-cointoss until at minimum Lv6?
 Feels a lot like Darius, but here you have more margin going in
-But also more fucked if snowballed on > overall higher winrate?
+But also more fucked if snowballed on (unless that's just me) > overall higher winrate?
 
 CQ sorc (for empowered R) or SS resolve (overgrowth second wind)
 Offensive anti-heal is important
