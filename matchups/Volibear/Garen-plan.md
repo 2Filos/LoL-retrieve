@@ -13,4 +13,4 @@ So requires care
 
 CQ sorc (for empowered R) or SS resolve (overgrowth second wind)
 Offensive anti-heal is important
-
+Doran Helm starts looks good? (06/07/26)
