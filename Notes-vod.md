@@ -18,7 +18,7 @@ NEED Garen vs Trynda - i got wasted
 NEED Garen vs Ornn AND vs Camille
 NEED Yorick vs Camille
 NEED BOTH vs Teemo
-NEED to look into Varus top
+NEED to look into Varus top in general and specifically for Yorick
 
 - Maybe
 > Zaheen... Pantheon? ... dunno
