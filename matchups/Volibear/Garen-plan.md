@@ -10,6 +10,7 @@ Wait for scaling until Lv3 vs LTH
 Generally you outscale
 And if he wants to snowball he can snowball hard off R
 So requires care
+Realistically SUPER-cointoss until at minimum Lv6?
 
 CQ sorc (for empowered R) or SS resolve (overgrowth second wind)
 Offensive anti-heal is important
