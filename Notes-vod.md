@@ -14,9 +14,11 @@ Basically both require heavy thinking and awareness > [Garen vs Yorick] > kinda 
 - Maybe wave control for ganks? Bounces?
 
 - Current
-Plan to watch vs Camille and vs Teemo
-Then... vs Zaahen? (postponed - I half-get it?)
-Probably vs Ornn after that
-
 NEED Garen vs Trynda - i got wasted
-NEED Garen vs Volibear - i got wasted and don't get how to win this AT ALL
+NEED Garen vs Ornn AND vs Camille
+NEED Yorick vs Camille
+NEED BOTH vs Teemo
+NEED to look into Varus top
+
+- Maybe
+> Zaheen... Pantheon? ... dunno
