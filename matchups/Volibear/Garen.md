@@ -11,5 +11,6 @@ Conveniently it's CQ vs Grasp. Perfect.
 Early kills - what's clear is that early duel is winnable but very close.
 Go in before he can prep grasp (otherwise early you cooked) - try and dodge E
 It could really go either way - it's one AA of difference, maybe HP rune early?
+Demolish seems particularly bad, best sorcery secondary (empowered R) to deal with his tanky drain
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783350198803","display":"Garen vs Voli Playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGoXaUSOQ3PftAddjYo5umGK"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGoXaUSOQ3PftAddjYo5umGK"]} -->
