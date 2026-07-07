@@ -14,9 +14,10 @@ Basically both require heavy thinking and awareness > [Garen vs Yorick] > kinda 
 
 - Current
 NEED Garen vs Trynda - i got wasted
-NEED Garen vs Ornn AND vs Camille
+NEED Garen vs Ornn AND vs Camille AND vs Kled
 NEED Yorick vs Camille
 NEED BOTH vs Teemo
+Need BOTH vs Urgot
 NEED to look into Varus top in general and specifically for Yorick - I got FUCKED
 
 - Maybe
