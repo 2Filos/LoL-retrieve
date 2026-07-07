@@ -14,3 +14,6 @@ Once you are a kill ahead you can take risks vs conqueror
 Two kills to take risks vs stormsurge
 And still best to take risks when strongside and JG on last camp or in the area
 That way, given long trade he can generally rotate and secure kill afterwards (or int..)
+
+Let him shove fully basically for free till lv3
+Lv3-6 you probably respect, after becomes manageable
