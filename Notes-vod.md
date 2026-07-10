@@ -13,7 +13,7 @@ Basically both require heavy thinking and awareness > [Garen vs Yorick] > kinda 
 - Maybe wave control for ganks? Bounces?
 
 - Current
-NEED Garen vs Trynda - i got wasted
+NEED Garen vs Trynda - i got wasted > Exhaust and shitty matchup
 NEED Garen vs Ornn AND vs Kled
 NEED BOTH vs Teemo/Urgot/Camille
 NEED vs Varus top both GENERAL and vs Yorick - he fucks you (just play super well or get fucked)
