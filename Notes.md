@@ -1,17 +1,23 @@
-> Skirmishes!
-> Focus Grubs/Herald more!
-Lane consistency bad one (makes sense)
-Champion pool too small, fair enough. Need to experiment Camille/Mundo (in normal)
-Aggression is the main stat that falls behind. Why? Scores are... evenly spread.
-Maybe just a consequence of heavy splitting? High movement macro? A teamfighter... Sett?
-To increase early partecipation/snowballing consider proxy - to convert into plates at minimum
+- VODS lookup
+[Garen vs Riven/Nasus/Volibear] > SEEN
+[Sett vs Garen] > SEEN
+[Garen vs Sett] (how to?) and viceversa [Sett vs Garen]
+Garen vs Sett not seen but understood indirectly? still need VOD
 
-- Medium issues (draintanks)
-vs Zaheen/Trundle/Tryndamere (VODs)
-lack of respect for turnaround? low HP is not low HP
+[Garen vs Yorick] (easier) and [Yorick vs Garen] (harder) but in reality feeling varies A LOT
+Basically both require heavy thinking and awareness > [Garen vs Yorick] > kinda SEEN
 
-- Gank setup and wave control
-Gotta think more on how to setup ganks, strong side and weakside and whatnot
-Care to not lose HP meaninglessly for CS too, CS will come to you, chill
+[Garen/Yorick vs Camille] (VOD to see it)
+[Yorick vs Teemo] - he kills Maiden maybe?
+- issue that's obvious vs ranged too
+- Maybe wave control for ganks? Bounces?
 
-<!-- METADATA: {"customLinks":[{"customId":"custom_1783248640783","display":"Garen DM","url":"https://www.youtube.com/@domisumReplay-Garen/playlists"},{"customId":"custom_1783249366838","display":"Yorick DM","url":"https://www.youtube.com/@domisumReplay-Yorick/playlists"},{"customId":"custom_1783249382278","display":"Sett CH","url":"https://www.youtube.com/playlist?list=PLPUygacvheSMHOUBzkC8QDvz5N9AU-z7b"},{"customId":"custom_1783252004572","display":"Sett - CH2","url":"https://www.youtube.com/@SettChallenger/videos"},{"customId":"custom_1783252149575","display":"-","url":"-"}],"linkOrder":["https://www.youtube.com/@domisumReplay-Garen/playlists","https://www.youtube.com/@domisumReplay-Yorick/playlists","https://www.youtube.com/playlist?list=PLPUygacvheSMHOUBzkC8QDvz5N9AU-z7b","https://www.youtube.com/@SettChallenger/videos","-"]} -->
+- Current
+NEED Garen vs Trynda - i got wasted > Exhaust and shitty matchup
+NEED Garen vs Ornn AND vs Kled AND vs Volibear
+NEED BOTH vs Teemo/Urgot/Camille
+NEED vs Varus top both GENERAL and vs Yorick - he fucks you (just play super well or get fucked)
+Or pick Olaf?
+
+- Maybe
+> Zaheen... Pantheon? ... dunno
