@@ -173,6 +173,18 @@ function saveDraftBeforeSwitch() {
     if (!editorEl) return;
 
     const textContent = editorEl.value;
+    const existingDraft = localStorage.getItem(activeMatchup.draftKey);
+    
+    // Determine if text has actually changed compared to the loaded remote state
+    const baseText = typeof githubTextCache !== 'undefined' && githubTextCache !== null ? githubTextCache : "";
+    const hasUnsavedTextEdits = (textContent !== baseText);
+
+    if (existingDraft === null && !hasUnsavedTextEdits) {
+        // No edits made and no draft currently exists.
+        // Skip creating a phantom draft.
+        return;
+    }
+
     // Only append metadata to the primary file
     const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
     const isPrimary = (isMatchup && activePageSide === 'right') ||

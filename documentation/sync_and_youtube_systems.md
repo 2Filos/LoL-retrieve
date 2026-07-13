@@ -9,7 +9,7 @@ Because the editor natively supports a split-view paradigm (Matchups have `Notes
 ### The Problem
 Users intuitively expect that hitting the footer "Sync GitHub" button while viewing a matchup will save *all* work related to that matchup, regardless of which tab they are currently viewing. If they edit the Plan, swap to Notes, and hit Sync, they expect the Plan edits to sync too.
 
-### The Implementation (`js/sync.js`)
+### The Implementation (`js/sync_save.js`)
 When `saveToGitHub()` is invoked:
 1. **Primary Sync**: It syncs the currently active tab (the one the user is looking at). It pulls the current SHA, updates the file, and clears its local draft cache.
 2. **Secondary Sync (Dual-Tab)**: It automatically calculates the `otherSide` of the current view (e.g. if looking at Notes, it calculates Plan). It uses `resolvePagePath` to find the secondary file's draft in `localStorage`. 
@@ -17,7 +17,7 @@ When `saveToGitHub()` is invoked:
 
 ## 2. Local Drafts and Stale SHA Caching
 
-The `storage.js` module handles the "Pending Local Drafts" sidebar. This sidebar allows users to sync drafts that they abandoned without clicking "Sync GitHub".
+The `storage_drafts.js` module handles the "Pending Local Drafts" sidebar. This sidebar allows users to sync drafts that they abandoned without clicking "Sync GitHub".
 
 ### Cache-Busting Requirement
 A major issue identified with the GitHub API (`bridgeFetch`) is aggressive browser caching of `GET` requests. 
@@ -39,7 +39,7 @@ The editor maintains a global index of all YouTube links attached to matchups, w
 2. If no link is found in metadata, it falls back to parsing the raw markdown text with a regex.
 
 ### The Shared Index
-When a sync occurs, `sync.js` cross-references the extracted link against the `youtube_links_index` stored in `localStorage`.
+When a sync occurs, `sync_save.js` cross-references the extracted link against the `youtube_links_index` stored in `localStorage`.
 If the link has changed, it updates the local index, translates it to JSON, and pushes `youtube_links.json` to the root of the GitHub repository.
 
 ### Sub-Page Protection Guard
