@@ -10,6 +10,7 @@
 async function loadMatchup() {
     const enemyName = document.getElementById('enemyChamp').value;
     const myName = document.getElementById('myChamp').value;
+    console.log(`[PROCEDURAL_TEST] Triggered loadMatchup: ${myName} vs ${enemyName}`);
 
     // Resolve display names to keys using helpers in utils.js
     const enemyKey = getChampionKeyByName(enemyName);
@@ -57,6 +58,7 @@ async function loadMatchup() {
  * Loads the General Notes from GitHub or local drafts.
  */
 async function loadGeneralNotes() {
+    console.log(`[PROCEDURAL_TEST] Triggered loadGeneralNotes`);
     // Clear inputs so user can easily search for matchups
     document.getElementById('enemyChamp').value = '';
     document.getElementById('myChamp').value = '';
@@ -275,7 +277,12 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
  * Resets local cache and SHA tags upon success.
  */
 async function saveToGitHub() {
-    if (!activeMatchup.path) return;
+    if (!activeMatchup.path) {
+        alert("Please load a matchup first.");
+        return;
+    }
+
+    console.log(`[PROCEDURAL_TEST] Triggered saveToGitHub for ${activeMatchup.path} (Active Tab: ${activePageSide})`);
 
     if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
         document.getElementById('status').innerText = "Saved draft locally. (Cannot sync: Bridge or Config offline).";
@@ -446,7 +453,7 @@ async function saveToGitHub() {
                 otherSide
             );
             const otherDraftRaw = localStorage.getItem(otherPathInfo.draftKey);
-            if (otherDraftRaw) {
+            if (otherDraftRaw !== null) {
                 try {
                     // Determine if the other tab is the primary file
                     const otherIsPrimary = (isMatchup && otherSide === 'right') ||
@@ -467,31 +474,47 @@ async function saveToGitHub() {
                         'Expires': '0'
                     });
                     const otherGetRes = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
+                    let skipOtherSync = false;
                     if (otherGetRes.ok) {
                         const otherData = otherGetRes.json();
                         otherSha = otherData.sha;
+                        const decodedOther = decodeURIComponent(escape(atob(otherData.content)));
+                        // If local draft perfectly matches remote, no need to push
+                        if (decodedOther === otherText) {
+                            skipOtherSync = true;
+                        }
+                    } else if (otherGetRes.status === 404 && otherText.length === 0) {
+                        // If file doesn't exist remotely and local draft is empty, no need to push
+                        skipOtherSync = true;
                     }
 
-                    const otherEncoded = btoa(unescape(encodeURIComponent(otherText)));
-                    const otherBody = {
-                        message: `Sync: updated ${activeMatchup.label} (${otherSide === 'left' ? (isMatchup ? 'Plan' : 'Notes') : (isMatchup ? 'Notes' : 'VODs')})`,
-                        content: otherEncoded
-                    };
-                    if (otherSha) otherBody.sha = otherSha;
-
-                    const otherRes = await bridgeFetch(config.url + otherPathInfo.path, {
-                        method: 'PUT',
-                        headers: config.headers,
-                        body: JSON.stringify(otherBody)
-                    });
-
-                    if (otherRes.ok) {
+                    if (skipOtherSync) {
                         localStorage.removeItem(otherPathInfo.draftKey);
                         if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
-                            console.log(`[DEBUG] Other tab (${otherSide}) synced successfully.`);
+                            console.log(`[DEBUG] Other tab (${otherSide}) is identical to remote or empty. Draft cleared.`);
                         }
                     } else {
-                        console.warn(`[WARN] Other tab sync failed: ${otherRes.status}`);
+                        const otherEncoded = btoa(unescape(encodeURIComponent(otherText)));
+                        const otherBody = {
+                            message: `Sync: updated ${activeMatchup.label} (${otherSide === 'left' ? (isMatchup ? 'Plan' : 'Notes') : (isMatchup ? 'Notes' : 'VODs')})`,
+                            content: otherEncoded
+                        };
+                        if (otherSha) otherBody.sha = otherSha;
+
+                        const otherRes = await bridgeFetch(config.url + otherPathInfo.path, {
+                            method: 'PUT',
+                            headers: config.headers,
+                            body: JSON.stringify(otherBody)
+                        });
+
+                        if (otherRes.ok) {
+                            localStorage.removeItem(otherPathInfo.draftKey);
+                            if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+                                console.log(`[DEBUG] Other tab (${otherSide}) synced successfully.`);
+                            }
+                        } else {
+                            console.warn(`[WARN] Other tab sync failed: ${otherRes.status}`);
+                        }
                     }
                 } catch (otherErr) {
                     console.warn(`[WARN] Other tab sync error: ${otherErr.message}`);

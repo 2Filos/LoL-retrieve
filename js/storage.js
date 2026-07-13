@@ -94,6 +94,9 @@ function renderLocalDrafts() {
     if (!container) return;
 
     const drafts = getLocalDrafts();
+    
+    console.log(`[PROCEDURAL_TEST] renderLocalDrafts: Found ${drafts.length} total distinct grouped drafts in localStorage.`);
+
     const activeDraftKey = activeMatchup?.draftKey || null;
     // For grouping: strip tab suffixes from active draft key to match against grouped drafts
     let activeGroupPath = null;
@@ -227,44 +230,58 @@ async function syncDraftDirectly(enemyKey, myKey) {
                 'Expires': '0'
             });
             const response = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
+            let skipSync = false;
             if (response.ok) {
                 const data = response.json();
                 sha = data.sha;
+                const decodedRemote = decodeURIComponent(escape(atob(data.content)));
+                if (decodedRemote === textContent) {
+                    skipSync = true;
+                }
+            } else if (response.status === 404 && textContent.length === 0) {
+                skipSync = true;
             }
 
-            // Encode string safely resolving multibyte characters
-            const encodedContent = btoa(unescape(encodeURIComponent(textContent)));
-            const bodyData = {
-                message: `Sync: updated ${entry.label}`,
-                content: encodedContent
-            };
-            if (sha) bodyData.sha = sha;
-
-            const syncResponse = await bridgeFetch(config.url + entry.path, {
-                method: 'PUT',
-                headers: config.headers,
-                body: JSON.stringify(bodyData)
-            });
-
-            if (syncResponse.ok) {
+            if (skipSync) {
                 if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
-                    console.log(`[DEBUG syncDraftDirectly] syncResponse OK. Removing draftKey: ${entry.draftKey}`);
+                    console.log(`[DEBUG syncDraftDirectly] Content identical or empty. Skipping PUT. Removing draftKey: ${entry.draftKey}`);
                 }
                 localStorage.removeItem(entry.draftKey);
-
-                // Sync status feedback logic for loaded matchup matching
-                if (activeMatchup.draftKey === entry.draftKey) {
-                    const putResult = syncResponse.json();
-                    currentSha = putResult.content.sha;
-                    githubTextCache = textContent;
-                    updateDiscardButtonState(false);
-                    const conflictBanner = document.getElementById('conflictBanner');
-                    if (conflictBanner) conflictBanner.style.display = 'none';
-                }
             } else {
-                allOk = false;
-                console.warn(`[WARN] syncResponse NOT OK for ${entry.draftKey}. Status: ${syncResponse.status}`);
-                statusEl.innerText = `Sync failed for ${entry.label} (Status ${syncResponse.status}).`;
+                // Encode string safely resolving multibyte characters
+                const encodedContent = btoa(unescape(encodeURIComponent(textContent)));
+                const bodyData = {
+                    message: `Sync: updated ${entry.label}`,
+                    content: encodedContent
+                };
+                if (sha) bodyData.sha = sha;
+
+                const syncResponse = await bridgeFetch(config.url + entry.path, {
+                    method: 'PUT',
+                    headers: config.headers,
+                    body: JSON.stringify(bodyData)
+                });
+
+                if (syncResponse.ok) {
+                    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+                        console.log(`[DEBUG syncDraftDirectly] syncResponse OK. Removing draftKey: ${entry.draftKey}`);
+                    }
+                    localStorage.removeItem(entry.draftKey);
+
+                    // Sync status feedback logic for loaded matchup matching
+                    if (activeMatchup.draftKey === entry.draftKey) {
+                        const putResult = syncResponse.json();
+                        currentSha = putResult.content.sha;
+                        githubTextCache = textContent;
+                        updateDiscardButtonState(false);
+                        const conflictBanner = document.getElementById('conflictBanner');
+                        if (conflictBanner) conflictBanner.style.display = 'none';
+                    }
+                } else {
+                    allOk = false;
+                    console.warn(`[WARN] syncResponse NOT OK for ${entry.draftKey}. Status: ${syncResponse.status}`);
+                    statusEl.innerText = `Sync failed for ${entry.label} (Status ${syncResponse.status}).`;
+                }
             }
         } catch (err) {
             allOk = false;

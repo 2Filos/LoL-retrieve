@@ -345,6 +345,84 @@ function updateTabLabels() {
 
     tabLeft.classList.toggle('active', activePageSide === 'left');
     tabRight.classList.toggle('active', activePageSide === 'right');
+
+    updateTabIndicators();
+}
+
+/**
+ * Checks if the left and right tabs have content and updates their indicator styles.
+ */
+async function updateTabIndicators() {
+    const tabLeft = document.getElementById('tabLeft');
+    const tabRight = document.getElementById('tabRight');
+    if (!tabLeft || !tabRight || !activeMatchup) return;
+
+    const leftInfo = resolvePagePath(activeMatchup, 'left');
+    const rightInfo = resolvePagePath(activeMatchup, 'right');
+    const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
+    const isLeftPrimary = !isMatchup; // General: left is Notes. Matchup: right is Notes.
+
+    const isGarenCamille = activeMatchup && activeMatchup.myKey === 'Garen' && activeMatchup.enemyKey === 'Camille';
+
+    async function hasContent(info, isPrimary) {
+        // 0. If checking the active tab, we already know the content!
+        if (info.path === activeMatchup.path) {
+            const editorText = document.getElementById('editor').value.trim();
+            console.log(`[PROCEDURAL_TEST] Indicator check for ${info.path}: Active in editor (clean length: ${editorText.length})`);
+            return editorText.length > 0;
+        }
+
+        // 1. Check local draft first
+        let draft = localStorage.getItem(info.draftKey);
+        if (draft !== null) {
+            let clean = draft.replace(/\n?\n?<!-- METADATA: .*? -->/, '').trim();
+            console.log(`[PROCEDURAL_TEST] Indicator check for ${info.path}: Found local draft (clean length: ${clean.length})`);
+            if (isGarenCamille) {
+                console.log(`[PROCEDURAL_TEST] [Garen vs Camille] LOCAL DRAFT CONTENT (${info.path}):\n"${clean}"`);
+            }
+            return clean.length > 0;
+        }
+        // 2. Fallback to checking github if no local draft
+        try {
+            if (typeof bridgeFetch !== 'undefined' && typeof getAPIConfig !== 'undefined') {
+                const config = getAPIConfig();
+                const url = `${config.url}${info.path}`;
+                const response = await bridgeFetch(url, {
+                    method: 'GET',
+                    headers: config.headers
+                });
+                
+                if (response && response.status === 200 && typeof response.json === 'function') {
+                    const data = await response.json();
+                    if (data && data.content) {
+                        // Decode base-64 multi-byte UTF-8
+                        const decoded = decodeURIComponent(escape(atob(data.content)));
+                        let clean = decoded.replace(/\n?\n?<!-- METADATA: .*? -->/, '').trim();
+                        console.log(`[PROCEDURAL_TEST] Indicator check for ${info.path}: Found remote file (clean length: ${clean.length})`);
+                        if (isGarenCamille) {
+                            console.log(`[PROCEDURAL_TEST] [Garen vs Camille] REMOTE GITHUB CONTENT (${info.path}):\n"${clean}"`);
+                        }
+                        return clean.length > 0;
+                    }
+                }
+            }
+        } catch (e) {
+            // Ignore fetch errors, file likely doesn't exist
+        }
+        console.log(`[PROCEDURAL_TEST] Indicator check for ${info.path}: No content found`);
+        return false;
+    }
+
+    // Run both checks in parallel
+    const [leftHasContent, rightHasContent] = await Promise.all([
+        hasContent(leftInfo, isLeftPrimary),
+        hasContent(rightInfo, !isLeftPrimary)
+    ]);
+
+    console.log(`[PROCEDURAL_TEST] Tab Indicators updated -> Left (Plan/Notes): ${leftHasContent}, Right (Notes/VODs): ${rightHasContent}`);
+
+    tabLeft.classList.toggle('has-content', leftHasContent);
+    tabRight.classList.toggle('has-content', rightHasContent);
 }
 
 /**
@@ -372,6 +450,8 @@ function saveDraftBeforeSwitch() {
  */
 function switchEditorTab(side) {
     if (side === activePageSide) return;
+    
+    console.log(`[PROCEDURAL_TEST] Switched Tab from ${activePageSide} to ${side}`);
 
     // Save current content before switching
     saveDraftBeforeSwitch();

@@ -25,6 +25,7 @@ let activePageSide = 'right'; // Which tab is active: 'left' or 'right'
 
 // --- Application Boot Loop ---
 window.onload = async () => {
+    console.log(`[PROCEDURAL_TEST] Page Booted / Reloaded at ${new Date().toISOString()}`);
     PerfProfiler.phaseStart('boot');
     // Restore last-active tab side from localStorage
     const savedTabSide = localStorage.getItem('editor_active_tab_side');
@@ -234,6 +235,12 @@ document.getElementById('editor').addEventListener('input', () => {
         const fullText = isPrimaryFile ? appendMetadata(textContent) : textContent;
         localStorage.setItem(activeMatchup.draftKey, fullText);
         renderLocalDrafts(); // Refresh list display
+        
+        console.log(`[PROCEDURAL_TEST] Editor autosave triggered for ${activeMatchup.path} (Length: ${textContent.length})`);
+
+        if (typeof updateTabIndicators === 'function') {
+            updateTabIndicators();
+        }
 
         updateDiscardButtonState(true);
         document.getElementById('status').innerText = "Typing... saved draft locally.";
