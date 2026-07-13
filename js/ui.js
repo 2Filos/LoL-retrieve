@@ -533,7 +533,10 @@ function deleteLinkEditModal() {
         const idx = activeMetadata.customLinks.findIndex(l => l.customId === customId);
         if (idx > -1) {
             const oldUrl = activeMetadata.customLinks[idx].url;
-            activeMetadata.customLinks.splice(idx, 1);
+            activeMetadata.customLinks = [
+                ...activeMetadata.customLinks.slice(0, idx),
+                ...activeMetadata.customLinks.slice(idx + 1)
+            ];
             activeMetadata.linkOrder = activeMetadata.linkOrder.filter(u => u !== oldUrl);
         }
     } else if (originalText && editor) {
@@ -541,9 +544,26 @@ function deleteLinkEditModal() {
         editor.value = editor.value.split(originalText).join("");
     }
 
-    // Trigger auto-save and update links
     if (editor) editor.dispatchEvent(new Event('input'));
     updateDetectedLinks();
+
+    // If we're on a non-primary tab, persist metadata to the primary draft explicitly
+    const isMatchupCtx = activeMatchup.enemyKey && activeMatchup.myKey;
+    const isPrimaryFileCtx = (isMatchupCtx && activePageSide === 'right') ||
+                              (!isMatchupCtx && activePageSide === 'left');
+    if (!isPrimaryFileCtx) {
+        const primaryDraftKey = isMatchupCtx
+            ? `draft_matchup:${activeMatchup.enemyKey}/${activeMatchup.myKey}`
+            : 'draft_matchup:Notes';
+        let primaryRaw = localStorage.getItem(primaryDraftKey);
+        if (primaryRaw) {
+            // Strip existing metadata block, then re-append updated metadata
+            const metaMatch = primaryRaw.match(/\n?\n?<!-- METADATA: .*? -->/);
+            if (metaMatch) primaryRaw = primaryRaw.replace(metaMatch[0], '');
+            localStorage.setItem(primaryDraftKey, appendMetadata(primaryRaw.trimEnd()));
+        }
+    }
+
     closeLinkEditModal();
 }
 
@@ -577,7 +597,11 @@ function saveLinkEditModal() {
         }
     } else if (customId) {
         // Route 1: It's a Custom Invisible Link (Metadata-only)
-        if (typeof activeMetadata === 'undefined') window.activeMetadata = { customLinks: [], linkOrder: [] };
+        if (typeof activeMetadata === 'undefined' || !activeMetadata) {
+            window.activeMetadata = { customLinks: [], linkOrder: [] };
+        }
+        if (!activeMetadata.customLinks) activeMetadata.customLinks = [];
+        if (!activeMetadata.linkOrder) activeMetadata.linkOrder = [];
         
         const idx = activeMetadata.customLinks.findIndex(l => l.customId === customId);
         if (idx > -1) {
@@ -610,6 +634,23 @@ function saveLinkEditModal() {
     
     // Instantly refresh the UI so the user doesn't have to wait 500ms
     updateDetectedLinks();
+
+    // If we're on a non-primary tab, persist metadata to the primary draft explicitly
+    const isMatchupCtx = activeMatchup.enemyKey && activeMatchup.myKey;
+    const isPrimaryFileCtx = (isMatchupCtx && activePageSide === 'right') ||
+                              (!isMatchupCtx && activePageSide === 'left');
+    if (!isPrimaryFileCtx) {
+        const primaryDraftKey = isMatchupCtx
+            ? `draft_matchup:${activeMatchup.enemyKey}/${activeMatchup.myKey}`
+            : 'draft_matchup:Notes';
+        let primaryRaw = localStorage.getItem(primaryDraftKey);
+        if (primaryRaw) {
+            // Strip existing metadata block, then re-append updated metadata
+            const metaMatch = primaryRaw.match(/\n?\n?<!-- METADATA: .*? -->/);
+            if (metaMatch) primaryRaw = primaryRaw.replace(metaMatch[0], '');
+            localStorage.setItem(primaryDraftKey, appendMetadata(primaryRaw.trimEnd()));
+        }
+    }
 
     closeLinkEditModal();
 }

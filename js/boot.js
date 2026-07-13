@@ -210,8 +210,11 @@ document.getElementById('editor').addEventListener('input', () => {
 
         const textContent = document.getElementById('editor').value;
 
-        // Save current content appended with hidden metadata to localStorage
-        const fullText = appendMetadata(textContent);
+        // Only append metadata to the primary file draft, matching saveToGitHub() and saveDraftBeforeSwitch()
+        const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
+        const isPrimaryFile = (isMatchup && activePageSide === 'right') ||
+                              (!isMatchup && activePageSide === 'left');
+        const fullText = isPrimaryFile ? appendMetadata(textContent) : textContent;
         localStorage.setItem(activeMatchup.draftKey, fullText);
         renderLocalDrafts(); // Refresh list display
 

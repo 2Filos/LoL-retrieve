@@ -178,20 +178,55 @@ async function syncDraftDirectly(enemyKey, myKey) {
     }
 
     // Filter to only entries that have actual drafts
-    const dirtyEntries = draftEntries.filter(e => localStorage.getItem(e.draftKey) !== null);
-    if (dirtyEntries.length === 0) return;
+    const dirtyEntries = draftEntries.filter(e => {
+        const val = localStorage.getItem(e.draftKey);
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+            console.log(`[DEBUG syncDraftDirectly] Checking draftKey: ${e.draftKey} -> exists: ${val !== null}`);
+        }
+        return val !== null;
+    });
+
+    if (dirtyEntries.length === 0) {
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+            console.log("[DEBUG syncDraftDirectly] No dirty entries found! Returning early.");
+        }
+        return;
+    }
 
     statusEl.innerText = `Syncing ${dirtyEntries.length} tab(s) to GitHub...`;
 
     let allOk = true;
     for (const entry of dirtyEntries) {
-        const textContent = localStorage.getItem(entry.draftKey);
-        if (!textContent) continue;
+        let textContent = localStorage.getItem(entry.draftKey);
+        if (textContent === null) continue;
+
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+            console.log(`[DEBUG syncDraftDirectly] Processing entry: ${entry.draftKey} for path: ${entry.path}`);
+        }
+
+        /**
+         * Metadata-Primary-Only Rule Validation
+         * Strip metadata from non-primary files before pushing to GitHub to prevent pollution.
+         * The primary file for matchups is the base Notes file (e.g. matchups/Enemy/My.md).
+         */
+        const isPrimaryEntry = (enemyKey !== null)
+            ? entry.path === `matchups/${enemyKey}/${myKey}.md`
+            : entry.path === 'Notes.md';
+        if (!isPrimaryEntry) {
+            const metaMatch = textContent.match(/\n?\n?<!-- METADATA: .*? -->/);
+            if (metaMatch) textContent = textContent.replace(metaMatch[0], '').trimEnd();
+        }
 
         try {
             // Fetch current SHA checksum to prevent conflict collisions
             let sha = null;
-            const response = await bridgeFetch(config.url + entry.path, { headers: config.headers });
+            const cacheBusterUrl = `${config.url}${entry.path}?t=${Date.now()}`;
+            const fetchHeaders = Object.assign({}, config.headers, {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            });
+            const response = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
             if (response.ok) {
                 const data = response.json();
                 sha = data.sha;
@@ -212,6 +247,9 @@ async function syncDraftDirectly(enemyKey, myKey) {
             });
 
             if (syncResponse.ok) {
+                if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+                    console.log(`[DEBUG syncDraftDirectly] syncResponse OK. Removing draftKey: ${entry.draftKey}`);
+                }
                 localStorage.removeItem(entry.draftKey);
 
                 // Sync status feedback logic for loaded matchup matching
@@ -225,12 +263,22 @@ async function syncDraftDirectly(enemyKey, myKey) {
                 }
             } else {
                 allOk = false;
+                console.warn(`[WARN] syncResponse NOT OK for ${entry.draftKey}. Status: ${syncResponse.status}`);
                 statusEl.innerText = `Sync failed for ${entry.label} (Status ${syncResponse.status}).`;
             }
         } catch (err) {
             allOk = false;
+            console.error(`[ERROR] Error syncing ${entry.draftKey}:`, err);
             statusEl.innerText = `Sync error for ${entry.label}: ` + err.message;
         }
+    }
+
+    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+        console.log("[DEBUG syncDraftDirectly] Finished loop. allOk:", allOk);
+        
+        // Log all remaining localStorage keys to see what's stuck
+        const remainingKeys = Object.keys(localStorage).filter(k => k.startsWith('draft_matchup:'));
+        console.log("[DEBUG syncDraftDirectly] Remaining draft keys in localStorage:", remainingKeys);
     }
 
     renderLocalDrafts();
@@ -386,7 +434,7 @@ function renderSavedMatchups() {
         } catch (e) { }
 
         // 2. Fallback to parsing local draft if it exists
-        const draftKey = `draft_${m.enemyKey}_${m.myKey}`;
+        const draftKey = `draft_matchup:${m.enemyKey}/${m.myKey}`;
         const localDraft = localStorage.getItem(draftKey);
         if (!ytLink && localDraft) {
             // Check for metadata first

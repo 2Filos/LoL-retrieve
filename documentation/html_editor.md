@@ -112,10 +112,12 @@ When the page loads:
 
 ### D. Editing and Local Auto-Saving
 1.  On input keystrokes (debounced 500ms), the editor saves content + appended metadata to `localStorage` under the active `draftKey`.
+    *   **Metadata Appendage Rule**: The autosave cycle only appends the hidden `<!-- METADATA: {...} -->` block to drafts of the *primary* file (Notes tab for matchups, Notes tab for General). Non-primary tab drafts (Plan, VODs) are saved as plain text without metadata. This prevents false conflict detections and metadata duplication across tabs.
 2.  Updates the pending drafts sidebar.
 3.  Updates the detected links panel.
 
 ### E. Saving to GitHub (`sync.js → saveToGitHub`)
+*   **Dual-Tab Sync**: Both the main "Sync GitHub" button and the sidebar "Sync" button sync BOTH tabs' drafts for the active matchup or General context. The main button first syncs the currently displayed tab, then automatically syncs the other tab's draft if one exists in `localStorage`. Metadata is stripped from non-primary tab files before push to prevent pollution.
 1.  Appends metadata to the primary file only (Notes for matchups, Notes for General).
 2.  Encodes to Base64 (with UTF-8 multibyte safety via `btoa(unescape(encodeURIComponent(...)))`).
 3.  PUTs to GitHub with the current SHA (or without SHA for new files).
@@ -145,6 +147,7 @@ The editor dynamically parses, highlights, and manages external links:
 *   Custom links are stored in `activeMetadata.customLinks` (array of `{customId, display, url}` objects).
 *   They are appended to the `.md` file as a hidden HTML comment: `<!-- METADATA: {...} -->`.
 *   Metadata is only appended to the primary file (Notes tab for matchups, Notes tab for General).
+*   **Cross-Tab Persistence**: When adding or editing a custom link while on a non-primary tab (Plan/VODs), the system explicitly persists the updated metadata to the primary tab's local draft. This ensures metadata changes are not lost when switching tabs or reloading.
 
 ### Link Ordering
 *   All links (text-extracted + custom) are merged and sorted according to `activeMetadata.linkOrder`.

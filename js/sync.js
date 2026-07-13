@@ -170,10 +170,10 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     // Fallback load in offline-only mode
     if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
         fileLabel.innerText = `${label} (Local Draft)`;
-        editorEl.value = localDraft || "";
+        editorEl.value = localDraftText || "";
         editorEl.disabled = false;
         statusEl.innerText = "Offline Mode: Draft active.";
-        updateDiscardButtonState(localDraft !== null);
+        updateDiscardButtonState(localDraftText !== null);
         updateDetectedLinks();
         updateStarButtonUI();
         return;
@@ -203,7 +203,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
             // File does not exist on GitHub yet
             statusEl.innerText = `${label} not found on GitHub.\n Ready to create new file.`;
             fileLabel.innerText = `New File: ${label}`;
-            editorEl.value = localDraft || "";
+            editorEl.value = localDraftText || "";
             editorEl.disabled = false;
             updateDiscardButtonState(true);
             updateDetectedLinks();
@@ -382,7 +382,9 @@ async function saveToGitHub() {
                     });
 
                     if (ytResponse.status === 409 || ytResponse.status === 422) {
-                        console.log("[DEBUG] YouTube index SHA mismatch, fetching latest and retrying...");
+                        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logYouTube) {
+                            console.log("[DEBUG] YouTube index SHA mismatch, fetching latest and retrying...");
+                        }
                         const getRes = await bridgeFetch(config.url + 'youtube_links.json', { method: 'GET', headers: config.headers });
                         if (getRes.ok) {
                             const getData = getRes.json();
@@ -411,19 +413,89 @@ async function saveToGitHub() {
                     if (ytResponse.ok) {
                         const ytResult = ytResponse.json();
                         youtubeLinksSha = ytResult.content.sha;
-                        console.log(`[DEBUG] YouTube index synced. New SHA: ${youtubeLinksSha}`);
+                        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logYouTube) {
+                            console.log(`[DEBUG] YouTube index synced. New SHA: ${youtubeLinksSha}`);
+                        }
                         renderSavedMatchups();
                     } else {
-                        console.warn(`[DEBUG] YouTube index sync failed: ${ytResponse.status}`);
+                        console.warn(`[WARN] YouTube index sync failed: ${ytResponse.status}`);
                     }
                 } catch (e) {
-                    console.error("[DEBUG] Error syncing youtube_links.json", e);
+                    console.error("[ERROR] Error syncing youtube_links.json", e);
                 }
             }
             // === END YOUTUBE LINK GLOBAL INDEX SYNC ===
 
-            // Delete local draft cache
+            // Delete local draft cache for the current tab
             localStorage.removeItem(activeMatchup.draftKey);
+
+            /**
+             * === SYNC THE OTHER TAB'S DRAFT ===
+             * Rule Validation: Dual-Tab Sync.
+             * After syncing the actively visible tab, the editor automatically looks for
+             * a draft of the opposite tab (e.g. Plan if Notes is active) and pushes it
+             * to GitHub in the background. It safely strips metadata from the non-primary
+             * file before pushing.
+             */
+            const otherSide = (activePageSide === 'left') ? 'right' : 'left';
+            const otherPathInfo = resolvePagePath(
+                { enemyKey: activeMatchup.enemyKey, myKey: activeMatchup.myKey },
+                otherSide
+            );
+            const otherDraftRaw = localStorage.getItem(otherPathInfo.draftKey);
+            if (otherDraftRaw) {
+                try {
+                    // Determine if the other tab is the primary file
+                    const otherIsPrimary = (isMatchup && otherSide === 'right') ||
+                                           (!isMatchup && otherSide === 'left');
+                    let otherText = otherDraftRaw;
+                    // Strip metadata from non-primary files to prevent pollution
+                    if (!otherIsPrimary) {
+                        const metaMatch = otherText.match(/\n?\n?<!-- METADATA: .*? -->/);
+                        if (metaMatch) otherText = otherText.replace(metaMatch[0], '').trimEnd();
+                    }
+
+                    // Fetch current SHA for the other file
+                    let otherSha = null;
+                    const cacheBusterUrl = `${config.url}${otherPathInfo.path}?t=${Date.now()}`;
+                    const fetchHeaders = Object.assign({}, config.headers, {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    });
+                    const otherGetRes = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
+                    if (otherGetRes.ok) {
+                        const otherData = otherGetRes.json();
+                        otherSha = otherData.sha;
+                    }
+
+                    const otherEncoded = btoa(unescape(encodeURIComponent(otherText)));
+                    const otherBody = {
+                        message: `Sync: updated ${activeMatchup.label} (${otherSide === 'left' ? (isMatchup ? 'Plan' : 'Notes') : (isMatchup ? 'Notes' : 'VODs')})`,
+                        content: otherEncoded
+                    };
+                    if (otherSha) otherBody.sha = otherSha;
+
+                    const otherRes = await bridgeFetch(config.url + otherPathInfo.path, {
+                        method: 'PUT',
+                        headers: config.headers,
+                        body: JSON.stringify(otherBody)
+                    });
+
+                    if (otherRes.ok) {
+                        localStorage.removeItem(otherPathInfo.draftKey);
+                        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+                            console.log(`[DEBUG] Other tab (${otherSide}) synced successfully.`);
+                        }
+                    } else {
+                        console.warn(`[WARN] Other tab sync failed: ${otherRes.status}`);
+                    }
+                } catch (otherErr) {
+                    console.warn(`[WARN] Other tab sync error: ${otherErr.message}`);
+                }
+            }
+            // === END OTHER TAB SYNC ===
+
             renderLocalDrafts();
             updateDiscardButtonState(false);
             const conflictBanner = document.getElementById('conflictBanner');
