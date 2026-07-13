@@ -81,6 +81,7 @@ async function loadGeneralNotes() {
  * for a specific path, setting the activeMatchup state.
  */
 async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey = null) {
+    PerfProfiler.phaseStart(`loadMatchupByPath:${path}`);
     const statusEl = document.getElementById('status');
     const editorEl = document.getElementById('editor');
     const fileLabel = document.getElementById('currentFileLabel');
@@ -265,6 +266,8 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
 
     updateStarButtonUI();
     updateTabLabels();
+    PerfProfiler.mark(`matchup_loaded:${path}`);
+    PerfProfiler.phaseEnd();
 }
 
 /**

@@ -25,6 +25,7 @@ let activePageSide = 'right'; // Which tab is active: 'left' or 'right'
 
 // --- Application Boot Loop ---
 window.onload = async () => {
+    PerfProfiler.phaseStart('boot');
     // Restore last-active tab side from localStorage
     const savedTabSide = localStorage.getItem('editor_active_tab_side');
     if (savedTabSide && (savedTabSide === 'left' || savedTabSide === 'right')) {
@@ -100,6 +101,7 @@ window.onload = async () => {
     }
 
     // 1. Establish bridge connectivity status
+    PerfProfiler.mark('boot_dom_ready');
     const bridgeOk = await checkBridgeStatus();
 
     // 2. Add listener to external links to support background tab opening via the bridge
@@ -132,12 +134,15 @@ window.onload = async () => {
         if (bridgeErrEl) bridgeErrEl.style.display = 'none';
 
         // Load Riot DDragon lists
+        PerfProfiler.phaseStart('loadChampionsList');
         await loadChampionsList();
+        PerfProfiler.mark('champions_loaded');
+        PerfProfiler.phaseEnd();
 
         // Authorize with GitHub credentials
         if (typeof CONFIG !== 'undefined' && isConfigValid) {
+            // Token check blocks boot (needed for sync button state)
             await checkTokenValidity();
-            await fetchYoutubeLinksIndex();
             renderSavedMatchups();
         } else {
             const connStatusEl = document.getElementById('connectionStatus');
@@ -191,10 +196,22 @@ window.onload = async () => {
     if (window.notesFallbackTimer) clearTimeout(window.notesFallbackTimer);
     if (window.matchupFallbackTimer) clearTimeout(window.matchupFallbackTimer);
 
+    PerfProfiler.mark('boot_content_loading');
     if (enemyVal && myVal) {
-        loadMatchup();
+        await loadMatchup();
     } else {
-        loadGeneralNotes();
+        await loadGeneralNotes();
+    }
+    PerfProfiler.mark('boot_content_loaded');
+    PerfProfiler.phaseEnd(); // end 'boot' phase
+    PerfProfiler.printSummary();
+
+    // Fire YouTube index fetch in background AFTER boot completes
+    // This is non-critical (only affects sidebar VOD icons) and often slow/502
+    if (bridgeActive && typeof CONFIG !== 'undefined' && isConfigValid) {
+        fetchYoutubeLinksIndex().then(() => {
+            renderSavedMatchups(); // re-render with fresh VOD data
+        });
     }
 };
 
