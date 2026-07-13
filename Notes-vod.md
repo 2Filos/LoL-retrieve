@@ -14,7 +14,7 @@ Basically both require heavy thinking and awareness > [Garen vs Yorick] > kinda 
 
 - Current
 NEED Garen vs Trynda - i got wasted > Exhaust and shitty matchup
-NEED Garen vs Ornn AND vs Kled
+NEED Garen vs Ornn AND vs Kled AND vs Volibear
 NEED BOTH vs Teemo/Urgot/Camille
 NEED vs Varus top both GENERAL and vs Yorick - he fucks you (just play super well or get fucked)
 Or pick Olaf?
