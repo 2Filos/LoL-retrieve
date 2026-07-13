@@ -12,4 +12,7 @@ If I lose HP meaninglessly I'm fucked, but if I give full prio i get chonked, li
 And I need to force him to use his passive
 Trade pattern seems a standard QWE with an attempt to move away from his E?
 
+Generally seems super close (IF played right)
+Make a mistake you get fucked
+
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783938431628","display":"DM Playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGpWLQlxfAdEVLgAz1cJplKu"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGpWLQlxfAdEVLgAz1cJplKu"]} -->
