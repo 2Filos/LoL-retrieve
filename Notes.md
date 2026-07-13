@@ -1,4 +1,4 @@
-- VODS lookup
+- VODS lookupA
 [Garen vs Riven/Nasus/Volibear] > SEEN
 [Sett vs Garen] > SEEN
 [Garen vs Sett] (how to?) and viceversa [Sett vs Garen]
