@@ -9,5 +9,6 @@ Care early ranged - only trade to E wave maybe?
 Feels like the E wave is a part I'm not thinking about enough
 I think it's important to balance respect with fight for prio
 If I lose HP meaninglessly I'm fucked, but if I give full prio i get chonked, like vs ranged
+And I need to force him to use his passive
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783938431628","display":"DM Playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGpWLQlxfAdEVLgAz1cJplKu"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGpWLQlxfAdEVLgAz1cJplKu"]} -->
