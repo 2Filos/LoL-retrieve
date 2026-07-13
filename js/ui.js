@@ -297,8 +297,20 @@ function toggleLinksPanel() {
  * Resolves the correct file path and draft key based on the active matchup
  * context and which tab side ('left' or 'right') is selected.
  * 
- * Matchups: left = Plan (-plan.md), right = Notes (.md)
- * General:  left = Notes (Notes.md), right = VODs (Notes-vod.md)
+/**
+ * Resolves the appropriate file path and draft key based on the active matchup context.
+ * 
+ * In a Matchup context (e.g. Garen vs Camille):
+ * - Left Tab: Plan (`matchups/...-plan.md`)
+ * - Right Tab: Notes (`matchups/... .md`)
+ * 
+ * In a General Notes context:
+ * - Left Tab: Notes (`Notes.md`)
+ * - Right Tab: VODs (`Notes-vod.md`)
+ * 
+ * @param {object} matchup - Object containing `enemyKey` and `myKey`.
+ * @param {string} side - The active tab side ('left' or 'right').
+ * @returns {object} An object containing the `path` and `draftKey` properties.
  */
 function resolvePagePath(matchup, side) {
     const isMatchup = matchup.enemyKey && matchup.myKey;
@@ -364,11 +376,21 @@ async function updateTabIndicators() {
 
     const isGarenCamille = activeMatchup && activeMatchup.myKey === 'Garen' && activeMatchup.enemyKey === 'Camille';
 
+    /**
+     * Helper function to determine if a specific tab has any content.
+     * Evaluates local editor state, local storage drafts, and remote GitHub files in that order.
+     * 
+     * @param {object} info - Object containing `path` and `draftKey` from resolvePagePath.
+     * @param {boolean} isPrimary - Whether this tab represents the primary metadata-bearing file.
+     * @returns {Promise<boolean>} True if the file contains text content, otherwise false.
+     */
     async function hasContent(info, isPrimary) {
         // 0. If checking the active tab, we already know the content!
         if (info.path === activeMatchup.path) {
             const editorText = document.getElementById('editor').value.trim();
-            console.log(`[PROCEDURAL_TEST] Indicator check for ${info.path}: Active in editor (clean length: ${editorText.length})`);
+            if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+                console.log(`[DEBUG EditorFlow] Indicator check for ${info.path}: Active in editor (clean length: ${editorText.length})`);
+            }
             return editorText.length > 0;
         }
 
@@ -376,9 +398,11 @@ async function updateTabIndicators() {
         let draft = localStorage.getItem(info.draftKey);
         if (draft !== null) {
             let clean = draft.replace(/\n?\n?<!-- METADATA: .*? -->/, '').trim();
-            console.log(`[PROCEDURAL_TEST] Indicator check for ${info.path}: Found local draft (clean length: ${clean.length})`);
-            if (isGarenCamille) {
-                console.log(`[PROCEDURAL_TEST] [Garen vs Camille] LOCAL DRAFT CONTENT (${info.path}):\n"${clean}"`);
+            if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+                console.log(`[DEBUG EditorFlow] Indicator check for ${info.path}: Found local draft (clean length: ${clean.length})`);
+                if (isGarenCamille) {
+                    console.log(`[DEBUG EditorFlow] [Garen vs Camille] LOCAL DRAFT CONTENT (${info.path}):\n"${clean}"`);
+                }
             }
             return clean.length > 0;
         }
@@ -398,9 +422,11 @@ async function updateTabIndicators() {
                         // Decode base-64 multi-byte UTF-8
                         const decoded = decodeURIComponent(escape(atob(data.content)));
                         let clean = decoded.replace(/\n?\n?<!-- METADATA: .*? -->/, '').trim();
-                        console.log(`[PROCEDURAL_TEST] Indicator check for ${info.path}: Found remote file (clean length: ${clean.length})`);
-                        if (isGarenCamille) {
-                            console.log(`[PROCEDURAL_TEST] [Garen vs Camille] REMOTE GITHUB CONTENT (${info.path}):\n"${clean}"`);
+                        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+                            console.log(`[DEBUG EditorFlow] Indicator check for ${info.path}: Found remote file (clean length: ${clean.length})`);
+                            if (isGarenCamille) {
+                                console.log(`[DEBUG EditorFlow] [Garen vs Camille] REMOTE GITHUB CONTENT (${info.path}):\n"${clean}"`);
+                            }
                         }
                         return clean.length > 0;
                     }
@@ -409,17 +435,20 @@ async function updateTabIndicators() {
         } catch (e) {
             // Ignore fetch errors, file likely doesn't exist
         }
-        console.log(`[PROCEDURAL_TEST] Indicator check for ${info.path}: No content found`);
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+            console.log(`[DEBUG EditorFlow] Indicator check for ${info.path}: No content found`);
+        }
         return false;
     }
 
-    // Run both checks in parallel
     const [leftHasContent, rightHasContent] = await Promise.all([
         hasContent(leftInfo, isLeftPrimary),
         hasContent(rightInfo, !isLeftPrimary)
     ]);
 
-    console.log(`[PROCEDURAL_TEST] Tab Indicators updated -> Left (Plan/Notes): ${leftHasContent}, Right (Notes/VODs): ${rightHasContent}`);
+    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        console.log(`[DEBUG EditorFlow] Tab Indicators updated -> Left (Plan/Notes): ${leftHasContent}, Right (Notes/VODs): ${rightHasContent}`);
+    }
 
     tabLeft.classList.toggle('has-content', leftHasContent);
     tabRight.classList.toggle('has-content', rightHasContent);
@@ -447,11 +476,15 @@ function saveDraftBeforeSwitch() {
 /**
  * Handles clicking a tab button to switch between editor pages.
  * Saves current draft, updates state, and reloads the appropriate file.
+ * 
+ * @param {string} side - The tab side to switch to ('left' or 'right').
  */
 function switchEditorTab(side) {
     if (side === activePageSide) return;
     
-    console.log(`[PROCEDURAL_TEST] Switched Tab from ${activePageSide} to ${side}`);
+    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        console.log(`[DEBUG EditorFlow] Switched Tab from ${activePageSide} to ${side}`);
+    }
 
     // Save current content before switching
     saveDraftBeforeSwitch();

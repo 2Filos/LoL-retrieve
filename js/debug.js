@@ -17,6 +17,9 @@ const DEBUG_CONFIG = {
     // Enable to see logs about metadata extraction and injection
     logMetadata: false,
 
+    // Enable to see logs about editor lifecycle, tab switching, and auto-saves
+    logEditorFlow: false,
+
     // ═══════════════════════════════════════════════════════════
     // PERFORMANCE PROFILER — Toggle to diagnose slow page loads
     // ═══════════════════════════════════════════════════════════

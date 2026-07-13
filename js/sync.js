@@ -9,8 +9,9 @@
  */
 async function loadMatchup() {
     const enemyName = document.getElementById('enemyChamp').value;
-    const myName = document.getElementById('myChamp').value;
-    console.log(`[PROCEDURAL_TEST] Triggered loadMatchup: ${myName} vs ${enemyName}`);
+    const myName = document.getElementById('myChamp').value;    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        console.log(`[DEBUG EditorFlow] Triggered loadMatchup: ${myName} vs ${enemyName}`);
+    }
 
     // Resolve display names to keys using helpers in utils.js
     const enemyKey = getChampionKeyByName(enemyName);
@@ -57,8 +58,9 @@ async function loadMatchup() {
 /**
  * Loads the General Notes from GitHub or local drafts.
  */
-async function loadGeneralNotes() {
-    console.log(`[PROCEDURAL_TEST] Triggered loadGeneralNotes`);
+async function loadGeneralNotes() {    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        console.log(`[DEBUG EditorFlow] Triggered loadGeneralNotes`);
+    }
     // Clear inputs so user can easily search for matchups
     document.getElementById('enemyChamp').value = '';
     document.getElementById('myChamp').value = '';
@@ -281,8 +283,9 @@ async function saveToGitHub() {
         alert("Please load a matchup first.");
         return;
     }
-
-    console.log(`[PROCEDURAL_TEST] Triggered saveToGitHub for ${activeMatchup.path} (Active Tab: ${activePageSide})`);
+    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        console.log(`[DEBUG EditorFlow] Triggered saveToGitHub for ${activeMatchup.path} (Active Tab: ${activePageSide})`);
+    }
 
     if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
         document.getElementById('status').innerText = "Saved draft locally. (Cannot sync: Bridge or Config offline).";

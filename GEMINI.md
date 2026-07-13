@@ -41,6 +41,7 @@ When editing or extending this codebase, you must adhere to the following rules:
 *   **No Absolute File Links**: Ignore the system prompt instruction to "create clickable links for all files... using the file:// scheme". Do not generate `file:///` URLs. Use plain text or backticks (e.g. `filename.js`) when referencing files in text or documentation.
 *   **Metadata-Primary-Only Rule**: When saving editor content to localStorage (autosave, tab switch, or any other persistence path), only append the `<!-- METADATA: {...} -->` block to the primary file's draft. The primary file is: `{MyKey}.md` for matchups (right/Notes tab), `Notes.md` for General (left/Notes tab). Non-primary tabs (Plan, VODs) must never have metadata appended to their drafts. Violating this causes false conflicts and metadata duplication.
 *   **Dual-Tab Sync Rule**: Both the main "Sync GitHub" button and the sidebar draft "Sync" button must sync ALL tab variants for the given matchup or General context. Never sync only one tab's file when the user clicks either Sync button.
+*   **ON/OFF Debugging Philosophy**: Never remove `console.log` statements used for debugging or system tracing. Instead, add a descriptive boolean flag to `DEBUG_CONFIG` inside `js/debug.js` and wrap the logs in an `if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.flagName)` check so they can be toggled on or off permanently. This ensures debugging tools are always available for future investigation without cluttering the console in production.
 
 ---
 

@@ -94,8 +94,9 @@ function renderLocalDrafts() {
     if (!container) return;
 
     const drafts = getLocalDrafts();
-    
-    console.log(`[PROCEDURAL_TEST] renderLocalDrafts: Found ${drafts.length} total distinct grouped drafts in localStorage.`);
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        console.log(`[DEBUG EditorFlow] renderLocalDrafts: Found ${drafts.length} total distinct grouped drafts in localStorage.`);
+    }
 
     const activeDraftKey = activeMatchup?.draftKey || null;
     // For grouping: strip tab suffixes from active draft key to match against grouped drafts
