@@ -60,12 +60,15 @@ To make sure the script activates on local matchup files, the script is configur
 // @match        file:///*matchup*.html*
 // @match        file:///*/matchups.html
 // @match        file:///*
+// @include      file://*
+// @include      file:///*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_openInTab
 // @connect      api.github.com
 // @connect      ddragon.leagueoflegends.com
 ```
 
-*   `@match`: Matches matchup HTML files (e.g. `matchups.html`) on local directories.
+*   `@match` / `@include`: Matches local HTML files across Chrome and Firefox file-scheme variations.
 *   `@grant`: Configures authorization for network requests and tab controls.
 *   `@connect`: Whitelists target domains to prevent repetitive browser security prompt popups.
+

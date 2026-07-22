@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         Local HTML to GitHub CORS Bridge
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  Bypasses Firefox & Chrome CORS blocks, handles token checks, and supports ping diagnostics
 // @author       You
 // @match        file:///*matchup*.html*
 // @match        file:///*/matchups.html
 // @match        file:///*
+// @include      file://*
+// @include      file:///*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_openInTab
 // @connect      api.github.com
