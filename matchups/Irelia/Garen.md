@@ -7,3 +7,4 @@ Save Q for QR for her W?
 
 Played vs god-awful Irelia, logic holds
 Respect the stacks
+Respect ER gank setup too
