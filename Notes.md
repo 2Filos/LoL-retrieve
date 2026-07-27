@@ -16,3 +16,5 @@ Care to not lose HP meaninglessly for CS too, CS will come to you, chill
 
 LOOK for telegraphed animations
 Chogath Q - Volibear E - Olaf Q
+Older champs generally have a half-a-second animation that lets you dodge
+Look AT THEM and not at your feet basically
