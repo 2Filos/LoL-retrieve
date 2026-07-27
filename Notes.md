@@ -13,3 +13,6 @@ lack of respect for turnaround? low HP is not low HP
 - Gank setup and wave control
 Gotta think more on how to setup ganks, strong side and weakside and whatnot
 Care to not lose HP meaninglessly for CS too, CS will come to you, chill
+
+LOOK for telegraphed animations
+Chogath Q - Volibear E - Olaf Q
