@@ -19,4 +19,4 @@ Chogath Q - Volibear E - Olaf Q
 Morde E too maybe? or Q (Q is minimal I feel)
 Spacing/tethering vaguely understand, but need to think of range advantages/disadvantages (like Morde Q, or Yorick Q, or Gwen Q, or Yone/Yasuo Q or Darius E)
 ACTIVELY visualize him turning onto you, you need to keep it visualized
-Have mouse ON HIM while you move away (for when he turns)
+Have mouse ON HIM while you move away (for when he turns) - probably need VOD reviews..
