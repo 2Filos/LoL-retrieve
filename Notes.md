@@ -14,9 +14,8 @@ lack of respect for turnaround? low HP is not low HP
 Gotta think more on how to setup ganks, strong side and weakside and whatnot
 Care to not lose HP meaninglessly for CS too, CS will come to you, chill
 
-LOOK for telegraphed animations
+LOOK for telegraphed animations (older champs particularly)
 Chogath Q - Volibear E - Olaf Q
-Older champs generally have a half-a-second animation that lets you dodge
-Look AT THEM and not at your feet basically
 Morde E too maybe? or Q (Q is minimal I feel)
-Spacing and tethering I need to practice but already vaguely understand, but I actively need to think of range advantages/disadvantages (like Morde Q, or Yorick Q, or Gwen Q, or Yone/Yasuo Q)
+Spacing/tethering vaguely understand, but need to think of range advantages/disadvantages (like Morde Q, or Yorick Q, or Gwen Q, or Yone/Yasuo Q or Darius E)
+ACTIVELY visualize him turning onto you, you need to keep it visualized
