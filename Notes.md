@@ -19,3 +19,4 @@ Chogath Q - Volibear E - Olaf Q
 Older champs generally have a half-a-second animation that lets you dodge
 Look AT THEM and not at your feet basically
 Morde E too maybe? or Q (Q is minimal I feel)
+Spacing and tethering I need to practice but already vaguely understand
