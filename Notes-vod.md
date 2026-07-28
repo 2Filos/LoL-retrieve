@@ -1,18 +1,25 @@
-- VODS lookup
-[Garen vs Riven/Nasus/Ornn/Volibear] > SEEN
-[Sett vs Garen] > SEEN
-[Garen vs Sett] (how to?) and viceversa [Sett vs Garen]
-Garen vs Sett not seen but understood indirectly? still need VOD
+> Skirmishes!
+> Focus Grubs/Herald more!
+Lane consistency bad one (makes sense)
+Aggression is the main stat that falls behind. Why? Scores are... evenly spread.
+Maybe just a consequence of heavy splitting? High movement macro? A teamfighter... Sett?
+To increase early partecipation/snowballing consider proxy - to convert into plates at minimum
 
-[Garen vs Yorick] (easier) and [Yorick vs Garen] (harder) but in reality feeling varies A LOT
-Basically both require heavy thinking and awareness > [Garen vs Yorick] > kinda SEEN
+- Medium issues (draintanks)
+vs Zaheen/Trundle/Tryndamere (VODs)
+lack of respect for turnaround? low HP is not low HP
 
-[Garen/Yorick vs Camille] (VOD to see it)
-[Yorick vs Teemo] - he kills Maiden maybe?
-- issue that's obvious vs ranged too
-- Maybe wave control for ganks? Bounces?
+- Gank setup and wave control
+Gotta think more on how to setup ganks, strong side and weakside and whatnot
+Care to not lose HP meaninglessly for CS too, CS will come to you, chill
 
-- Current
-NEED Garen vs Trynda/Kled - i got wasted > Exhaust and shitty matchup
-NEED BOTH vs Teemo/Urgot/Camille
-> Zaheen... Pantheon? ... dunno
+LOOK for telegraphed animations (older champs particularly)
+Chogath Q - Volibear E - Olaf Q
+Morde E too maybe? or Q (Q is minimal I feel)
+Spacing/tethering vaguely understand, but need to think of range advantages/disadvantages (like Morde Q, or Yorick Q, or Gwen Q, or Yone/Yasuo Q or Darius E)
+ACTIVELY visualize him turning onto you, you need to keep it visualized
+Have mouse ON HIM while you move away (for when he turns) - probably need VOD reviews..
+
+MACRO
+> Baron Intentionality
+> Support vision connection
