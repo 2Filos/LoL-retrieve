@@ -19,8 +19,10 @@ Spacing/tethering, think of range advantages/disadvantages (like Morde/Yorick/Gw
 ACTIVELY visualize him turning onto you, you need to keep it visualized
 Have mouse ON HIM while you move away (for when he turns) - probably need VOD reviews..
 
-MACRO
-> Baron Intentionality > Basically try to consciously be aware of mid and baron "ORBITS" + Baron calls
+CRITERIA
+> Micro Intentionality > Space, tether, mouse movements
+> Baron Intensity > Basically try to consciously be aware of mid and baron "ORBITS" + Baron calls
 > Support vision connection > Generally track where JG and SUPP are for macro...
+These 3 criteria are crucial particularly for VOD reviews!
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1785247934972","display":"Intentionality","url":"https://www.youtube.com/watch?v=0egh5Sh-250"},{"customId":"custom_1785248479829","display":"DM Garen","url":"https://www.youtube.com/@domisumReplay-Garen/playlists"},{"customId":"custom_1785251992085","display":"Intensity","url":"https://www.youtube.com/watch?v=EcmrtBWw-3s"},{"customId":"custom_1785253403016","display":"Tempo","url":"https://www.youtube.com/watch?v=u9-gGcqXdkU"}],"linkOrder":["https://www.youtube.com/@domisumReplay-Garen/playlists","https://www.youtube.com/watch?v=0egh5Sh-250","https://www.youtube.com/watch?v=EcmrtBWw-3s","https://www.youtube.com/watch?v=u9-gGcqXdkU"]} -->
