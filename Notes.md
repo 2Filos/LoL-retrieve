@@ -21,7 +21,7 @@ ACTIVELY visualize him turning onto you, you need to keep it visualized
 Have mouse ON HIM while you move away (for when he turns) - probably need VOD reviews..
 
 MACRO
-> Baron Intentionality
+> Baron Intentionality > Basically try to consciously be aware of mid and baron "ORBITS"
 > Support vision connection > Generally track where JG and SUPP are for macro...
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1785247934972","display":"Intentionality","url":"https://www.youtube.com/watch?v=0egh5Sh-250"},{"customId":"custom_1785248479829","display":"DM Garen","url":"https://www.youtube.com/@domisumReplay-Garen/playlists"}],"linkOrder":["https://www.youtube.com/watch?v=0egh5Sh-250","https://www.youtube.com/@domisumReplay-Garen/playlists"]} -->
