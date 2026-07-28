@@ -20,4 +20,8 @@ Spacing/tethering vaguely understand, but need to think of range advantages/disa
 ACTIVELY visualize him turning onto you, you need to keep it visualized
 Have mouse ON HIM while you move away (for when he turns) - probably need VOD reviews..
 
+MACRO
+> Baron Intentionality
+> Support vision connection
+
 <!-- METADATA: {"customLinks":[{"customId":"custom_1785247934972","display":"Intentionality","url":"https://www.youtube.com/watch?v=0egh5Sh-250"}],"linkOrder":["https://www.youtube.com/watch?v=0egh5Sh-250"]} -->
