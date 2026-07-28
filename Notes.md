@@ -22,6 +22,6 @@ Have mouse ON HIM while you move away (for when he turns) - probably need VOD re
 
 MACRO
 > Baron Intentionality
-> Support vision connection
+> Support vision connection > Generally track where JG and SUPP are for macro...
 
 <!-- METADATA: {"customLinks":[{"customId":"custom_1785247934972","display":"Intentionality","url":"https://www.youtube.com/watch?v=0egh5Sh-250"},{"customId":"custom_1785248479829","display":"DM Garen","url":"https://www.youtube.com/@domisumReplay-Garen/playlists"}],"linkOrder":["https://www.youtube.com/watch?v=0egh5Sh-250","https://www.youtube.com/@domisumReplay-Garen/playlists"]} -->
