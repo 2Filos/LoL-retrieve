@@ -1,7 +1,6 @@
 > Skirmishes!
 > Focus Grubs/Herald more!
 Lane consistency bad one (makes sense)
-Champion pool too small, fair enough. Need to experiment Camille/Mundo (in normal)
 Aggression is the main stat that falls behind. Why? Scores are... evenly spread.
 Maybe just a consequence of heavy splitting? High movement macro? A teamfighter... Sett?
 To increase early partecipation/snowballing consider proxy - to convert into plates at minimum
