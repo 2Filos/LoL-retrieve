@@ -14,9 +14,8 @@ Gotta think more on how to setup ganks, strong side and weakside and whatnot
 Care to not lose HP meaninglessly for CS too, CS will come to you, chill
 
 LOOK for telegraphed animations (older champs particularly)
-Chogath Q - Volibear E - Olaf Q
-Morde E too maybe? or Q (Q is minimal I feel)
-Spacing/tethering vaguely understand, but need to think of range advantages/disadvantages (like Morde Q, or Yorick Q, or Gwen Q, or Yone/Yasuo Q or Darius E)
+Chogath Q - Volibear E - Olaf Q - Morde E too maybe? or Q (Q is minimal I feel)
+Spacing/tethering, think of range advantages/disadvantages (like Morde/Yorick/Gwen Q, or Darius E)
 ACTIVELY visualize him turning onto you, you need to keep it visualized
 Have mouse ON HIM while you move away (for when he turns) - probably need VOD reviews..
 
