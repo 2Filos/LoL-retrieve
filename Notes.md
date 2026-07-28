@@ -19,3 +19,5 @@ Morde E too maybe? or Q (Q is minimal I feel)
 Spacing/tethering vaguely understand, but need to think of range advantages/disadvantages (like Morde Q, or Yorick Q, or Gwen Q, or Yone/Yasuo Q or Darius E)
 ACTIVELY visualize him turning onto you, you need to keep it visualized
 Have mouse ON HIM while you move away (for when he turns) - probably need VOD reviews..
+
+<!-- METADATA: {"customLinks":[{"customId":"custom_1785247934972","display":"Intentionality","url":"https://www.youtube.com/watch?v=0egh5Sh-250"}],"linkOrder":["https://www.youtube.com/watch?v=0egh5Sh-250"]} -->
