@@ -24,4 +24,4 @@ MACRO
 > Baron Intentionality > Basically try to consciously be aware of mid and baron "ORBITS"
 > Support vision connection > Generally track where JG and SUPP are for macro...
 
-<!-- METADATA: {"customLinks":[{"customId":"custom_1785247934972","display":"Intentionality","url":"https://www.youtube.com/watch?v=0egh5Sh-250"},{"customId":"custom_1785248479829","display":"DM Garen","url":"https://www.youtube.com/@domisumReplay-Garen/playlists"}],"linkOrder":["https://www.youtube.com/watch?v=0egh5Sh-250","https://www.youtube.com/@domisumReplay-Garen/playlists"]} -->
+<!-- METADATA: {"customLinks":[{"customId":"custom_1785247934972","display":"Intentionality","url":"https://www.youtube.com/watch?v=0egh5Sh-250"},{"customId":"custom_1785248479829","display":"DM Garen","url":"https://www.youtube.com/@domisumReplay-Garen/playlists"},{"customId":"custom_1785251992085","display":"Intensity","url":"https://www.youtube.com/watch?v=EcmrtBWw-3s"}],"linkOrder":["https://www.youtube.com/@domisumReplay-Garen/playlists","https://www.youtube.com/watch?v=0egh5Sh-250","https://www.youtube.com/watch?v=EcmrtBWw-3s"]} -->
