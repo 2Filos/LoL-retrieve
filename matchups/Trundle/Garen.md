@@ -7,4 +7,4 @@ What am I misunderstanding here?
 If I trade on him I have to give prio and then he just recovers.
 I fundamentally can't fight him unless I'm heavily ahead no?
 
-<!-- METADATA: {"customLinks":[{"customId":"custom_1785349025172","display":"DM","url":"a"}],"linkOrder":["a"]} -->
+<!-- METADATA: {"customLinks":[{"customId":"custom_1785349025172","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGpUG5tF5atIY5BlrhWgRYuP"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGpUG5tF5atIY5BlrhWgRYuP"]} -->
