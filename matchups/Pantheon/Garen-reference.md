@@ -1,11 +1,4 @@
 PANTHEON MEDIUM
 RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST/IGNITE. Ability Order: Q MAX.
-Rush Ironspike Whip into Stridebreaker (Berserker Greaves after)
-Pantheon is an incredibly strong champion in laning phase but quickly gets outscaled after just 1 item. For this reason, it's a viable strategy
-to simply concede a bunch of CS to get to Stridebreaker safely since once you get Stridebreaker, it becomes impossible for Pantheon to try
-to out space you with Qs. However, after you get a few points in Q and first back you can probably try to go for a few trades when the wave
-is on your side. It is important to start the trade with Q, and then not spin until you see if his E invulnerability goes off. If he uses it, don't spin
-immediately until it's on cooldown. If he doesn't use it and you see that he's silenced when you used Q on him, then you can start your E.
-It's important to try to W Pantheon's Q and W whenever possible during lane to mitigate his poke or to win trades. It's hard to react to,
-but it is integral to winning and surviving the lane. Pantheon hates 1v1ing Garen after mythic, so permanently splitpushing vs him is great as
-long as you play it slowly since he has no sustain.
+Rush Ironspike Whip into Stridebreaker (Berserker Greaves after) Pantheon is an incredibly strong champion in laning phase but quickly gets outscaled after just 1 item. For this reason, it's a viable strategy to simply concede a bunch of CS to get to Stridebreaker safely since once you get Stridebreaker, it becomes impossible for Pantheon to try to out space you with Qs. However, after you get a few points in Q and first back you can probably try to go for a few trades when the wave is on your side. It is important to start the trade with Q, and then not spin until you see if his E invulnerability goes off. If he uses it, don't spin immediately until it's on cooldown. If he doesn't use it and you see that he's silenced when you used Q on him, then you can start your E.
+It's important to try to W Pantheon's Q and W whenever possible during lane to mitigate his poke or to win trades. It's hard to react to, but it is integral to winning and surviving the lane. Pantheon hates 1v1ing Garen after mythic, so permanently splitpushing vs him is great as long as you play it slowly since he has no sustain.

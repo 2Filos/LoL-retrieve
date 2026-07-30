@@ -1,14 +1,5 @@
 YONE MEDIUM
 RUNES: Grasp of The Undying (Demolish, Second Wind, Overgrowth) Sorcery: (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
 Ability Order: Q MAX. Rush Sheen into Tier 1 Boots into Ruby Crystal into Hearthbound Axe.
-Yone is a lethal tempo champion, so automatically for that reason, it is important that we don’t bother fighting him in the early levels. It’s
-okay to go for a Grasp Q but it’s important to not really extend it past that. Yone’s W is also a big shield, so if we do end up going for a
-short trade on our side of the lane at some point, make sure we wait for him to randomly use it as poke since he probably will. His W blocks
-your entire Q so it’s important to wait it out if it does go off when you’re trying to hit him. Yone can kite Garen easily with his E since he gets
-a ton of free movement speed so if he ever starts using it, it’s best to disengage the trade so he does not get free damage on you. Yone’s
-early game is surprisingly his strongest point vs Garen and his scaling is his weakest part. Garen starts to do too much damage after
-multiple components and items since his burst becomes too high for Yone to handle since they don’t typically build shieldbow anymore.
-Playing safe all lane and waiting for Trinity Force is a working strategy, but it is good to try to fight him after Sheen since you can punish
-him for misusing his Q3 dash or his E. Keep the trades really short or make the all ins an instant burst. The inbetween extended trade that
-is not quite an all in but is not a short trade is what Yone wants since it will chunk you out really hard and will not allow you to deal much
-damage back to him. If Yone is about to hit R on you, start your E so that you are spinning on him while airborne.
+Yone is a lethal tempo champion, so automatically for that reason, it is important that we don’t bother fighting him in the early levels. It’s okay to go for a Grasp Q but it’s important to not really extend it past that. Yone’s W is also a big shield, so if we do end up going for a short trade on our side of the lane at some point, make sure we wait for him to randomly use it as poke since he probably will. His W blocks your entire Q so it’s important to wait it out if it does go off when you’re trying to hit him. Yone can kite Garen easily with his E since he gets a ton of free movement speed so if he ever starts using it, it’s best to disengage the trade so he does not get free damage on you. Yone’s early game is surprisingly his strongest point vs Garen and his scaling is his weakest part. Garen starts to do too much damage after multiple components and items since his burst becomes too high for Yone to handle since they don’t typically build shieldbow anymore.
+Playing safe all lane and waiting for Trinity Force is a working strategy, but it is good to try to fight him after Sheen since you can punish him for misusing his Q3 dash or his E. Keep the trades really short or make the all ins an instant burst. The inbetween extended trade that is not quite an all in but is not a short trade is what Yone wants since it will chunk you out really hard and will not allow you to deal much damage back to him. If Yone is about to hit R on you, start your E so that you are spinning on him while airborne.

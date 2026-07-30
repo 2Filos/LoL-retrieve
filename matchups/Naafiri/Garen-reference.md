@@ -1,10 +1,5 @@
 NAAFIRI EASY
 RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
 SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
-Naafiri is an assassin champ and has a somewhat decent early game, but quickly gets outscaled by Garen with just a Sheen and a few
-points into Q. The only thing you really have to worry about is her Q (Throwing Daggers) that make you bleed a lot if you get hit by it twice.
-She also has a dash in all directions and a shield when she ults after she hits a target for the first time. All you really have to do vs Naafiri
-is not get over confident with trades and just stick with short and simple Q trades and backing off after you don't have Q up. It's a really
-simple matchup since she has no sustain and all you really have to worry about is dodging her 2nd dagger. Just play for Q poke with Grasp
-and scale up if you're taking too much damage early. Make sure you don't R when she Rs since she will get a shield so hold R until you know
-it's gone and on cooldown.
+Naafiri is an assassin champ and has a somewhat decent early game, but quickly gets outscaled by Garen with just a Sheen and a few points into Q. The only thing you really have to worry about is her Q (Throwing Daggers) that make you bleed a lot if you get hit by it twice.
+She also has a dash in all directions and a shield when she ults after she hits a target for the first time. All you really have to do vs Naafiri is not get over confident with trades and just stick with short and simple Q trades and backing off after you don't have Q up. It's a really simple matchup since she has no sustain and all you really have to worry about is dodging her 2nd dagger. Just play for Q poke with Grasp and scale up if you're taking too much damage early. Make sure you don't R when she Rs since she will get a shield so hold R until you know it's gone and on cooldown.

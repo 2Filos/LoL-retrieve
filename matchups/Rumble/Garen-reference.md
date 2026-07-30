@@ -1,14 +1,3 @@
 RUMBLE HARD/BAN
-RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST/GHOST TELEPORT. Ability Order:
-E MAX. Rush Negatron Cloak if losing really hard or Berserker Greaves into Ironspike Whip if the lane is stable.
-Rumble is one of Garen’s worst matchups mostly because of the laning phase. With a recent patch, Rumble has retained his presence in
-laning phase as an early game bully but now he also scales and can go HP items like Demonic Embrace. For this reason, it is incredibly
-important that we have 0 deaths in lane and pretty much give most cs unless we have W and Q up to take it. We want to also use the max
-range of our E to pick up cs that is 1 HP since it is longer than auto range and can be used while moving. Rumble has two abilities that give
-Garen lots of issues, his movement speed with his shield, and his rockets that slow you. He can poke you freely and if you ever try to Q
-towards him for a trade his shield will absorb most of the burst which is a huge counter to Garen and you won’t even be able to spin on him
-since he gets more move speed than you. He also can dive you with his overheat autos by flashing and igniting you with his nimbus cloak
-so it’s important to keep HP high in anticipation of this. We wait until Stridebreaker since it is the only way to counter his kiting
-and poking. He has no sustain so mid to late game if you are against him in the side lane you can easily chunk him down with multiple Q E
-Stride trades, it’s just getting there that is the hard part. Hullbreaker is really good vs him since he is an AP champion that is squishy and
-wants to teamfight for the most part.
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST/GHOST TELEPORT. Ability Order: E MAX. Rush Negatron Cloak if losing really hard or Berserker Greaves into Ironspike Whip if the lane is stable.
+Rumble is one of Garen’s worst matchups mostly because of the laning phase. With a recent patch, Rumble has retained his presence in laning phase as an early game bully but now he also scales and can go HP items like Demonic Embrace. For this reason, it is incredibly important that we have 0 deaths in lane and pretty much give most cs unless we have W and Q up to take it. We want to also use the max range of our E to pick up cs that is 1 HP since it is longer than auto range and can be used while moving. Rumble has two abilities that give Garen lots of issues, his movement speed with his shield, and his rockets that slow you. He can poke you freely and if you ever try to Q towards him for a trade his shield will absorb most of the burst which is a huge counter to Garen and you won’t even be able to spin on him since he gets more move speed than you. He also can dive you with his overheat autos by flashing and igniting you with his nimbus cloak so it’s important to keep HP high in anticipation of this. We wait until Stridebreaker since it is the only way to counter his kiting and poking. He has no sustain so mid to late game if you are against him in the side lane you can easily chunk him down with multiple Q E Stride trades, it’s just getting there that is the hard part. Hullbreaker is really good vs him since he is an AP champion that is squishy and wants to teamfight for the most part.

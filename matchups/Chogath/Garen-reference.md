@@ -1,10 +1,4 @@
 CHO'GATH MEDIUM
 RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
 SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
-Cho'Gath is a scaling champion disguised as having a weak early game while he really has a good one. It's important to only trade with
-Cho'Gath when you have your Grasp up so that you can actually get a proper chunk into him. This matchup is mostly about farming instead
-of playing for a kill since you both have so much sustain. Garen can win after Sheen and 4 points Q but it's not easy at all since Cho'Gath
-heals so much. It's important to not trade him when you don't have W as well. If the Cho'Gath has Arcane Comet you also have to be really
-careful early since it deals a ton of damage after just a few points into his Q. He can chain CC you into a Flash Ignite R similar to how Garen
-does all ins so it's really important to keep HP high early game vs AP Cho'Gath. If he is tank you can play a lot more aggressively early, but
-if he is AP it's best to play for an outscale at 1 item. Splitpush all game vs him since you don't want him to help his team with his utility.
+Cho'Gath is a scaling champion disguised as having a weak early game while he really has a good one. It's important to only trade with Cho'Gath when you have your Grasp up so that you can actually get a proper chunk into him. This matchup is mostly about farming instead of playing for a kill since you both have so much sustain. Garen can win after Sheen and 4 points Q but it's not easy at all since Cho'Gath heals so much. It's important to not trade him when you don't have W as well. If the Cho'Gath has Arcane Comet you also have to be really careful early since it deals a ton of damage after just a few points into his Q. He can chain CC you into a Flash Ignite R similar to how Garen does all ins so it's really important to keep HP high early game vs AP Cho'Gath. If he is tank you can play a lot more aggressively early, but if he is AP it's best to play for an outscale at 1 item. Splitpush all game vs him since you don't want him to help his team with his utility.

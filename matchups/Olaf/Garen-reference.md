@@ -1,14 +1,5 @@
 OLAF MEDIUM
 RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: Q MAX.
 Rush Ironspike Whip into Berserker Greaves.
-Olaf is a champion with an incredibly good early game especially in the early levels, so it's important to respect him for the most part until
-you have a few points in Q. After you get to at least lvl 5, you can then start to Auto Q E him for short trades and then you run away with
-Phase Rush. Always make sure to run away straight after activating Phase Rush so that he can't punish you by throwing multiple Q slows at
-you. Olaf is a champion that builds Ravenous Hydra sometimes, and a component in this item is Vampiric Scepter. The problem with this is
-that Garen can't burst Olaf down fast enough from full HP to actually kill him, but then he won't be able to short trade with Olaf after this
-item purchase because Olaf just heals off of minions after a short Phase Rush trade. At that point, it's safe to try to proxy or just straight
-up ignore him and farm since there is no way to beat him if he has that item and you don't have a lead. You have to chunk him out very
-hard and then fight him immediately after before he heals on minions otherwise he will get the HP back faster than your passive heals you.
-Garen can nullify Olaf's presence in teamfights quite effectively so it's okay if you don't get a lead in lane, it's just important to not get baited
-by short trades when he can heal to full hp off of one wave after first back if he decides to buy Vampiric Scepter. Always kite Olaf R if he tries
-to all in you with it, it's never a good idea to face tank it unless you are certain you burst him through it.
+Olaf is a champion with an incredibly good early game especially in the early levels, so it's important to respect him for the most part until you have a few points in Q. After you get to at least lvl 5, you can then start to Auto Q E him for short trades and then you run away with Phase Rush. Always make sure to run away straight after activating Phase Rush so that he can't punish you by throwing multiple Q slows at you. Olaf is a champion that builds Ravenous Hydra sometimes, and a component in this item is Vampiric Scepter. The problem with this is that Garen can't burst Olaf down fast enough from full HP to actually kill him, but then he won't be able to short trade with Olaf after this item purchase because Olaf just heals off of minions after a short Phase Rush trade. At that point, it's safe to try to proxy or just straight up ignore him and farm since there is no way to beat him if he has that item and you don't have a lead. You have to chunk him out very hard and then fight him immediately after before he heals on minions otherwise he will get the HP back faster than your passive heals you.
+Garen can nullify Olaf's presence in teamfights quite effectively so it's okay if you don't get a lead in lane, it's just important to not get baited by short trades when he can heal to full hp off of one wave after first back if he decides to buy Vampiric Scepter. Always kite Olaf R if he tries to all in you with it, it's never a good idea to face tank it unless you are certain you burst him through it.

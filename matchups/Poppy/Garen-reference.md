@@ -1,11 +1,5 @@
 POPPY MEDIUM
 RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
 SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
-Poppy is a champion with a very strong early game so it's best to play very safe early, even starting W is a good idea. Poppy will try to
-cheese the early game and get a lvl 3-4 kill if she can, so stay as high HP as you can. After first back this matchup becomes a lot easier,
-it's just important to still respect the fact that Poppy's abilities do a billion damage so you should only ever go for trades when you have W
-available. If you are low HP under tower and she is standing at an angle where she can push you into the tower or a wall for a stun into a
-big combo with her R, it's important to get out of that position immediately since it can be a random solo kill and an instant game loss.
-After you get your Triforce or even just a few components it becomes a lot easier to play, it's just important to not die vs her early since she
-has so much kill pressure. You can get a few Grasp autos with Q here and there in early levels but never let her hit abilities without your W
-being available. Perma splitting vs her if you got a lead in lane is not a bad idea with this build.
+Poppy is a champion with a very strong early game so it's best to play very safe early, even starting W is a good idea. Poppy will try to cheese the early game and get a lvl 3-4 kill if she can, so stay as high HP as you can. After first back this matchup becomes a lot easier, it's just important to still respect the fact that Poppy's abilities do a billion damage so you should only ever go for trades when you have W available. If you are low HP under tower and she is standing at an angle where she can push you into the tower or a wall for a stun into a big combo with her R, it's important to get out of that position immediately since it can be a random solo kill and an instant game loss.
+After you get your Triforce or even just a few components it becomes a lot easier to play, it's just important to not die vs her early since she has so much kill pressure. You can get a few Grasp autos with Q here and there in early levels but never let her hit abilities without your W being available. Perma splitting vs her if you got a lead in lane is not a bad idea with this build.

@@ -1,11 +1,5 @@
 ORNN EASY
-RUNES: Grasp of The Undying (Demolish, Conditioning, Overgrowth), Inspiration (Magical Footwear, Cosmic Insight) SUMMS:
-FLASH GHOST Ability Order: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
-Ornn is a strong early game tank that can abuse Grasp of The Undying quite well with his W for insane short trade damage. Garen needs to
-have W available to trade into Ornn effectively without hard losing the trade since Ornn’s brittle auto is an overwhelming amount of damage.
+RUNES: Grasp of The Undying (Demolish, Conditioning, Overgrowth), Inspiration (Magical Footwear, Cosmic Insight) SUMMS: FLASH GHOST Ability Order: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Ornn is a strong early game tank that can abuse Grasp of The Undying quite well with his W for insane short trade damage. Garen needs to have W available to trade into Ornn effectively without hard losing the trade since Ornn’s brittle auto is an overwhelming amount of damage.
 Going for Qs whenever you can is good to do so you can stack Grasp and poke Ornn. Make sure to respect Ornn’s all in potential with his R.
-Not only is it good gank setup, it does an insane amount of burst damage. Ornn is a champion with no sustain, so chunking him out with big
-trades and standing back for a while to heal with passive is a strong playstyle. Perma splitpushing vs Ornn is a recommended viable strategy
-since his waveclear vs Hullbreaker is incredibly weak and you want to keep him away from teammates so he can’t upgrade their items or
-use his strong teamfighting abilities. If you manage to get a Hullbreaker cannon under the tower, you can go for a demolish while he hits you
-and then disengage.
+Not only is it good gank setup, it does an insane amount of burst damage. Ornn is a champion with no sustain, so chunking him out with big trades and standing back for a while to heal with passive is a strong playstyle. Perma splitpushing vs Ornn is a recommended viable strategy since his waveclear vs Hullbreaker is incredibly weak and you want to keep him away from teammates so he can’t upgrade their items or use his strong teamfighting abilities. If you manage to get a Hullbreaker cannon under the tower, you can go for a demolish while he hits you and then disengage.
