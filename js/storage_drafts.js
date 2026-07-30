@@ -71,7 +71,7 @@ function getLocalDrafts() {
                 if (parts.length === 2) {
                     let mySide = parts[1];
                     // Strip tab suffixes for grouping
-                    mySide = mySide.replace(/-plan$/, '').replace(/-vod$/, '');
+                    mySide = mySide.replace(/-plan$/, '').replace(/-vod$/, '').replace(/-reference$/, '');
                     const groupKey = `${parts[0]}/${mySide}`;
                     if (!seen.has(groupKey)) {
                         seen.add(groupKey);
@@ -104,7 +104,7 @@ function renderLocalDrafts() {
     let activeGroupPath = null;
     if (activeDraftKey) {
         activeGroupPath = activeDraftKey.replace('draft_matchup:', '')
-            .replace(/-plan$/, '').replace(/-vod$/, '');
+            .replace(/-plan$/, '').replace(/-vod$/, '').replace(/-reference$/, '');
         // Normalize 'Notes-vod' to 'Notes'
         if (activeGroupPath === 'Notes-vod') activeGroupPath = 'Notes';
     }
@@ -178,7 +178,8 @@ async function syncDraftDirectly(enemyKey, myKey) {
         const label = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
         draftEntries = [
             { path: `matchups/${enemyKey}/${myKey}.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}`, label: `${label} (Notes)` },
-            { path: `matchups/${enemyKey}/${myKey}-plan.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}-plan`, label: `${label} (Plan)` }
+            { path: `matchups/${enemyKey}/${myKey}-plan.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}-plan`, label: `${label} (Plan)` },
+            { path: `matchups/${enemyKey}/${myKey}-reference.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}-reference`, label: `${label} (Reference)` }
         ];
     }
 
