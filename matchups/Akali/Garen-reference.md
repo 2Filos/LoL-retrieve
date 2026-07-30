@@ -1,0 +1,13 @@
+AKALI EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Two Ruby Crystals into Sheen into Hearthbound Axe. Buy Hullbreaker
+after Trinity Force.
+Akali is a champion with a pokey early game and a strong all in at 6 when the wave is on her side. To counter this, we play safe in early
+levels, buy two Ruby Crystals, and then once we get lvl 7 and 4 points in Q, it becomes very easy to win every short trade vs Akali.
+If we run at Akali and she uses her E to get out of range of our Q, don't use it on a minion until her E mark is gone from you. If she takes the
+E mark, W when she lands on you to mitigate the damage and smack down a Q and move away. This is an incredibly winning trade that even
+high elo Akali players fall for and is one of the main ways to win trades vs her. Fish for any Qs you can get since it is a crazy amount of
+damage and she doesn't have any way of sustaining other than using teleport. Once we get to our 1 item and even Hullbreaker right after,
+it becomes more and more unplayable for Akali to play as you stack more HP since she has no way of dealing with high health targets.
+You perma splitpush so she can't avoid you and then you take the tower for free while poking her under the tower with Trinity Qs and
+outsustaining the tower shot and her damage.

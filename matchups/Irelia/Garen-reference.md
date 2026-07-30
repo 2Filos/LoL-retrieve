@@ -1,0 +1,21 @@
+IRELIA MEDIUM
+RUNES: Phase Rush, Resolve (Conditioning, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: Q MAX. Rush
+Berserker Greaves into Ironspike Whip. Make sure to buy Executioner's Calling after Stridebreaker for Mortal Reminder.
+Irelia as a champion is pretty much the definition of win lane lose game. For this reason, we can do our best to minimize the risk of dying to
+her, even if that means giving 30-40 cs to survive lane. If we do not give Irelia a lead, we will pretty much always be more useful than her
+mid to late game. The Q max in the build setup is mainly for the extra movespeed to escape after taking a cs or running from her Qs as she
+tries to run you down if she hits E on you. It’s important we basically never ever trade with her unless it’s to activate Phase Rush to escape
+after we took some cs. Using Ghost + Phase Rush if she uses R on you is great since it gets you through the slow from her R and makes
+it impossible to run you down with autos since you will be too fast. Don’t feel bad in using both of your summs to escape since her R is a
+decently long cd and it makes it pretty much impossible for her to 100-0 if she doesn’t have it up. If the wave slowpushes to her, be
+incredibly careful and give cs if she is zoning you off from it since she is attempting to setup room to run you down. After you get
+Stridebreaker you can start trying to fight her but it can be incredibly risky since Blade of the Ruined King is a strong powerspike for her
+to the point where she can be down 1100 gold and still beat you if you tank her autos. It’s typically just not worth even trading with her until
+you get executioners and can chunk her out for a lot of damage in side lane or in teamfights. Irelia is the win lane champion so naturally
+her weakness is teamfighting. If you survived lane, you can play mostly for teamfights since her side laning is weak and you can pretty
+much always focus her if she goes in with Q E R and it will be incredibly hard for her to play since your teammates will cc her at the same
+time. You can fight her in side lane after Stridebreaker and Executioners Calling, but you have to make sure that she can’t kite out your E
+the moment you start it with minions that are around her since she can Q out of range and back into range after your E is on cooldown
+which can be tremendously bad since Garen E is most of his damage. You typically want to start trades with Q and see what she does
+first before you E. If the situation is bad, you can always just Stridebreaker and Phase Rush away. Make sure you do not start spinning on
+Irelia if she uses W, this is why using Q first and waiting to see if she is silenced and not using W is important.

@@ -1,0 +1,14 @@
+ILLAOI MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: E MAX or Q MAX.
+Rush Berserker Greaves into Ironspike Whip.
+Illaoi is a champion that revolves around mostly 1 singular ability in her kit, her E. It is incredibly important that you dodge it since it does an
+incredible amount of damage if it does connect and then makes you unable to walk up since you are cursed for a bunch of time. If you
+dodge Illaoi E, that is a window for you to try to either all in Illaoi if she is chunked to about 60-70% HP post 6 or you can use it as an
+opportunity to get a trade on her. If she doesn't have it up, she probably won't fight you. The only thing you should be careful of is that her
+empowered auto attack (W) is really strong since it has a 4 second CD lvl 1. Illaoi players will start it first thing and you have to be really
+careful going for extended trades early because of it. Otherwise, it's mostly just about dodging the E and having good movement to dodge
+her other hitboxes. If you do get hit by her E, it's important that you walk in a straight line away from the circle so that you can stop taking
+damage. Don't try to all in through her E if she hits it, she will just use R and heal a bunch of HP and one shot you. Also important to make
+sure that she doesn't crash a big wave under the tower and go for Es on you while you cs since it is really easy for her to hit in that spot.
+Thin out minion waves so they aren't big when they crash. Below is a link of a video that may be useful on how to play vs Illaoi as any
+champion. https://www.youtube.com/watch?v=C3ZA3pxRGE0&t=48s

@@ -1,0 +1,12 @@
+RENEKTON HARD
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Sorcery: Nimbus Cloak, Celerity.
+SUMMS: FLASH IGNITE. ABILITY ORDER: Q MAX. Rush Sheen.
+Renekton is a champion that has a very strong early game and can easily dive you or zone you to tier 2 with his jungler or even all by
+himself if you are missing too much hp. That is why it is very important to not lose lots of hp early game especially if their jungler is strong
+early. Garen outscales Renekton and you beat him pretty easily after Trinity Force, it's just getting there that is the hard
+part. If the wave is slow pushing to Renekton and you want to grab a cs, it is important you only do so with both Q and W available so you
+don't get punished. It is very important that you only walk up for cs when it is at the lowest hp possible so you don’t take unnecessary
+damage. If Renekton uses R even after Trinity, it’s usually good to kite him out until it’s gone since it gives a lot of hp. Trading into Renekton
+should only be done with Q and W available and only when your Grasp is ready to be used. W his stun (you have to predict it if you are in
+melee range) and Q him and run away with the movement speed duration. Avoid putting yourself in a situation where he can run you down
+by not overextending.
