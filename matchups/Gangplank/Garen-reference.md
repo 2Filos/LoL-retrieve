@@ -1,0 +1,16 @@
+GANGPLANK MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: E MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Gangplank is a hard scaling champion that ramps up as the game goes on while having a decently safe laning phase. For this reason, it is
+important to try to fight Gangplank early game for a kill so that he doesn't get to outscale you for free with his huge gold advantage he will
+have from all of his sources of income. Gangplank will often use bushes lvl 1 to bush cheese a free barrel hit on you so it's really good to
+run straight to the bushes from base before he does so that you can punish him from face checking the bush that is closest to his tower.
+Otherwise if you weren't able to protect the bush at lvl 1 because you were doing something else, it can be better to just start W lvl 1 and not
+fight him since his barrels are really strong early and you need to W each one he uses on you. Poking Gangplank with short trades like
+Auto Q E is fine since he has little sustain other than his orange. After you get 3 points into E, it is important to start trying to trade with him
+in an extended manner since he is close to being one shottable once you have R. Berserker Greaves is the main powerspike in the matchup
+that you want to start increasing your aggressive gameplay since you can one shot him from nearly full HP if you land a full Ignite
+Q E auto auto R. Make sure you only go for extended trades close to your tower so you give yourself more room to run him down if he
+makes the mistake of being in melee range of you. Gangplank also has a really good all in if he is standing on top of a barrel and if he has
+Ignite too so be careful for that. After you get Stridebreaker and lvl 11, the matchup becomes pretty easy if he didn't get to free farm since
+you can just one shot him from full hp if your Stridebreaker active and Q connect for the rest of your abilities.

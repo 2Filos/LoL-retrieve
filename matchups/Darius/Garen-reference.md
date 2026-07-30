@@ -1,0 +1,19 @@
+DARIUS HARD/BAN
+RUNES: Phase Rush, Resolve: (Second Wind, Overgrowth). 1 Adaptive Force Double scaling HP
+SUMMS: FLASH GHOST/IGNITE ABILITY ORDER: 3 POINTS Q, THEN E MAX. (Depending on wave state, you can go early points
+in E) Rush Boots of Swiftness or Plated Steelcaps. START W LEVEL 1 TO NOT GET ZONED OFF XP
+Darius is a champion that wants to all in and catch your Phase Rush activation with his E (hook). For this reason, you want to avoid
+both of these things as these are his win conditions. Garen can almost never win against Darius, and the rune set and summoners I suggest
+above allow you to scale into the mid game and also ignore him in the laning phase. The main problem with this matchup is that Darius
+can force an extended trade simply with his auto W combo. If Darius is smart, when you go to try to auto Q E him to activate Phase Rush,
+he will walk forwards after he hits you with W while you start moving away and pull you back with E. By the time you're out of the airborne
+and slow that his E provides, your Phase Rush Is already deactivated and then you are most likely dead since you have no escape.
+This is the situation you want to avoid, and you want to never enter melee range against a Darius that knows how this works unless you
+are trading right next to your tower so you can easily escape even if he pulls you during your Phase Rush activation. If Darius freezes the
+wave and tries to enter melee range against you, try to proxy to break the freeze if the enemy jungler won't punish you for it.
+After Stridebreaker, you can Q E Stridebreaker Active and run away from him to activate Phase Rush and get a short poke if he's side laning
+against you. This only works because of the Stridebreaker slow, and it is the only way to trade vs Darius who knows how to use E properly.
+If he does not know how to use his E properly (using it after his auto W and walking forwards to catch your Phase Rush activation) then you
+can auto Q E him with Phase Rush on cooldown repeatedly until he is in all in range. This is particularly effective in low elo.
+CHECK OPGG FOR BUILD, IT DEPENDS ON THE GAME
+S14

@@ -1,0 +1,11 @@
+YASUO MEDIUM
+RUNES: Grasp of The Undying (Demolish, Second Wind, Overgrowth) Sorcery: (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
+Ability Order: Q MAX. Rush Sheen into Tier 1 Boots into Ruby Crystal into Hearthbound Axe.
+Yasuo is a Lethal Tempo champion with an insanely good early game so it's important that we are careful for his extended trades. His E
+and Q with R lead to all ins similar to Darius with how he runs you down so you have to be very careful around certain wave states that
+favour him on his side of the lane. If we want to trade with Yasuo, we need the wave to be at least in the middle of the lane, auto his passive
+shield so that it's on cooldown, and then we can go for a Q on him. It's important to not chase him down the lane if he begins to kite you far
+since he will then engage on you when your Q movement speed is gone and then run you down since it's on cooldown. It's all about short
+trading him when the wave is on your side of the lane since he has no sustain. Garen outscales Yasuo pretty hard, but it's still important
+to try to fight him in lane so that he can't proxy for free or get CS that he shouldn't be allowed to get. Stacking Grasp on him whenever you
+can is great if you don't get traded on in an extended manner.

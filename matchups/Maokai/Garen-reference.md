@@ -1,0 +1,9 @@
+MAOKAI EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Maokai is a champion with a mostly weak early game but he does have decent poke when he knocks you away. It's important to Grasp Q
+him when he knocks you away so you can even out the trade. Maokai is a bit similar to Cho'Gath in the sense that he has great sustain and
+a decent short trade so it will most likely be a farm lane. You can still try to chunk out Maokai as much as you want since he doesn't really
+have great kill pressure. He does have good gank setup though so you have to be careful for that. After Trinity Force it should be pretty easy
+to just perma split vs him and outscale him in side lane. If it is too hard you can shove the wave, take jungle camps, and then out rotate since
+he will have to respect you.

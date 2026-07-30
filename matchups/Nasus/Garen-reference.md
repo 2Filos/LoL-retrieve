@@ -1,0 +1,12 @@
+NASUS EASY
+RUNES: Phase Rush, Resolve (Demolish, Overgrowth/Unflinching) SUMMS: FLASH GHOST/IGNITE. Ability Order: Q MAX.
+Rush Ironspike Whip into Berserker Greaves.
+Nasus is a scaling champion that has one of the easiest lanes to punish in the game for Garen. Garen has the options of freezing, shoving,
+poking, and roaming which makes it a very easy lane to play. My personal favorite to do vs Nasus is to shove waves under his turret and
+post lvl 4 it becomes incredibly easy to poke him with at least 2 points into Q. I shove a wave, take a demolish on the turret, then exit with
+Auto Q E under his tower. After you get Ironspike Whip this becomes even more brutal for him to deal with. If you notice that he is healing
+too much or is chunking you too hard with Sheen, it's probably better to try to let the wave push to you so that he can't auto the minions as
+much for healing with his passive. Remember to not walk up without Phase Rush since he can wither you if you don't have Q as well and
+then run you down if he has Sheen and lvl 6. Factor in his R when you are trying to all in him since it gives lots of hp to him. He will
+eventually outscale you in the 1v1 if you didn't get a massive lead which is fine since you can just push in side lane and then rotate to
+teamfights where you are more useful. Always kite him and run away until his R is deactivated if you can't instantly kill him after he uses it.

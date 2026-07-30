@@ -1,0 +1,14 @@
+SION EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning, Overgrowth), Inspiration (Magical Footwear, Cosmic Insight) SUMMS:
+FLASH GHOST Ability Order: Q MAX if he lanes, E MAX if he proxies. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Sion is a champion that is trying to mostly stalemate the lane since he outscales you. He can do this in multiple ways, but the best and most
+common way is dying on purpose to clear a wave with his passive so you are stuck in lane and then using teleport to walk into lane,
+clear a wave, and then begin proxying with his Cull or Bami’s Cinder. For this reason, it is important that if we are trying to kill Sion, we kill
+him when there isn’t a wave nearby for him to kill with his passive. Garen can’t run teleport to counter this strategy, so it is important that we
+avoid giving him a ‘good death.’ When we trade with Sion, it is important to use our W on his Q since the tenacity works well against it and it
+also is his biggest burst of damage. They will usually slam the Q down the moment it becomes an airborne and if you are almost out of the
+hitbox so that is the sweet spot for W timing. It is very important that we don’t trade into his W so it absorbs a massive amount of damage
+especially for Garen’s damage, so the best time to punish Sion is when his W is on cooldown. Stack Grasp whenever you can if you have
+cooldowns available. He has 0 sustain so we can easily poke him down with good trades and movement. It is mostly important that he
+doesn’t 1 for 1 us or get a good death for his teleport. If he proxies, you can chase him after clearing the wave under your tower and try to
+punish him with your jungler.
