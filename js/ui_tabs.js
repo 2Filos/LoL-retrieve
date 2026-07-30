@@ -36,6 +36,11 @@ function resolvePagePath(matchup, side) {
             path: `matchups/${matchup.enemyKey}/${matchup.myKey}-plan.md`,
             draftKey: `draft_matchup:${matchup.enemyKey}/${matchup.myKey}-plan`
         };
+    } else if (side === 'ref') {
+        return {
+            path: `matchups/${matchup.enemyKey}/${matchup.myKey}-reference.md`,
+            draftKey: `draft_matchup:${matchup.enemyKey}/${matchup.myKey}-reference`
+        };
     }
     return {
         path: `matchups/${matchup.enemyKey}/${matchup.myKey}.md`,
@@ -50,6 +55,7 @@ function resolvePagePath(matchup, side) {
 function updateTabLabels() {
     const tabLeft = document.getElementById('tabLeft');
     const tabRight = document.getElementById('tabRight');
+    const tabRef = document.getElementById('tabRef');
     const tabGroup = document.getElementById('editorTabs');
     if (!tabLeft || !tabRight || !tabGroup) return;
 
@@ -59,13 +65,21 @@ function updateTabLabels() {
     if (isMatchup) {
         tabLeft.textContent = 'Plan';
         tabRight.textContent = 'Notes';
+        if (tabRef) {
+            tabRef.style.display = 'inline-block';
+            tabRef.textContent = 'Reference';
+        }
     } else {
         tabLeft.textContent = 'Notes';
         tabRight.textContent = 'VODs';
+        if (tabRef) {
+            tabRef.style.display = 'none';
+        }
     }
 
     tabLeft.classList.toggle('active', activePageSide === 'left');
     tabRight.classList.toggle('active', activePageSide === 'right');
+    if (tabRef) tabRef.classList.toggle('active', activePageSide === 'ref');
 
     updateTabIndicators();
 }
@@ -76,11 +90,18 @@ function updateTabLabels() {
 async function updateTabIndicators() {
     const tabLeft = document.getElementById('tabLeft');
     const tabRight = document.getElementById('tabRight');
+    const tabRef = document.getElementById('tabRef');
     if (!tabLeft || !tabRight || !activeMatchup) return;
 
     const leftInfo = resolvePagePath(activeMatchup, 'left');
     const rightInfo = resolvePagePath(activeMatchup, 'right');
     const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
+    
+    let refInfo = null;
+    if (isMatchup) {
+        refInfo = resolvePagePath(activeMatchup, 'ref');
+    }
+
     const isLeftPrimary = !isMatchup; // General: left is Notes. Matchup: right is Notes.
 
     const isGarenCamille = activeMatchup && activeMatchup.myKey === 'Garen' && activeMatchup.enemyKey === 'Camille';
@@ -150,17 +171,26 @@ async function updateTabIndicators() {
         return false;
     }
 
-    const [leftHasContent, rightHasContent] = await Promise.all([
+    const promises = [
         hasContent(leftInfo, isLeftPrimary),
         hasContent(rightInfo, !isLeftPrimary)
-    ]);
+    ];
+    if (isMatchup && refInfo) {
+        promises.push(hasContent(refInfo, false));
+    }
+
+    const results = await Promise.all(promises);
+    const leftHasContent = results[0];
+    const rightHasContent = results[1];
+    const refHasContent = isMatchup && refInfo ? results[2] : false;
 
     if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
-        console.log(`[DEBUG EditorFlow] Tab Indicators updated -> Left (Plan/Notes): ${leftHasContent}, Right (Notes/VODs): ${rightHasContent}`);
+        console.log(`[DEBUG EditorFlow] Tab Indicators updated -> Left (Plan/Notes): ${leftHasContent}, Right (Notes/VODs): ${rightHasContent}, Ref: ${refHasContent}`);
     }
 
     tabLeft.classList.toggle('has-content', leftHasContent);
     tabRight.classList.toggle('has-content', rightHasContent);
+    if (tabRef) tabRef.classList.toggle('has-content', refHasContent);
 }
 
 /**
@@ -216,8 +246,10 @@ function switchEditorTab(side) {
     // Update button active states
     const tabLeft = document.getElementById('tabLeft');
     const tabRight = document.getElementById('tabRight');
+    const tabRef = document.getElementById('tabRef');
     if (tabLeft) tabLeft.classList.toggle('active', side === 'left');
     if (tabRight) tabRight.classList.toggle('active', side === 'right');
+    if (tabRef) tabRef.classList.toggle('active', side === 'ref');
 
     // Compute new path and reload
     const pathInfo = resolvePagePath(activeMatchup, side);
