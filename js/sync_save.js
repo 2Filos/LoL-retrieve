@@ -174,87 +174,94 @@ async function saveToGitHub() {
             localStorage.removeItem(activeMatchup.draftKey);
 
             /**
-             * === SYNC THE OTHER TAB'S DRAFT ===
-             * Rule Validation: Dual-Tab Sync.
+             * === SYNC OTHER TABS' DRAFTS ===
+             * Rule Validation: Multi-Tab Sync.
              * After syncing the actively visible tab, the editor automatically looks for
-             * a draft of the opposite tab (e.g. Plan if Notes is active) and pushes it
+             * drafts of the other tabs (e.g. Plan or Reference if Notes is active) and pushes them
              * to GitHub in the background. It safely strips metadata from the non-primary
              * file before pushing.
              */
-            const otherSide = (activePageSide === 'left') ? 'right' : 'left';
-            const otherPathInfo = resolvePagePath(
-                { enemyKey: activeMatchup.enemyKey, myKey: activeMatchup.myKey },
-                otherSide
-            );
-            const otherDraftRaw = localStorage.getItem(otherPathInfo.draftKey);
-            if (otherDraftRaw !== null) {
-                try {
-                    // Determine if the other tab is the primary file
-                    const otherIsPrimary = (isMatchup && otherSide === 'right') ||
-                                           (!isMatchup && otherSide === 'left');
-                    let otherText = otherDraftRaw;
-                    // Strip metadata from non-primary files to prevent pollution
-                    if (!otherIsPrimary) {
-                        const metaMatch = otherText.match(/\n?\n?<!-- METADATA: .*? -->/);
-                        if (metaMatch) otherText = otherText.replace(metaMatch[0], '').trimEnd();
-                    }
+            const allSides = isMatchup ? ['left', 'right', 'ref'] : ['left', 'right'];
+            const otherSides = allSides.filter(s => s !== activePageSide);
 
-                    // Fetch current SHA for the other file
-                    let otherSha = null;
-                    const cacheBusterUrl = `${config.url}${otherPathInfo.path}?t=${Date.now()}`;
-                    const fetchHeaders = Object.assign({}, config.headers, {
-                        'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache',
-                        'Expires': '0'
-                    });
-                    const otherGetRes = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
-                    let skipOtherSync = false;
-                    if (otherGetRes.ok) {
-                        const otherData = otherGetRes.json();
-                        otherSha = otherData.sha;
-                        const decodedOther = decodeURIComponent(escape(atob(otherData.content)));
-                        // If local draft perfectly matches remote, no need to push
-                        if (decodedOther === otherText) {
+            for (const otherSide of otherSides) {
+                const otherPathInfo = resolvePagePath(
+                    { enemyKey: activeMatchup.enemyKey, myKey: activeMatchup.myKey },
+                    otherSide
+                );
+                const otherDraftRaw = localStorage.getItem(otherPathInfo.draftKey);
+                if (otherDraftRaw !== null) {
+                    try {
+                        // Determine if the other tab is the primary file
+                        const otherIsPrimary = (isMatchup && otherSide === 'right') ||
+                                               (!isMatchup && otherSide === 'left');
+                        let otherText = otherDraftRaw;
+                        // Strip metadata from non-primary files to prevent pollution
+                        if (!otherIsPrimary) {
+                            const metaMatch = otherText.match(/\n?\n?<!-- METADATA: .*? -->/);
+                            if (metaMatch) otherText = otherText.replace(metaMatch[0], '').trimEnd();
+                        }
+
+                        // Fetch current SHA for the other file
+                        let otherSha = null;
+                        const cacheBusterUrl = `${config.url}${otherPathInfo.path}?t=${Date.now()}`;
+                        const fetchHeaders = Object.assign({}, config.headers, {
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
+                        });
+                        const otherGetRes = await bridgeFetch(cacheBusterUrl, { headers: fetchHeaders });
+                        let skipOtherSync = false;
+                        if (otherGetRes.ok) {
+                            const otherData = otherGetRes.json();
+                            otherSha = otherData.sha;
+                            const decodedOther = decodeURIComponent(escape(atob(otherData.content)));
+                            // If local draft perfectly matches remote, no need to push
+                            if (decodedOther === otherText) {
+                                skipOtherSync = true;
+                            }
+                        } else if (otherGetRes.status === 404 && otherText.length === 0) {
+                            // If file doesn't exist remotely and local draft is empty, no need to push
                             skipOtherSync = true;
                         }
-                    } else if (otherGetRes.status === 404 && otherText.length === 0) {
-                        // If file doesn't exist remotely and local draft is empty, no need to push
-                        skipOtherSync = true;
-                    }
 
-                    if (skipOtherSync) {
-                        localStorage.removeItem(otherPathInfo.draftKey);
-                        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
-                            console.log(`[DEBUG] Other tab (${otherSide}) is identical to remote or empty. Draft cleared.`);
-                        }
-                    } else {
-                        const otherEncoded = btoa(unescape(encodeURIComponent(otherText)));
-                        const otherBody = {
-                            message: `Sync: updated ${activeMatchup.label} (${otherSide === 'left' ? (isMatchup ? 'Plan' : 'Notes') : (isMatchup ? 'Notes' : 'VODs')})`,
-                            content: otherEncoded
-                        };
-                        if (otherSha) otherBody.sha = otherSha;
-
-                        const otherRes = await bridgeFetch(config.url + otherPathInfo.path, {
-                            method: 'PUT',
-                            headers: config.headers,
-                            body: JSON.stringify(otherBody)
-                        });
-
-                        if (otherRes.ok) {
+                        if (skipOtherSync) {
                             localStorage.removeItem(otherPathInfo.draftKey);
                             if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
-                                console.log(`[DEBUG] Other tab (${otherSide}) synced successfully.`);
+                                console.log(`[DEBUG] Other tab (${otherSide}) is identical to remote or empty. Draft cleared.`);
                             }
                         } else {
-                            console.warn(`[WARN] Other tab sync failed: ${otherRes.status}`);
+                            const otherEncoded = btoa(unescape(encodeURIComponent(otherText)));
+                            let tabName = otherSide === 'left' ? (isMatchup ? 'Plan' : 'Notes') : (isMatchup ? 'Notes' : 'VODs');
+                            if (otherSide === 'ref') tabName = 'Reference';
+
+                            const otherBody = {
+                                message: `Sync: updated ${activeMatchup.label} (${tabName})`,
+                                content: otherEncoded
+                            };
+                            if (otherSha) otherBody.sha = otherSha;
+
+                            const otherRes = await bridgeFetch(config.url + otherPathInfo.path, {
+                                method: 'PUT',
+                                headers: config.headers,
+                                body: JSON.stringify(otherBody)
+                            });
+
+                            if (otherRes.ok) {
+                                localStorage.removeItem(otherPathInfo.draftKey);
+                                if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
+                                    console.log(`[DEBUG] Other tab (${otherSide}) synced successfully.`);
+                                }
+                            } else {
+                                console.warn(`[WARN] Other tab sync failed: ${otherRes.status}`);
+                            }
                         }
+                    } catch (otherErr) {
+                        console.warn(`[WARN] Other tab sync error: ${otherErr.message}`);
                     }
-                } catch (otherErr) {
-                    console.warn(`[WARN] Other tab sync error: ${otherErr.message}`);
                 }
             }
-            // === END OTHER TAB SYNC ===
+            // === END OTHER TABS SYNC ===
 
             renderLocalDrafts();
             updateDiscardButtonState(false);
