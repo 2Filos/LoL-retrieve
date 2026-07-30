@@ -13,3 +13,7 @@ No Q? She gets a good trade and might even kill you
 That's all there is to it
 Will try that
 
+IT WORKS
+It works so hard it's ridicolous
+I can super-disrespect and go under tower for plates (provided i have minions..)
+I need big fat waves so that she can't clear them in time for the tower to aggro me (while she CC me)
