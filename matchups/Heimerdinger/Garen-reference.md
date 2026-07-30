@@ -1,0 +1,12 @@
+HEIMERDINGER MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: Q MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Heimerdinger can be best described as a win lane lose game champion. Heimerdinger is incredibly strong in laning phase and can one shot
+you for hitting one of his stun grenades since it activates his turrets to shoot at you. This is why it's very important to use W on the stun
+grenades so that you can readjust your position and use the tenacity to dodge the turret shots so you don't evaporate instantly. Don't walk
+up for CS while under tower if you don't have W and he has his stun grenade since it is the perfect opportunity for him to throw one at you.
+It mostly revolves around that one interaction since that is Heimer's main way of surprising you with burst. There's pretty much no way to
+kill him unless he takes turret aggro or takes damage from minions and he goes into all in range of around 50% HP for you to flash on him.
+Once you get Stridebreaker and lvl 11 he gets turbo outscaled since he is basically always one shottable and you can just W his grenade and
+run at him. If his R is going to do too much damage you can just Phase Rush away and heal up under tower again and then go in once you
+have your CDs back up. A chunked Heimer is super easy to kill post 1 item, you just have to get there

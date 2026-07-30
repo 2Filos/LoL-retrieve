@@ -1,0 +1,18 @@
+MORDEKAISER MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: Q MAX. Rush
+Berserker Greaves into Ironspike Whip. Serpent's Fang is a good option to counter his shield if his team has other shields.
+Mordekaiser is a high pressure, highly mechanical matchup that is describable as a final boss for Garen. It is somewhat difficult but not
+impossible to dodge Mordekaiser’s Q and E but it is incredibly important that you do. Especially his pull, if Mordekaiser lands it he can get a
+big extended trade with his passive that will pretty much always not be worth it. To dodge Mordekaiser’s abilities, you can wiggle in and out
+of the max range for his Q and E and try to see if he uses it. If he hits you with Q or E and you get punished for doing this, you simply run
+away and chill until you regen a bit of hp. Usually the trading pattern for Garen is to run at Mordekaiser with Q especially if he just missed an
+ability, then Q Mordekaiser and run away after 1-2 spins since you are Q maxing. If Mordekaiser ends up hitting pull on you on your way out,
+you can auto him to activate Phase Rush since you hit 2 abilities before. This gets you out of his passive, but can be problematic if he has R
+available and you aren’t already close to your tower. It’s important to never get hit by E post 6 since he can just press R and all in you and
+you pretty much always die especially if he has ignite. You also have to be careful about trading him in the middle of the lane if the enemy
+jungler is topside since he can R you from full hp without hitting anything so that his jungler can close the gap and be right on top of you the
+moment you come out of Mordekaiser’s R. The short trades that you do while avoiding Mordekaiser’s E will eventually build up damage on
+him especially if you are punishing his W cd. You can tell if he has it up or not if he has any amount of the white bar below his health.
+Mordekaiser has no sustain other than his W healing so if you keep poking it out it will be hard for him to sustain. Eventually if you get him
+low or catch him without W, you can all in him for a one shot. It must be a one shot of course. Proxying is also an option if you feel like you
+can’t beat him in lane but fighting him is possible.

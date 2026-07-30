@@ -1,0 +1,10 @@
+GRAGAS MEDIUM
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Gragas is a strong overall laning phase champion with weak early levels. Garen is able to get the early push in the first levels and Gragas
+will simply just not interact early. However after first back when Gragas has Lost Chapter and a few points in his abilities, he quickly becomes
+very poke heavy. It's important to try to go for a few Qs on him while your Grasp is ready even if he will just disengage the trade with his E
+to push you away. After around 4 points in your Q with Sheen this will begin to chunk him a decent amount for it to be worth it so it's good to
+try to go for it. Be careful for when the wave gets on his side, he can combo you with his R to push you into the tower. His R is also really
+good gank setup. After 1 or 2 items Garen outscales Gragas pretty hard in side lane since Trinity Force and Hullbreaker are so strong vs
+Gragas.
