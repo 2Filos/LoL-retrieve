@@ -1,0 +1,661 @@
+CHAMPION DIFFICULTY HOW TO PLAY LANE/RUNES TO TAKE
+DARIUS HARD/BAN
+RUNES: Phase Rush, Resolve: (Second Wind, Overgrowth). 1 Adaptive Force Double scaling HP
+SUMMS: FLASH GHOST/IGNITE ABILITY ORDER: 3 POINTS Q, THEN E MAX. (Depending on wave state, you can go early points
+in E) Rush Boots of Swiftness or Plated Steelcaps. START W LEVEL 1 TO NOT GET ZONED OFF XP
+Darius is a champion that wants to all in and catch your Phase Rush activation with his E (hook). For this reason, you want to avoid
+both of these things as these are his win conditions. Garen can almost never win against Darius, and the rune set and summoners I suggest
+above allow you to scale into the mid game and also ignore him in the laning phase. The main problem with this matchup is that Darius
+can force an extended trade simply with his auto W combo. If Darius is smart, when you go to try to auto Q E him to activate Phase Rush,
+he will walk forwards after he hits you with W while you start moving away and pull you back with E. By the time you're out of the airborne
+and slow that his E provides, your Phase Rush Is already deactivated and then you are most likely dead since you have no escape.
+This is the situation you want to avoid, and you want to never enter melee range against a Darius that knows how this works unless you
+are trading right next to your tower so you can easily escape even if he pulls you during your Phase Rush activation. If Darius freezes the
+wave and tries to enter melee range against you, try to proxy to break the freeze if the enemy jungler won't punish you for it.
+After Stridebreaker, you can Q E Stridebreaker Active and run away from him to activate Phase Rush and get a short poke if he's side laning
+against you. This only works because of the Stridebreaker slow, and it is the only way to trade vs Darius who knows how to use E properly.
+If he does not know how to use his E properly (using it after his auto W and walking forwards to catch your Phase Rush activation) then you
+can auto Q E him with Phase Rush on cooldown repeatedly until he is in all in range. This is particularly effective in low elo.
+CHECK OPGG FOR BUILD, IT DEPENDS ON THE GAME
+S14
+MALPHITE EASY
+Phase Rush, Resolve: (Conditioning Overgrowth.) 1 Adaptive Force, double scaling HP. SUMMS: FLASH GHOST/IGNITE
+ABILITY ORDER: E MAX.
+Malphite is a particularly easy matchup since he enables Garen to scale consistently with little pressure in lane from Malphite. It's important
+to respect him in early levels if he takes Grasp of the Undying and W maxes, but otherwise we can just shove the wave and ignore him
+for the most part. If he allows us to hit a full E into auto Q, it can be viable to trade with him but otherwise you just play for good recall timers
+by utilizing proxying and roaming/taking jungle camps. You can't really dive Malphite under the tower if you are splitpushing so it's best to
+get him under the tower and then rotate around the map so that he is forced to spend his TP. Maximizing farm is key in this matchup.
+JAX MEDIUM
+RUNES: Conqueror, Triumph Haste Last Stand, Resolve: Boneplating Overgrowth. Double Adaptive Force, Flat HP
+SUMMS: FLASH IGNITE. ABILITY ORDER: E MAX.
+Jax is a champion that is all about multiple auto attacks and all-ins. Garen's goal against Jax is to shorten Jax's extended trades by using
+W on his counterstrike stun since it is typically most of his burst and it reduces his stun by a lot. Garen wants to trade with Jax by keeping
+his E on the outer most edge so that it is spinning on Jax at the tip while you kite him. This will make it harder for him to auto you while you
+are spinning on him. Never fight him without W up, Jax's burst damage is pretty high so he can win a short trade easily. Respect Jax's Q
+range when you have no W up. Don't keep fighting him once he Rs unless you can Ignite and R to instantly kill him since his R makes him
+really tanky. When Jax's R is active, you must run away until it is on cooldown if his HP is high. Make sure that you only all in Jax when he
+gets one shot from one rotation of E Auto Q R otherwise his sustained damage will overpower your all-in. This is why it's important to poke
+Jax down with short trades before going for an all-in. Garen should usually win after Stridebreaker since you can kite him with Stridebreaker
+and E very effectively to poke him down into all-in range. This is an incredibly cooldown based matchup so only trade/all-in when you have
+all cooldowns available. (A sneaky pro tip is to use Q as Jax's E is about to finish, this allows you to hit your Q while you are stunned by his
+E!
+AATROX EASY
+RUNES: Phase Rush Resolve: Conditioning/Second Wind Overgrowth. SUMMS: FLASH IGNITE/GHOST. ABILITY
+ORDER: Q MAX. Rush Boots of Swiftness or Berserker's Greaves. Make sure to buy Executioner's Calling after Stridebreaker for
+Mortal Reminder. (Sit on a Zeal and then finish Phantom Dancer after Mortal Reminder)
+Push the first two waves with E start for a 2 wave crash so you can safely farm for level 4!
+Aatrox is a champion with an incredibly strong early game after level 4 and has the abilities to stun and kite Garen when Garen tries to
+charge forward. This is why it's important to use Q max movespeed and rush tier 1 and 2 boots as soon as you can so that you can chase
+after him with a quick Q trade and then escape with the remaining movespeed. Building Q max + boots makes it really hard for Aatrox to
+hit his Q. A good trading pattern is to use Q E and then cancel spin as soon as possible so that you can auto attack and escape with
+Phase Rush. Make sure you use your move speed properly and be mindful of where he will position his Q (you can almost always dodge it
+with the amount of movespeed you will have. Keep the trades short, and farm well so you can outscale him at lvl 11 Stridebreaker. Don't
+forget your executioner's calling after Stridebreaker! If he catches you with a Q combo, it's best to W as soon as he hits his first Q.
+K'SANTE EASY
+RUNES: Phase Rush, Inspiration: Magical Footwear, Cosmic Insight. SUMMS: FLASH IGNITE/GHOST. ABILITY
+ORDER 3 POINTS IN Q, THEN E MAX. Rush Tiamat.
+K'sante is a champion that wants to go for quick pokes with his Q and Grasp while nullifying your response with his shield. For this reason,
+it is important that we either catch his shield without the cooldown, or chase him down until it expires and then go for a Q E trade on him.
+K'sante has no sustain, so any damage you can build up on him is great. The hard part is wiggling in and out of his Q range and waiting for
+him to mess up his shield cooldown. A good K'sante will space perfectly and this will be almost impossible to accomplish so at a certain
+point the matchup becomes a farm fest. It is important that we do not fight him on his side of the lane after lvl 6 since he can R us into tower.
+remember to use your W on his W stun, he will often chain combo it into his Q.
+Garen outscales K'sante in the teamfight really hard so it's safe to just farm and relax in lane if you don't want to look for a kill.
+RENEKTON HARD
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Sorcery: Nimbus Cloak, Celerity.
+SUMMS: FLASH IGNITE. ABILITY ORDER: Q MAX. Rush Sheen.
+Renekton is a champion that has a very strong early game and can easily dive you or zone you to tier 2 with his jungler or even all by
+himself if you are missing too much hp. That is why it is very important to not lose lots of hp early game especially if their jungler is strong
+early. Garen outscales Renekton and you beat him pretty easily after Trinity Force, it's just getting there that is the hard
+part. If the wave is slow pushing to Renekton and you want to grab a cs, it is important you only do so with both Q and W available so you
+don't get punished. It is very important that you only walk up for cs when it is at the lowest hp possible so you don’t take unnecessary
+damage. If Renekton uses R even after Trinity, it’s usually good to kite him out until it’s gone since it gives a lot of hp. Trading into Renekton
+should only be done with Q and W available and only when your Grasp is ready to be used. W his stun (you have to predict it if you are in
+melee range) and Q him and run away with the movement speed duration. Avoid putting yourself in a situation where he can run you down
+by not overextending.
+FIORA HARD/BAN
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth) SUMMS: FLASH IGNITE. Ability Order: E MAX.
+Rush Tiamat. Make sure to buy Executioner's Calling after Stridebreaker for Mortal Reminder. (Sit on a Zeal and then finish
+Phantom Dancer after Mortal Reminder)
+(One thing to note is that ability hits still activate Phase Rush through Fiora parry!) The Fiora matchup is all about good mechanics and
+spacing with autos and Garen E. Fiora’s vital passive is her main tool to win trades vs Garen since he has no way of responding if she hits
+one of them other than using W and backing off. The way to beat Fiora is to catch her using Q on you and then adjusting your position with a
+short movement so that she cannot hit the vital. If she hits Q only on you and not the vital, you can then start spinning as she has no way of
+kiting it out since the movespeed from the vital is her only way of getting out of the spin and she missed it. This is the best way to punish
+Fiora for Garen and you can save your W for her second hit with her empowered auto instead. If you lose a trade, it’s okay to back up and
+heal with passive since she has no sustain and you do. It’s important that you try to get winning trades like this since Fiora outscales Garen
+pretty hard unless you build specifically for the 1v1 and play very well. After winning a few trades with E, you can try to all in her with Flash
+Q E R if she’s one shottable (usually around 35% hp) since Flash Q makes it difficult for her to react with her parry. You can also try to
+force her parry out by starting the all in with Q and if she doesn’t parry the Q at the start, then she is going to die to the silence since you
+can just press E and R before it runs out. You can only do this if the threat of her dying is great enough to be one shot just from Q E R if she
+doesn’t parry it. If she does parry your Q, then you can still hit her with E and R since she doesn’t have parry for your R anymore. One great
+tip against bad Fiora players that don’t react to Garen’s Q animation and instead predict that you are going to hit her with Q is to start your
+Q and run at Fiora and the moment you get into melee range start clicking around her instead of on her so that you don’t hit Q. Bad
+Fiora players will use their parry early before you even Q and then when they come out of invulnerability, you can hit them with the Q still to
+punish it. The matchup is overall about having good micromovements and dodging her vital hits with her Q so you can punish with your spin.
+If you want to avoid her hitting R vitals, you can stand right next to a wall in the lane as well and if it’s close enough to the wall, it will be
+impossible for her to hit the vital. Typically when she Rs though, you want to just run away. Fiora’s teamfight is a lot worse than Garen’s and
+you also have better wave clear so you can usually clear a wave in side lane far up before she starts split pushing and then run down to an
+objective fight if you want to not fight her 1v1. Moral of the story, always start trades/all ins with E unless she is low enough to be one
+shot for not using parry on Q.
+IRELIA MEDIUM
+RUNES: Phase Rush, Resolve (Conditioning, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: Q MAX. Rush
+Berserker Greaves into Ironspike Whip. Make sure to buy Executioner's Calling after Stridebreaker for Mortal Reminder.
+Irelia as a champion is pretty much the definition of win lane lose game. For this reason, we can do our best to minimize the risk of dying to
+her, even if that means giving 30-40 cs to survive lane. If we do not give Irelia a lead, we will pretty much always be more useful than her
+mid to late game. The Q max in the build setup is mainly for the extra movespeed to escape after taking a cs or running from her Qs as she
+tries to run you down if she hits E on you. It’s important we basically never ever trade with her unless it’s to activate Phase Rush to escape
+after we took some cs. Using Ghost + Phase Rush if she uses R on you is great since it gets you through the slow from her R and makes
+it impossible to run you down with autos since you will be too fast. Don’t feel bad in using both of your summs to escape since her R is a
+decently long cd and it makes it pretty much impossible for her to 100-0 if she doesn’t have it up. If the wave slowpushes to her, be
+incredibly careful and give cs if she is zoning you off from it since she is attempting to setup room to run you down. After you get
+Stridebreaker you can start trying to fight her but it can be incredibly risky since Blade of the Ruined King is a strong powerspike for her
+to the point where she can be down 1100 gold and still beat you if you tank her autos. It’s typically just not worth even trading with her until
+you get executioners and can chunk her out for a lot of damage in side lane or in teamfights. Irelia is the win lane champion so naturally
+her weakness is teamfighting. If you survived lane, you can play mostly for teamfights since her side laning is weak and you can pretty
+much always focus her if she goes in with Q E R and it will be incredibly hard for her to play since your teammates will cc her at the same
+time. You can fight her in side lane after Stridebreaker and Executioners Calling, but you have to make sure that she can’t kite out your E
+the moment you start it with minions that are around her since she can Q out of range and back into range after your E is on cooldown
+which can be tremendously bad since Garen E is most of his damage. You typically want to start trades with Q and see what she does
+first before you E. If the situation is bad, you can always just Stridebreaker and Phase Rush away. Make sure you do not start spinning on
+Irelia if she uses W, this is why using Q first and waiting to see if she is silenced and not using W is important.
+MORDEKAISER MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: Q MAX. Rush
+Berserker Greaves into Ironspike Whip. Serpent's Fang is a good option to counter his shield if his team has other shields.
+Mordekaiser is a high pressure, highly mechanical matchup that is describable as a final boss for Garen. It is somewhat difficult but not
+impossible to dodge Mordekaiser’s Q and E but it is incredibly important that you do. Especially his pull, if Mordekaiser lands it he can get a
+big extended trade with his passive that will pretty much always not be worth it. To dodge Mordekaiser’s abilities, you can wiggle in and out
+of the max range for his Q and E and try to see if he uses it. If he hits you with Q or E and you get punished for doing this, you simply run
+away and chill until you regen a bit of hp. Usually the trading pattern for Garen is to run at Mordekaiser with Q especially if he just missed an
+ability, then Q Mordekaiser and run away after 1-2 spins since you are Q maxing. If Mordekaiser ends up hitting pull on you on your way out,
+you can auto him to activate Phase Rush since you hit 2 abilities before. This gets you out of his passive, but can be problematic if he has R
+available and you aren’t already close to your tower. It’s important to never get hit by E post 6 since he can just press R and all in you and
+you pretty much always die especially if he has ignite. You also have to be careful about trading him in the middle of the lane if the enemy
+jungler is topside since he can R you from full hp without hitting anything so that his jungler can close the gap and be right on top of you the
+moment you come out of Mordekaiser’s R. The short trades that you do while avoiding Mordekaiser’s E will eventually build up damage on
+him especially if you are punishing his W cd. You can tell if he has it up or not if he has any amount of the white bar below his health.
+Mordekaiser has no sustain other than his W healing so if you keep poking it out it will be hard for him to sustain. Eventually if you get him
+low or catch him without W, you can all in him for a one shot. It must be a one shot of course. Proxying is also an option if you feel like you
+can’t beat him in lane but fighting him is possible.
+RUMBLE HARD/BAN
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST/GHOST TELEPORT. Ability Order:
+E MAX. Rush Negatron Cloak if losing really hard or Berserker Greaves into Ironspike Whip if the lane is stable.
+Rumble is one of Garen’s worst matchups mostly because of the laning phase. With a recent patch, Rumble has retained his presence in
+laning phase as an early game bully but now he also scales and can go HP items like Demonic Embrace. For this reason, it is incredibly
+important that we have 0 deaths in lane and pretty much give most cs unless we have W and Q up to take it. We want to also use the max
+range of our E to pick up cs that is 1 HP since it is longer than auto range and can be used while moving. Rumble has two abilities that give
+Garen lots of issues, his movement speed with his shield, and his rockets that slow you. He can poke you freely and if you ever try to Q
+towards him for a trade his shield will absorb most of the burst which is a huge counter to Garen and you won’t even be able to spin on him
+since he gets more move speed than you. He also can dive you with his overheat autos by flashing and igniting you with his nimbus cloak
+so it’s important to keep HP high in anticipation of this. We wait until Stridebreaker since it is the only way to counter his kiting
+and poking. He has no sustain so mid to late game if you are against him in the side lane you can easily chunk him down with multiple Q E
+Stride trades, it’s just getting there that is the hard part. Hullbreaker is really good vs him since he is an AP champion that is squishy and
+wants to teamfight for the most part.
+CAMILLE HARD/BAN
+RUNES: Grasp of The Undying (Demolish, Second Wind, Overgrowth) Sorcery (Nimbus Cloak, Scorch) SUMMS: FLASH IGNITE.
+Ability Order: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Camille is a matchup that you have to win early game since she outscales you at 1 mythic. However, playing aggressively early game can
+prove to be very difficult and annoying because of her passive shield, her R, and her E. Since we are taking Grasp, we can start Q lvl 1 and
+try to win a short trade after her passive is down since this is really the only way to beat her. We can try to bait her passive by trading an auto
+with her to start her passive shield up and then we can follow her as she kites back to then punish with our Q the moment the shield drops
+for a trade she won’t like. It is important we W her Q1 when trying to bait her passive in later levels since it can be a lot of burst and wasted
+HP just for her passive cooldown. It is really important that we are hyper aware of the enemy jungler since she has amazing gank setup
+with her ult that basically is a death sentence from full hp if you are standing in the middle of the lane with her jungler topside. If Camille
+ever uses E into you, you can W it to get tenacity and pretty much instantly get out of the stun. This matchup is all about catching her with
+Q past her passive CD, if we can’t do that then it is doomed. You can also try to Flash on her when she is low HP to surprise her before
+she can use passive and get a bit of Q and spin damage before she uses passive which you can then respond with Ignite R if she is low
+enough to one shot her since the true damage goes through her physical damage shield.
+JAYCE HARD
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: Q MAX. Rush
+Ironspike Whip into Berserker’s Greaves.
+Jayce is a ranged champion that scales incredibly well and can bully you in lane. For this reason we need to show him a lot of respect in the
+early levels and get a lead at some point after we purchase Ironspike Whip. With Q max, you can chase the Jayce down unless he uses
+his movement speed gate to kite you which can be problematic. If he uses it when you Q at him, it’s best to disengage the trade and wait
+until your Q is up again since his movement speed gate has a longer cooldown than your Q. When you have Ironspike Whip and at least
+3 points into Q, you can basically poke Jayce down since he has no sustain and really low base HP which can lead to you getting him low
+enough for you to Flash Q E Ignite R him. You run at him with Q and then instantly E Ironspike Whip to run away with Phase Rush since
+you don’t want to extend the trade vs him. You can W his burst while doing this and you will effectively never lose the trade if he doesn’t
+end up kiting or spacing out your Q. Remember to respect him for the most part and only go for short pokes like this when you have all
+of your cooldowns up. If Jayce doesn’t have Phase Rush, he gets outscaled after Stridebreaker since you can hit him with the Stride
+slow as he knocks you away in his hammer form. Jayce is really one shottable so the all in threshold is pretty high and he can die from
+even 65% HP if you Flash Q E Ignite R.
+RIVEN MEDIUM
+RUNES: Grasp of The Undying (Demolish, Conditioning, Overgrowth) Sorcery (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
+Ability Order: Q MAX. Rush Sheen Ruby Crystal into Hearthbound Axe.
+Riven is an early game cooldown-based champion that is looking to do short quick bursty trades with Garen so that he is low enough to get
+one shot by her R combo. Making sure that you kite away from Riven with your Q ms is incredibly important since it is all of your damage. If
+she tries to catch up, you can start your spin as you move away. Riven is able to punish Garen’s W CD really effectively since she goes
+Nimbus Cloak and Ignite and can run you down the entire lane with her R and Q combo. We can trade with Riven and use our W to win the
+trade, but we must not be in range of her abilities for her to extend the trade after. Garen outscales Riven, but that doesn’t mean you should
+not fight her at all since there is ways to punish Riven’s mistakes during laning phase. If Riven wastes E, it’s easy to one shot her post 6 with
+Ignite Q E R, can even use flash to close the gap if she is around 70% hp. What’s important is that you respect her damage and if you don’t
+have cooldowns, don’t walk up. You can usually start trades with Q and she will typically just E away which is fine since Grasp and Sheen
+will poke a little bit through. Remember to always kite backwards if she is doing a Q combo on you while you are spinning. Be careful if the
+wave gets on her side since it gives her lots of space to run you down with her R and Q combo. Play around the minion wave to crash it if
+it gets into this spot. One of the best times to use Q and Grasp on Riven is when she uses her third Q since she has to E away immediately
+after using it otherwise she gets hit by all of the damage.
+SETT MEDIUM
+RUNES: Phase Rush, Resolve (Bone Plating, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: E MAX. Rush
+Berserker’s Greaves into Ironspike Whip.
+Sett is a strong champion in the early lvls up to 5 and 6 vs Garen but gets quickly outscaled after the first recall. For this reason, we probably
+want to start W vs him lvl 1 since he will start E and try to force a fight with his pull. One thing about Sett is that his pull is an ability you have
+to predict with your W which can be difficult since he can use it at any time and if we W incorrectly it can result in big danger for us. This is
+why it’s usually better to hold W for his Q which is a more consistent ability unless it is obvious when he is going to E us in which case, we
+can W. The most important thing about the Sett matchup is that we are not extending trades vs him. Because of his grit (the white bar
+below his HP) his W will do lots of damage if we continue spinning on top of him for too long. To counter this, we can auto Q E to activate
+Phase Rush and sprint away as he is chasing us so that it is harder for him to pull and W us. It’s important to keep HP high for the most
+part in the early levels before we start fighting him like this, but after Greaves, we can typically start trading and auto Q Eing him to run away.
+You pretty much always want to move in the opposite direction of Sett after doing an auto Q E unless his W is on cooldown and we can one
+shot him if he is missing some hp. Garen outscales Sett the hardest at Stridebreaker, at which point he will be unable to hit E on you after
+your Q E Stride combo. The overall goal of this matchup no matter what point in the game it is, is to poke him down slowly and not go for big
+extended trades so he cannot W you for true damage.
+GNAR MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Unflinching) SUMMS: FLASH IGNITE. Ability Order: E MAX. Rush Berserker Greaves
+into Ironspike Whip.
+Gnar is a strong laning phase champion that is very hard to force a kill on. He has to make a big mistake with his hop cooldown for him to
+die, otherwise, it is a Farmville angle for both players in this matchup. Gnar can punish you in the same way you punish him, standing too
+far up on the opponents side of the lane without important cooldowns. Gnar can run down Garen with a bunch of autos since he gets a slow
+and TONS of movespeed to continue autoing over and over. It is really important that we don’t get ourselves into this situation since it is
+realistically the only way we die vs Gnar. His short pokes aren’t very good other than his boomerang, and that ability is dodgeable. We
+should also always use W on his passive stacks. Once Gnar is in mega we basically never want to fight him as it makes him super tanky
+and strong. When Gnar comes out of mega, he gets this special effect called ‘Tired’ where he is unable to gain rage for a short amount of
+time after coming out of mega. This is the optimal time to all in him if he is standing on your side of the lane with missing HP and if you have
+Ignite available. Garen outscales Gnar at Stridebreaker, but we still have to respect his extended trades and all in potential with Trinity Force
+since it makes him decently tanky with Plated Steelcaps. For Garen to be able to one shot Gnar, he has to already be around 70% HP in
+mini form post lvl 6.
+TEEMO HARD
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: E MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Teemo is a champion that is pretty much unkillable in laning phase no matter what you do. Unless he takes a tower shot or two, this guy is
+not dying. It’s important that we have 0 deaths vs him since we outscale him at Stridebreaker very hard since our all in at lvl 11 is strong.
+The laning phase is just the hard part and you’re going to have to get through it and wait for your jg to come top. If they don’t, all you can
+do is farm. Be careful when walking through lane against his shrooms and his invis passive, he can be standing anywhere and waiting for
+you to step on one and if you don’t have Q, consider yourself dead. Walk in the line the minions do behind them and they can check for you
+first. Teemo actually has a decent all in under your tower if he slow pushes a wave in with ignite so make sure to keep your HP decently high.
+Save E to cs cannons since he will blind your auto attacks out of hitting them.
+YONE MEDIUM
+RUNES: Grasp of The Undying (Demolish, Second Wind, Overgrowth) Sorcery: (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
+Ability Order: Q MAX. Rush Sheen into Tier 1 Boots into Ruby Crystal into Hearthbound Axe.
+Yone is a lethal tempo champion, so automatically for that reason, it is important that we don’t bother fighting him in the early levels. It’s
+okay to go for a Grasp Q but it’s important to not really extend it past that. Yone’s W is also a big shield, so if we do end up going for a
+short trade on our side of the lane at some point, make sure we wait for him to randomly use it as poke since he probably will. His W blocks
+your entire Q so it’s important to wait it out if it does go off when you’re trying to hit him. Yone can kite Garen easily with his E since he gets
+a ton of free movement speed so if he ever starts using it, it’s best to disengage the trade so he does not get free damage on you. Yone’s
+early game is surprisingly his strongest point vs Garen and his scaling is his weakest part. Garen starts to do too much damage after
+multiple components and items since his burst becomes too high for Yone to handle since they don’t typically build shieldbow anymore.
+Playing safe all lane and waiting for Trinity Force is a working strategy, but it is good to try to fight him after Sheen since you can punish
+him for misusing his Q3 dash or his E. Keep the trades really short or make the all ins an instant burst. The inbetween extended trade that
+is not quite an all in but is not a short trade is what Yone wants since it will chunk you out really hard and will not allow you to deal much
+damage back to him. If Yone is about to hit R on you, start your E so that you are spinning on him while airborne.
+TRYNDAMERE HARD
+RUNES: Phase Rush, Resolve (Conditioning, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: E MAX. Rush
+Berserker Greaves/Plated Steelcaps into Ironspike Whip.
+Tryndamere can be best compared to a brick wall. You will never ever break him down. He simply has too much sustain for Garen to try to
+poke, and he also has an ultimate ability that counters burst. Your best bet is to simply afk farm for Stridebreaker. Never ever click on him
+unless it is to get Phase Rush to run away faster from him. There is no point in dealing any damage to him at all really. Tryndamere will
+notice that you aren’t interacting at all and will probably proxy/invade after crashing a wave. There’s not really anything you can do vs this
+other than try to thin the wave as soon as possible so that there isn’t a giant wave under your tower giving him time to do what he wants.
+It’s okay to give lots of cs in this lane if the wave is slowpushing to him since we want to do everything we can to not die. His snowballing
+is incredibly strong and if we deny his early game advantage by not dying, we can easily win the game mid to late. It’s just the early that is
+the issue. After Stridebreaker, we can try to one shot him with R to force his R out, and then Stridebreaker when he tries to go for autos on
+us. There’s basically no way for him to catch us unless we misplay after Stridebreaker if we made it out of lane without dying and without
+him having a significant gold advantage. If his R is on cd, he is pretty much not a champion so look to burst it out so he can’t teamfight or
+1v1 you.
+KENNEN HARD
+RUNES: Phase Rush, Resolve (Second Wind, Unflinching/Overgrowth) SUMMS: FLASH GHOST/GHOST TELEPORT. Ability Order:
+E MAX. Rush Berserker Greaves into Ironspike Whip.
+Kennen is another matchup where there is no chance of killing him unless he makes a big mistake and takes tower shots or too much
+minion aggro. You have to scale up for Stridebreaker. Once you do get it though, if you didn’t die, he gets outscaled quite hard. The problem
+with Kennen is that he can go First Strike and bully you hard in lane. He typically ends lane with a 1000 gold lead if he’s good, so it is
+quite painful. It all comes down to how well you can cs minions under tower without getting dove by his jungler or even just him since his R
+all in is strong. Using W on his shuriken is usually the best idea since that is what does the most damage in his kit. The tenacity also works
+on his stuns so it’s good to use if you know he’s going to stun you. It’s a farm lane/wait for jungle to help you overall.
+SINGED EASY
+RUNES: Phase Rush, Resolve (Conditioning/Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE/FLASH GHOST
+/GHOST TELEPORT. Ability Order: Q MAX. Rush Berserker Greaves into Ironspike Whip.
+Singed is a scaling champion with a weak early game. To fix this, Singed players typically opt to proxy with his superior wave clear early
+game. It is important that we thin minion waves when he tries to push them in so that he cannot walk through the tower for free. Singed
+is a champion with low sustain, so poking him down is a very efficient strategy. Singed’s runes and build can vary greatly, so keep an eye out
+for what he is building. If he has Conqueror Ignite, he has incredibly strong all in potential lvl 1-2 if you are not careful. However, if he has
+anything else, he probably won’t do much damage and you can go for auto Qs whenever you like. It’s important that we use W + Q on
+Singed’s fling since that is most of his burst and we won’t really get a better opportunity to Q him other than that. It’s important that we
+play for the short pokes with Q and do not run into his poison for more than a second unless he flinged us into it and we used W. If
+Singed proxies early game before we have Greaves, we don’t really want to chase him and we should mostly just farm at tower. After we
+get Berserker’s Greaves, chasing Singed can be a legitimate strategy if we can get his R on cooldown. When Singed uses R, he gets a ton
+of stats that we don’t want to fight against so simply getting the ability on cooldown is helpful for your jungler to help punish his proxying. If
+his R is active, it’s most likely best to not fight him. If he is staying in lane and fighting you, that is exactly what you want since you will slowly
+poke him down with multiple short Q trades. If Singed does not have Phase Rush after Stridebreaker, we can Stridebreaker him as he flings
+us and Q him to get an extended trade and hit a full Q E which will be a considerable amount of damage especially since he doesn’t really
+have any healing. We can still catch up to him like this even with just Berserker’s Greaves, but it can depend on a lot of things like runes,
+items he bought, and how many points we have in Q. Consider all this if you want to chase him and continue spinning after he flings you
+while you Q. Make sure you activate Phase Rush after he gets Rylais so that you can actually deal damage to him and remove the slow
+for a bit. Splitpushing vs Singed can be a good strategy, but it’s important that you walk with your minions to get them to the tower so that
+he can’t proxy them in side lane. He might also try to fling the cannon out of turret range so it’s important to go Hullbreaker so it’s harder
+for him to kill it.
+SION EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning, Overgrowth), Inspiration (Magical Footwear, Cosmic Insight) SUMMS:
+FLASH GHOST Ability Order: Q MAX if he lanes, E MAX if he proxies. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Sion is a champion that is trying to mostly stalemate the lane since he outscales you. He can do this in multiple ways, but the best and most
+common way is dying on purpose to clear a wave with his passive so you are stuck in lane and then using teleport to walk into lane,
+clear a wave, and then begin proxying with his Cull or Bami’s Cinder. For this reason, it is important that if we are trying to kill Sion, we kill
+him when there isn’t a wave nearby for him to kill with his passive. Garen can’t run teleport to counter this strategy, so it is important that we
+avoid giving him a ‘good death.’ When we trade with Sion, it is important to use our W on his Q since the tenacity works well against it and it
+also is his biggest burst of damage. They will usually slam the Q down the moment it becomes an airborne and if you are almost out of the
+hitbox so that is the sweet spot for W timing. It is very important that we don’t trade into his W so it absorbs a massive amount of damage
+especially for Garen’s damage, so the best time to punish Sion is when his W is on cooldown. Stack Grasp whenever you can if you have
+cooldowns available. He has 0 sustain so we can easily poke him down with good trades and movement. It is mostly important that he
+doesn’t 1 for 1 us or get a good death for his teleport. If he proxies, you can chase him after clearing the wave under your tower and try to
+punish him with your jungler.
+ORNN EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning, Overgrowth), Inspiration (Magical Footwear, Cosmic Insight) SUMMS:
+FLASH GHOST Ability Order: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Ornn is a strong early game tank that can abuse Grasp of The Undying quite well with his W for insane short trade damage. Garen needs to
+have W available to trade into Ornn effectively without hard losing the trade since Ornn’s brittle auto is an overwhelming amount of damage.
+Going for Qs whenever you can is good to do so you can stack Grasp and poke Ornn. Make sure to respect Ornn’s all in potential with his R.
+Not only is it good gank setup, it does an insane amount of burst damage. Ornn is a champion with no sustain, so chunking him out with big
+trades and standing back for a while to heal with passive is a strong playstyle. Perma splitpushing vs Ornn is a recommended viable strategy
+since his waveclear vs Hullbreaker is incredibly weak and you want to keep him away from teammates so he can’t upgrade their items or
+use his strong teamfighting abilities. If you manage to get a Hullbreaker cannon under the tower, you can go for a demolish while he hits you
+and then disengage.
+KAYLE MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST/IGNITE. Ability Order: Q MAX.
+Rush Berserker Greaves into Ironspike Whip.
+Kayle is a lethal tempo champion so naturally Garen will struggle with extended trades. For this reason, Garen Q maxes and plays for short
+pokes into Kayle. This is important because if Kayle can extend the trade and get her Lethal Tempo stacked, you will lose too much HP and
+CS. At lvl 1, it's important to let Kayle push the wave if she got to it first. However, if she leashes, Garen can E the wave lvl 1 and get prio.
+This allows you to have more control of the lane and be safer from her early game Lethal Tempo all in. You can try to punish Kayle in the
+early levels (1-5) but after first back with Berserker's Greaves and lvl 6, Kayle will start to win simply by being ranged. For this reason you
+will need to respect her until Stridebreaker or if she misuses her slow or speed up abilities. If you want to trade with her, don't immediately
+use Q until she uses the ability that slows you since you will not be able to cleanse it if you do. Otherwise, try to get a kill or at least her TP
+in early levels and farm until Stridebreaker where you will outscale in 1v1 at lvl 11 if you are not behind too much XP or CS. You can flash on
+Kayle even if she has R up if you do it fast enough so she can't react to the silence when she is low HP for your all in with R.
+GANGPLANK MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: E MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Gangplank is a hard scaling champion that ramps up as the game goes on while having a decently safe laning phase. For this reason, it is
+important to try to fight Gangplank early game for a kill so that he doesn't get to outscale you for free with his huge gold advantage he will
+have from all of his sources of income. Gangplank will often use bushes lvl 1 to bush cheese a free barrel hit on you so it's really good to
+run straight to the bushes from base before he does so that you can punish him from face checking the bush that is closest to his tower.
+Otherwise if you weren't able to protect the bush at lvl 1 because you were doing something else, it can be better to just start W lvl 1 and not
+fight him since his barrels are really strong early and you need to W each one he uses on you. Poking Gangplank with short trades like
+Auto Q E is fine since he has little sustain other than his orange. After you get 3 points into E, it is important to start trying to trade with him
+in an extended manner since he is close to being one shottable once you have R. Berserker Greaves is the main powerspike in the matchup
+that you want to start increasing your aggressive gameplay since you can one shot him from nearly full HP if you land a full Ignite
+Q E auto auto R. Make sure you only go for extended trades close to your tower so you give yourself more room to run him down if he
+makes the mistake of being in melee range of you. Gangplank also has a really good all in if he is standing on top of a barrel and if he has
+Ignite too so be careful for that. After you get Stridebreaker and lvl 11, the matchup becomes pretty easy if he didn't get to free farm since
+you can just one shot him from full hp if your Stridebreaker active and Q connect for the rest of your abilities.
+ILLAOI MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: E MAX or Q MAX.
+Rush Berserker Greaves into Ironspike Whip.
+Illaoi is a champion that revolves around mostly 1 singular ability in her kit, her E. It is incredibly important that you dodge it since it does an
+incredible amount of damage if it does connect and then makes you unable to walk up since you are cursed for a bunch of time. If you
+dodge Illaoi E, that is a window for you to try to either all in Illaoi if she is chunked to about 60-70% HP post 6 or you can use it as an
+opportunity to get a trade on her. If she doesn't have it up, she probably won't fight you. The only thing you should be careful of is that her
+empowered auto attack (W) is really strong since it has a 4 second CD lvl 1. Illaoi players will start it first thing and you have to be really
+careful going for extended trades early because of it. Otherwise, it's mostly just about dodging the E and having good movement to dodge
+her other hitboxes. If you do get hit by her E, it's important that you walk in a straight line away from the circle so that you can stop taking
+damage. Don't try to all in through her E if she hits it, she will just use R and heal a bunch of HP and one shot you. Also important to make
+sure that she doesn't crash a big wave under the tower and go for Es on you while you cs since it is really easy for her to hit in that spot.
+Thin out minion waves so they aren't big when they crash. Below is a link of a video that may be useful on how to play vs Illaoi as any
+champion. https://www.youtube.com/watch?v=C3ZA3pxRGE0&t=48s
+GWEN EASY
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: Q MAX.
+Rush Ironspike Whip into Berserker Greaves. Buy Executioner's Calling and Mortal Reminder after Stridebreaker at some point.
+Gwen is a champion that really likes extended trades vs Garen. However, Garen has many ways of shortening trades effectively which
+makes the lane pretty easy for Garen after a few points in Q and Ironspike Whip. Gwen has the upperhand in the first few levels since her
+base stats are higher than Garen's, but after just 3 points in Q it becomes pretty easy for Garen to just Q E run away and W her Q. All
+you really have to do is play around your Phase Rush cooldown and Ironspike Whip so you can Q E Whip over and over to win short trades
+and back off to heal with your passive. After Stridebreaker you just Q E Stride active and it's basically impossible for her to do anything
+since you will get to chunk her into an HP where she is burstable from Ignite Q E R. The Gwen matchup is all about these short trades in
+lane and in side lane while you splitpush. Getting her to a one shottable HP is easy enough if you play around cooldowns correctly. Make
+sure to have Phase Rush up post 6 if you are planning to trade with her, she can run you down if your Phase Rush is on cooldown
+since it is the only thing keeping you alive from the slows of her R.
+NASUS EASY
+RUNES: Phase Rush, Resolve (Demolish, Overgrowth/Unflinching) SUMMS: FLASH GHOST/IGNITE. Ability Order: Q MAX.
+Rush Ironspike Whip into Berserker Greaves.
+Nasus is a scaling champion that has one of the easiest lanes to punish in the game for Garen. Garen has the options of freezing, shoving,
+poking, and roaming which makes it a very easy lane to play. My personal favorite to do vs Nasus is to shove waves under his turret and
+post lvl 4 it becomes incredibly easy to poke him with at least 2 points into Q. I shove a wave, take a demolish on the turret, then exit with
+Auto Q E under his tower. After you get Ironspike Whip this becomes even more brutal for him to deal with. If you notice that he is healing
+too much or is chunking you too hard with Sheen, it's probably better to try to let the wave push to you so that he can't auto the minions as
+much for healing with his passive. Remember to not walk up without Phase Rush since he can wither you if you don't have Q as well and
+then run you down if he has Sheen and lvl 6. Factor in his R when you are trying to all in him since it gives lots of hp to him. He will
+eventually outscale you in the 1v1 if you didn't get a massive lead which is fine since you can just push in side lane and then rotate to
+teamfights where you are more useful. Always kite him and run away until his R is deactivated if you can't instantly kill him after he uses it.
+VOLIBEAR MEDIUM
+RUNES: Phase Rush, Resolve (Conditioning, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: Q MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Volibear is a very strong laning phase champion and he pretty much can't be beaten unless you go for lots of short trades and you dodge
+his E (Thunder Circle thing) by using W on his stun. The main trading pattern usually is just Q E run away while using W on his stun, but
+you don't really want to fight Volibear or drop HP because his dive potential with his R disabling the turret and his jungler coming to help
+is too great of a threat for the most part. If Volibear's R is active it's safe to just ghost and run away to kite it out until it's on cooldown. Once
+you have Ironspike Whip or Stridebreaker, it becomes really easy to short trade with him. However, if he purchases Iceborn Gauntlet, it's
+probably better to stick to teamfighting vs that guy. Any champion with Iceborn Gauntlet is a big problem for Garen since it reduces so much
+of his damage and the slow is crippling if you don't have Phase Rush available for slow reduction. The lane is mostly just about farming and
+not dropping too low of an HP so you can get to Stridebreaker and lvl 11 to teamfight or maybe 1v1 him if you are brave enough.
+PANTHEON MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST/IGNITE. Ability Order: Q MAX.
+Rush Ironspike Whip into Stridebreaker (Berserker Greaves after)
+Pantheon is an incredibly strong champion in laning phase but quickly gets outscaled after just 1 item. For this reason, it's a viable strategy
+to simply concede a bunch of CS to get to Stridebreaker safely since once you get Stridebreaker, it becomes impossible for Pantheon to try
+to out space you with Qs. However, after you get a few points in Q and first back you can probably try to go for a few trades when the wave
+is on your side. It is important to start the trade with Q, and then not spin until you see if his E invulnerability goes off. If he uses it, don't spin
+immediately until it's on cooldown. If he doesn't use it and you see that he's silenced when you used Q on him, then you can start your E.
+It's important to try to W Pantheon's Q and W whenever possible during lane to mitigate his poke or to win trades. It's hard to react to,
+but it is integral to winning and surviving the lane. Pantheon hates 1v1ing Garen after mythic, so permanently splitpushing vs him is great as
+long as you play it slowly since he has no sustain.
+SHEN EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Bone Plating, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Shen is an incredibly strong early game champion that isn't really to be messed with. Garen can begin to win after first back and around
+level 7 with Sheen, but until then you have to respect Shen and W his taunt or his Q auto since he does an insane extended trade with those
+abilities. However, after some scaling begins to happen, and especially at mythic, Shen falls apart quite quickly. If he Rs while you are perma
+shoving with demolish and Sheen, his whole tower will disappear. Trinity Force and Black Cleaver end up being incredibly effective against
+him and you do tons of damage to him in side lane. All you really have to do is get to the point where you win the short trades vs him in lane
+and then you will have a really easy time splitpushing vs him for the rest of the game. Just watch out for his strong early game, start W even
+if you are scared of him zoning you from XP. It can be good to start spinning as he is about to taunt you as well since you will hit your full
+spin for free and avoid auto attacking him while he uses his W to dodge what would be autos.
+AKALI EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Two Ruby Crystals into Sheen into Hearthbound Axe. Buy Hullbreaker
+after Trinity Force.
+Akali is a champion with a pokey early game and a strong all in at 6 when the wave is on her side. To counter this, we play safe in early
+levels, buy two Ruby Crystals, and then once we get lvl 7 and 4 points in Q, it becomes very easy to win every short trade vs Akali.
+If we run at Akali and she uses her E to get out of range of our Q, don't use it on a minion until her E mark is gone from you. If she takes the
+E mark, W when she lands on you to mitigate the damage and smack down a Q and move away. This is an incredibly winning trade that even
+high elo Akali players fall for and is one of the main ways to win trades vs her. Fish for any Qs you can get since it is a crazy amount of
+damage and she doesn't have any way of sustaining other than using teleport. Once we get to our 1 item and even Hullbreaker right after,
+it becomes more and more unplayable for Akali to play as you stack more HP since she has no way of dealing with high health targets.
+You perma splitpush so she can't avoid you and then you take the tower for free while poking her under the tower with Trinity Qs and
+outsustaining the tower shot and her damage.
+POPPY MEDIUM
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Poppy is a champion with a very strong early game so it's best to play very safe early, even starting W is a good idea. Poppy will try to
+cheese the early game and get a lvl 3-4 kill if she can, so stay as high HP as you can. After first back this matchup becomes a lot easier,
+it's just important to still respect the fact that Poppy's abilities do a billion damage so you should only ever go for trades when you have W
+available. If you are low HP under tower and she is standing at an angle where she can push you into the tower or a wall for a stun into a
+big combo with her R, it's important to get out of that position immediately since it can be a random solo kill and an instant game loss.
+After you get your Triforce or even just a few components it becomes a lot easier to play, it's just important to not die vs her early since she
+has so much kill pressure. You can get a few Grasp autos with Q here and there in early levels but never let her hit abilities without your W
+being available. Perma splitting vs her if you got a lead in lane is not a bad idea with this build.
+YASUO MEDIUM
+RUNES: Grasp of The Undying (Demolish, Second Wind, Overgrowth) Sorcery: (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
+Ability Order: Q MAX. Rush Sheen into Tier 1 Boots into Ruby Crystal into Hearthbound Axe.
+Yasuo is a Lethal Tempo champion with an insanely good early game so it's important that we are careful for his extended trades. His E
+and Q with R lead to all ins similar to Darius with how he runs you down so you have to be very careful around certain wave states that
+favour him on his side of the lane. If we want to trade with Yasuo, we need the wave to be at least in the middle of the lane, auto his passive
+shield so that it's on cooldown, and then we can go for a Q on him. It's important to not chase him down the lane if he begins to kite you far
+since he will then engage on you when your Q movement speed is gone and then run you down since it's on cooldown. It's all about short
+trading him when the wave is on your side of the lane since he has no sustain. Garen outscales Yasuo pretty hard, but it's still important
+to try to fight him in lane so that he can't proxy for free or get CS that he shouldn't be allowed to get. Stacking Grasp on him whenever you
+can is great if you don't get traded on in an extended manner.
+OLAF MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: Q MAX.
+Rush Ironspike Whip into Berserker Greaves.
+Olaf is a champion with an incredibly good early game especially in the early levels, so it's important to respect him for the most part until
+you have a few points in Q. After you get to at least lvl 5, you can then start to Auto Q E him for short trades and then you run away with
+Phase Rush. Always make sure to run away straight after activating Phase Rush so that he can't punish you by throwing multiple Q slows at
+you. Olaf is a champion that builds Ravenous Hydra sometimes, and a component in this item is Vampiric Scepter. The problem with this is
+that Garen can't burst Olaf down fast enough from full HP to actually kill him, but then he won't be able to short trade with Olaf after this
+item purchase because Olaf just heals off of minions after a short Phase Rush trade. At that point, it's safe to try to proxy or just straight
+up ignore him and farm since there is no way to beat him if he has that item and you don't have a lead. You have to chunk him out very
+hard and then fight him immediately after before he heals on minions otherwise he will get the HP back faster than your passive heals you.
+Garen can nullify Olaf's presence in teamfights quite effectively so it's okay if you don't get a lead in lane, it's just important to not get baited
+by short trades when he can heal to full hp off of one wave after first back if he decides to buy Vampiric Scepter. Always kite Olaf R if he tries
+to all in you with it, it's never a good idea to face tank it unless you are certain you burst him through it.
+NAAFIRI EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Naafiri is an assassin champ and has a somewhat decent early game, but quickly gets outscaled by Garen with just a Sheen and a few
+points into Q. The only thing you really have to worry about is her Q (Throwing Daggers) that make you bleed a lot if you get hit by it twice.
+She also has a dash in all directions and a shield when she ults after she hits a target for the first time. All you really have to do vs Naafiri
+is not get over confident with trades and just stick with short and simple Q trades and backing off after you don't have Q up. It's a really
+simple matchup since she has no sustain and all you really have to worry about is dodging her 2nd dagger. Just play for Q poke with Grasp
+and scale up if you're taking too much damage early. Make sure you don't R when she Rs since she will get a shield so hold R until you know
+it's gone and on cooldown.
+YORICK MEDIUM
+RUNES: Grasp of The Undying (Demolish, Second Wind, Overgrowth) Sorcery: (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
+Ability Order: Q MAX. Rush Sheen into Tier 1 Boots into Ruby Crystal into Hearthbound Axe.
+Yorick is a scaling champion with an incredibly weak early game and a kit that counters Garen's spin specifically. Since Garen has no
+dashes, Yorick's cage ability is really strong vs him since it instantly denies Garen from moving to continously hit multiple spins. But since
+Grasp is now a viable build with Q max, this isn't really a problem. The only issue is that Yorick can put up a fight if he hits his E (Cone
+shaped ability that slows) since that can make you take a ton of damage from his ghouls if you're stuck in the cage at the same time. It's
+important to dodge this. If you do, you can easily just run at him to slap him with a Q Grasp trade. You can try to Q him without seeing
+if he misses an ability first, but you have to be careful and make sure that he can't one shot you if he does end up hitting his E and his cage.
+We have to win early game since Yorick outscales us so make sure that you play at least a bit aggressively during the early game. Always
+match his splitpush since you should be ahead for the entire game if you utilize your early game advantage.
+KLED MEDIUM
+RUNES: Grasp of The Undying (Demolish, Conditioning, Overgrowth) Sorcery: (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
+Ability Order: Q MAX. Rush Sheen into Tier 1 Boots into Ruby Crystal into Hearthbound Axe.
+Kled is a very strong early game champion that will look for a dive on you lvl 3-4 if you make mistakes and take too much damage. This is
+why it's important to respect him early game and only go for short trades with Grasp Q here and there. Do not dismount Kled until 6, this is
+very important. You only want to dismount Kled when you have kill pressure with Ignite and R, otherwise you are just giving him free HP
+back when he remounts if you don't kill him. After about 4 points in Q and Sheen, it will be really easy to burst him when he is off of
+Skaarl. It's all about poking him down until he is dismounted and can be one shotted with Q E Ignite R. Garen outscales Kled in side lane
+as well, it's just about surviving the early game and getting to a point where you can one shot him while he is dismounted.
+CHO'GATH MEDIUM
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Cho'Gath is a scaling champion disguised as having a weak early game while he really has a good one. It's important to only trade with
+Cho'Gath when you have your Grasp up so that you can actually get a proper chunk into him. This matchup is mostly about farming instead
+of playing for a kill since you both have so much sustain. Garen can win after Sheen and 4 points Q but it's not easy at all since Cho'Gath
+heals so much. It's important to not trade him when you don't have W as well. If the Cho'Gath has Arcane Comet you also have to be really
+careful early since it deals a ton of damage after just a few points into his Q. He can chain CC you into a Flash Ignite R similar to how Garen
+does all ins so it's really important to keep HP high early game vs AP Cho'Gath. If he is tank you can play a lot more aggressively early, but
+if he is AP it's best to play for an outscale at 1 item. Splitpush all game vs him since you don't want him to help his team with his utility.
+URGOT MEDIUM
+RUNES: Conqueror, (Triumph Tenacity Last Stand), Resolve: Conditioning, Overgrowth/Unflinching. SUMMS: FLASH IGNITE.
+ABILITY ORDER: E MAX. Rush Berserker Greaves into Ironspike Whip. Can go Warden's Mail after Berserker's Greaves if you
+want to make sure you can't lose early.
+Urgot is a champion with an incredibly strong lvl 1 and 2 vs Garen, for this reason you want to start W lvl 1 since he will try to zone you off
+with his flip and PTA damage. Once Garen has all 3 of his abilities, it's really easy to win trades into Urgot. You can walk at him and use your
+E to start spinning on him. If you see his shield appear on his health bar, he is about to go into his flip dash ability. To counter it, W it so that
+the damage and stun is reduced while you continue to spin on him. After your E is fully done running, you can auto Q him as you disengage
+from the trade. This is the main trading pattern vs Urgot that works quite well. It may lose you the trade sometimes, but Urgot has no sustain
+and all you have to do is sit back and wait as your passive ticks for a bit. Urgot is really burstable early game after lvl 6 and you need to
+take that opportunity since he outscales you tremendously hard. Build for teamfights (Deadman's, Steraks) so you can avoid 1v1ing Urgot
+since he has one of the best dueling kits vs Garen.
+GRAGAS MEDIUM
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Gragas is a strong overall laning phase champion with weak early levels. Garen is able to get the early push in the first levels and Gragas
+will simply just not interact early. However after first back when Gragas has Lost Chapter and a few points in his abilities, he quickly becomes
+very poke heavy. It's important to try to go for a few Qs on him while your Grasp is ready even if he will just disengage the trade with his E
+to push you away. After around 4 points in your Q with Sheen this will begin to chunk him a decent amount for it to be worth it so it's good to
+try to go for it. Be careful for when the wave gets on his side, he can combo you with his R to push you into the tower. His R is also really
+good gank setup. After 1 or 2 items Garen outscales Gragas pretty hard in side lane since Trinity Force and Hullbreaker are so strong vs
+Gragas.
+QUINN MEDIUM
+RUNES: Phase Rush, Inspiration: Magical Footwear, Cosmic Insight. SUMMS: FLASH GHOST ABILITY ORDER: E MAX. Rush
+Ironspike Whip into Hearthbound Axe.
+Quinn is an unkillable champion in laning phase for Garen because of her vault. It cancels Garen's Q even if he started it mid animation,
+slows him, and then pushes Quinn away from Garen. For this reason, we need to fully invest in farming until we have Stridebreaker, which
+is the only counter to this interaction. As Quinn kicks Garen and vaults away, you can Stridebreaker as she's on top of you and she will get
+hit by the slow. You can get her to vault on you simply by running at her with Q or even just straight up walking at her. If she's good she
+will only use it if you Q at her though. At lvl 11 and if the wave is on your side and she vaults like this with you hitting the Stridebreaker slow,
+you will one shot her from full HP with Ghost. This is the powerspike you unfortunately have to play for and you must spam ping your team
+if she roams with her ultimate. Remember to W when her bird targets you since it adds bonus damage to her autos.
+DR. MUNDO EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe. Buy an Executioner's
+Calling after Trinity Force.
+Mundo is an incredibly weak early game champion with only really 1 ability to poke with and use, his cleaver. If you stand behind minions,
+have good movement, or just straight up W it if he hits it, you can nullify this one ability he has quite easily. If Mundo ever walks up to the
+wave to CS or if he misses his cleaver, you can try to punish him immediately with Grasp Q and E. Garen outscales Mundo at 1 item as well
+since Trinity Force is so strong vs him, so you don't have to worry too much about winning lane hard. It's still good to try though since Mundo
+is pretty easy to punish. Perma splitting is good if you got a decent lead from laning phase.
+MAOKAI EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Maokai is a champion with a mostly weak early game but he does have decent poke when he knocks you away. It's important to Grasp Q
+him when he knocks you away so you can even out the trade. Maokai is a bit similar to Cho'Gath in the sense that he has great sustain and
+a decent short trade so it will most likely be a farm lane. You can still try to chunk out Maokai as much as you want since he doesn't really
+have great kill pressure. He does have good gank setup though so you have to be careful for that. After Trinity Force it should be pretty easy
+to just perma split vs him and outscale him in side lane. If it is too hard you can shove the wave, take jungle camps, and then out rotate since
+he will have to respect you.
+SHYVANA EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Shyvana is one of the weirdest champion dynamics in league. She has a kit that is built around scaling, but is actually pretty strong early
+game. Her base stats are incredibly high so it's a good idea to keep the trades really short with just Q and W. Her empowered auto activates
+2 PTA autos so it's important to W that. When Shyvana has R, make sure to be really careful since she can dash onto you and use her
+empowered projectile ability and it does a ton of damage. Just chill and farm when she has it and go for a Grasp trade here and there without
+losing too much hp. After mythic it is pretty much an auto win in side lane 1v1.
+WARWICK MEDIUM
+RUNES: Grasp of The Undying (Demolish, Second Wind, Overgrowth), Sorcery: Nimbus Cloak, Celerity. SUMMS: FLASH IGNITE
+ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Warwick is a champion with sustain comparable to Tryndamere. However Warwick can only mostly heal to half hp so it becomes a lot more
+possible to burst him. The main problem is that he can go Barrier which is a huge counter to Garen's burst. For this reason, it is important
+to not full commit to all ins vs him and to instead poke him with Q Grasp with Sheen and see what he does when you kite in and out after
+getting him really low.to see if you can bait an important cooldown. To actually kill Warwick through Barrier, you need to look at his healthbar
+and use abilities to overkill him past what you would normally expect. Otherwise you can just farm Grasp on him and chill in lane since you
+outscale Warwick in teamfight hard. Remember to always W his empowered auto (Q) it's the biggest part of his burst. Playing safe all lane
+is fine to do since he is really hard to kill.
+VLADIMIR MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: E MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Vladimir is a ranged champion with sustain, good poke, and a lot of healing in combat. For this reason, Garen needs to mainly just farm until
+Stridebreaker. There is pretty much nothing to do in this lane to win, especially if Vladimir goes Ghost Ignite and Summon Aery. Vlad actually
+has really high kill pressure with his empowered Q under the tower when he crashes a big wave since he can choose to do his empowered
+Q and tank a turret shot for the extra damage on you to keep your passive down and do extra damage to you. This is why it's important to
+give some CS if Vladimir begins to do this because he can threaten a dive if your hp drops too low with his Q, R, and ignite. However, most
+Vladimir players are pretty passive and let you farm up and outscale them for Stridebreaker and Hullbreaker which is basically GG in side
+lane. If Vladimir goes Phase Rush it can be a lot harder to outscale him but your lane will be a lot safer so it will usually be fine either way.
+TRUNDLE MEDIUM
+RUNES: Conqueror, (Triumph Tenacity Last Stand), Sorcery: Nimbus Cloak, Celerity. SUMMS: FLASH IGNITE. ABILITY ORDER:
+E MAX. Rush Berserker Greaves into Ironspike Whip.
+Trundle is one of the most stat checky champs in League of Legends purely because he steals your armor and lowers your AD. He
+also has incredible sustain if he opts for Vampiric Scepter so it's best to try to burst him from a higher HP with a more aggressive rune page
+like Conqueror. The other rune options only allow you to short trade and run away while Conqueror allows you to go for a higher HP all in
+which is what you want to do vs Trundle since his sustain is so high. When the wave is on your side you can try to space at the max range
+of your E and go for an extended trade vs Trundle to set him up for an all by chunking him so he is burstable. You can even try to do this
+at level 1, but you have to be really careful and know your limits decently well since Trundle can run you down really easily with his pillar and
+Q slow. After 1 or 2 items it's best to not 1v1 Trundle since he gets stronger and stronger in the 1v1 as the game progresses unless you got
+a decent lead in lane. He is really useless in teamfights so it's best to take him on in those.
+WUKONG EASY
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH IGNITE. Ability Order: Q MAX.
+Rush Ironspike Whip into Berserker Greaves.
+Wukong's entire kit revolves around extended trades. This is problematic for Wukong since Garen is one of the best champs at nullifying
+his extended trades. Wukong also has low sustain so Garen poking him with Q max is really terrible for Wukong. Garen can simply just
+auto Q Wukong and walk away. Or even Auto Q E or Q E Ironspike Whip and run away immediately in a straight lane without thinking twice.
+Wukong's passive give him armor as he deals damage, his E gives him attack speed which is better in extended fights, and his Q CD gets
+reduced by auto attacks. This all isn't really allowed to be done against Garen since Garen just silences him and runs away at the speed
+of light with Phase Rush. It gets even worse at Stridebreaker since Wukong can't even follow Garen to auto him. If you play the cooldowns
+correctly, there's pretty much no way to lose against Wukong if you disengage every trade quickly. You can perma split vs him and chunk
+him out the same way you do in lane. Be careful for his clone when using R, it can bait you out into ulting the wrong Wukong.
+RENGAR MEDIUM
+RUNES: Grasp of The Undying (Demolish, Bone Plating, Overgrowth) Sorcery: (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
+Ability Order: Q MAX. Rush Two Ruby Crytals into Sheen into Tier 1 Boots into Hearthbound Axe.
+Rengar is a very strong early game champion that pretty much can't lose the early levels in any way shape or form. This is why it's important
+to pay lots of respect to him early on and to hug the wall that is furthest away from the bush. If he ever leaps on you, use your W immediately
+on the first part of damage he does. Starting W lvl 1 is recommended too since he can do this right as the lane starts with no counterplay.
+It's okay to give CS early since Rengar scales a lot worse compared to you and after one recall he will begin to have issues short trading with
+you. Be careful when chasing Rengar into bushes, he can jump to minions from the bush back and forth to kite you and even outplay you
+since he will get his stacks to heal up again or use another empowered ability. It's best to avoid walking into bushes with him for that reason
+unless you can immediately kill him. After 1 item there is pretty much no way he can win unless you are very behind in laning phase.
+TAHM KENCH EASY
+RUNES: Grasp of The Undying (Demolish, Conditioning/Second Wind, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
+SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
+Tahm Kench is a very weak champion overall with his only main strength being a decent amount of durability with his shield and his base
+damage on his tongue skill shot. He can also kidnap you into his tower if he stacks on you while you are close to it, but other than that, Tahm
+Kench struggles being a threat to Garen in laning phase due to his lack of damage. You can pretty much just walk up to this guy and bonk
+him with a Q whenever you have Grasp ready and he can't really punish it. You just have to make sure he doesn't get his 3 stacks
+so that he can't stun you or R you. He has pretty decent gank setup with his R as well so that's all you really need to worry about. If you are
+chasing him down, try to hold your Q for his W which is his channel ability where he teleports through the ground. You can silence him out
+of it which is really terrible for him. Otherwise just perma split vs him since Trinity Cleaver is broken and if you can't deal enough dmg you
+can just opt to get a hull cannon under the tower and demolish it if no one is around to punish you.
+AKSHAN HARD
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: E MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Akshan is a champion with one of the best early games in top lane. He has an insanely good lvl 1-2-3 to the point where you need to give
+XP if he decides to level up his hook lvl 2 and use it to zone you off. It can one shot you from nearly full since he runs Ignite as well so you
+need to be really careful and start W. Garen outscales Akshan in the 1v1 with Stridebreaker, but getting there without being down lots and
+lots of CS is really hard. There's basically no kill opportunities on him unless he takes minion aggro damage or tower shots so you pretty
+much have to play for high CS and high HP so you don't get dove. You will be more useful than him in teamfights at level 11 as long as you
+aren't turbo behind so you can always be patient and wait for that. The lane is very brutal overall.
+VAYNE HARD
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: Q MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Vayne is a champion that you must survive until Stridebreaker against. You may not be able to 1v1 her, but you will be a lot more useful in
+teamfights as a frontline if you didn't die in lane and you got to soak all the XP you needed to get to the special lvl 11 number. If she takes
+too much minion aggro or tower damage there's potential for a kill as well but you will mostly be stuck under tower farming as much as you
+can. Make sure you don't drop too much HP so you don't get dove by her or her jungler. There's a certain amount of minions you're allowed
+to take without getting destroyed. If Vayne ever tumbles forwards you can potentially go for a Q on her and see if she eats your E as well. If
+she instantly condemns you it's fine since you won't really get punished all that hard and she will be missing hp that won't come back
+since her sustain isn't good at all. It's important to not overextend in lane since Vayne can run you down with multiple autos since her
+passive gives her movement speed towards you.
+HEIMERDINGER MEDIUM
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: Q MAX. Rush
+Berserker Greaves into Ironspike Whip.
+Heimerdinger can be best described as a win lane lose game champion. Heimerdinger is incredibly strong in laning phase and can one shot
+you for hitting one of his stun grenades since it activates his turrets to shoot at you. This is why it's very important to use W on the stun
+grenades so that you can readjust your position and use the tenacity to dodge the turret shots so you don't evaporate instantly. Don't walk
+up for CS while under tower if you don't have W and he has his stun grenade since it is the perfect opportunity for him to throw one at you.
+It mostly revolves around that one interaction since that is Heimer's main way of surprising you with burst. There's pretty much no way to
+kill him unless he takes turret aggro or takes damage from minions and he goes into all in range of around 50% HP for you to flash on him.
+Once you get Stridebreaker and lvl 11 he gets turbo outscaled since he is basically always one shottable and you can just W his grenade and
+run at him. If his R is going to do too much damage you can just Phase Rush away and heal up under tower again and then go in once you
+have your CDs back up. A chunked Heimer is super easy to kill post 1 item, you just have to get there
