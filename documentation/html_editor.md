@@ -93,13 +93,13 @@ When the page loads:
 11. **Final Load**: Clears fallback timers. If URL parameters or pre-filled inputs specify a matchup, calls `loadMatchup()`. Otherwise calls `loadGeneralNotes()`.
 12. **Autosave Listener**: Attaches a debounced (500ms) `input` listener to the editor textarea that saves current content (with metadata) to `localStorage` on every keystroke.
 
-### B. Loading a Matchup (`sync.js → loadMatchup`)
+### B. Loading a Matchup (`sync_load.js → loadMatchup`)
 1.  Resolves champion display names to keys using `utils.js` helpers.
 2.  Constructs and sets external site URLs (Mobalytics, OP.GG, Lolalytics) using the role selector value.
 3.  Resolves the active tab's file path via `resolvePagePath()` (e.g., `matchups/Sett/Garen.md` or `matchups/Sett/Garen-plan.md`).
 4.  Calls `loadMatchupByPath()` with the resolved path, draft key, and champion keys.
 
-### C. Loading by Path (`sync.js → loadMatchupByPath`)
+### C. Loading by Path (`sync_load.js → loadMatchupByPath`)
 1.  Updates `activeMatchup` global state. Re-renders the local drafts panel.
 2.  **Metadata Resolution**: On matchup change, extracts metadata from the primary local draft. If loading a secondary tab (Plan/VODs), asynchronously fetches the primary file from GitHub to get shared link metadata.
 3.  **Local Draft Check**: Reads `localStorage` for the current draft key. Extracts metadata if present.
@@ -112,10 +112,12 @@ When the page loads:
 
 ### D. Editing and Local Auto-Saving
 1.  On input keystrokes (debounced 500ms), the editor saves content + appended metadata to `localStorage` under the active `draftKey`.
+    *   **Metadata Appendage Rule**: The autosave cycle only appends the hidden `<!-- METADATA: {...} -->` block to drafts of the *primary* file (Notes tab for matchups, Notes tab for General). Non-primary tab drafts (Plan, VODs) are saved as plain text without metadata. This prevents false conflict detections and metadata duplication across tabs.
 2.  Updates the pending drafts sidebar.
 3.  Updates the detected links panel.
 
-### E. Saving to GitHub (`sync.js → saveToGitHub`)
+### E. Saving to GitHub (`sync_save.js → saveToGitHub`)
+*   **Dual-Tab Sync**: Both the main "Sync GitHub" button and the sidebar "Sync" button sync BOTH tabs' drafts for the active matchup or General context. The main button first syncs the currently displayed tab, then automatically syncs the other tab's draft if one exists in `localStorage`. Metadata is stripped from non-primary tab files before push to prevent pollution.
 1.  Appends metadata to the primary file only (Notes for matchups, Notes for General).
 2.  Encodes to Base64 (with UTF-8 multibyte safety via `btoa(unescape(encodeURIComponent(...)))`).
 3.  PUTs to GitHub with the current SHA (or without SHA for new files).
@@ -124,7 +126,7 @@ When the page loads:
     *   **YouTube Index Sync**: Extracts YouTube links from the saved text. If the link changed, updates `youtube_links.json` on GitHub (fetching/updating its SHA) and refreshes `localStorage`.
     *   Clears the local draft, hides conflict banner, re-renders drafts and saved matchups.
 
-### F. Tab Switching (`ui.js → switchEditorTab`)
+### F. Tab Switching (`ui_tabs.js → switchEditorTab`)
 1.  Saves current editor content as a local draft before switching.
 2.  Updates `activePageSide` and persists to `localStorage`.
 3.  Computes the new file path via `resolvePagePath()` and calls `loadMatchupByPath()`.
@@ -145,6 +147,7 @@ The editor dynamically parses, highlights, and manages external links:
 *   Custom links are stored in `activeMetadata.customLinks` (array of `{customId, display, url}` objects).
 *   They are appended to the `.md` file as a hidden HTML comment: `<!-- METADATA: {...} -->`.
 *   Metadata is only appended to the primary file (Notes tab for matchups, Notes tab for General).
+*   **Cross-Tab Persistence**: When adding or editing a custom link while on a non-primary tab (Plan/VODs), the system explicitly persists the updated metadata to the primary tab's local draft. This ensures metadata changes are not lost when switching tabs or reloading.
 
 ### Link Ordering
 *   All links (text-extracted + custom) are merged and sorted according to `activeMetadata.linkOrder`.

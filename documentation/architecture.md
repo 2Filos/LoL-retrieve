@@ -18,17 +18,37 @@ The client-side application logic is split into several purpose-built script fil
 - **Purpose**: Networking and CORS bridge client layer.
 - **Responsibilities**: Implements the `bridgeFetch()` function that routes HTTP requests through Tampermonkey's privileged `GM_xmlhttpRequest` via `CustomEvent` messaging. Provides `fetchDirectOrBridge()` for endpoints that may work with standard `fetch` (like DDragon). Handles GitHub PAT validation (`checkTokenValidity()`), config error UI (`handleConfigMissing()`), and the ping/pong bridge diagnostic (`checkBridgeStatus()`). Also manages the global YouTube links index fetch (`fetchYoutubeLinksIndex()`).
 
-### `storage.js`
-- **Purpose**: Local draft persistence, conflict resolution, and saved matchup management.
-- **Responsibilities**: Scans `localStorage` for unsaved draft keys (`draft_matchup:*`), groups tab variants (base, `-plan`, `-vod`) under the same parent matchup, and renders the "Pending Local Drafts" sidebar panel. Provides conflict resolution (`resolveConflict()`) and draft discard logic. Manages the "Saved Matchups" starred list (CRUD operations, alphabetical sorting, character truncation, YouTube icon detection via dual-layer link extraction). Also handles background sync of individual draft cards (`syncDraftDirectly()`).
+### `storage_drafts.js`
+- **Purpose**: Local draft persistence and conflict resolution.
+- **Responsibilities**: Scans `localStorage` for unsaved draft keys, groups tab variants, and renders the "Pending Local Drafts" sidebar panel. Provides conflict resolution (`resolveConflict()`) and draft discard logic. Handles background sync of individual draft cards (`syncDraftDirectly()`).
 
-### `sync.js`
-- **Purpose**: Remote state synchronization with GitHub.
-- **Responsibilities**: Implements `loadMatchup()` to resolve champion inputs, build file paths, and set external site links (Mobalytics, OP.GG, Lolalytics). The core `loadMatchupByPath()` function fetches files from GitHub via the CORS bridge, performs conflict detection between local drafts and remote copies, manages the `currentSha` revision tracker, and handles cross-tab metadata resolution. `saveToGitHub()` encodes content in Base64, PUTs to GitHub, updates SHA, and runs the YouTube links index sync pipeline.
+### `storage_saved.js`
+- **Purpose**: Saved matchup management.
+- **Responsibilities**: Manages the "Saved Matchups" starred list (CRUD operations, alphabetical sorting, character truncation, YouTube icon detection via dual-layer link extraction) and renders the sidebar.
 
-### `ui.js`
-- **Purpose**: DOM manipulation, URL extraction, and UI feedback states.
-- **Responsibilities**: Parses and extracts URLs from editor text (`extractUrls()`), generates domain-specific icons (`getLinkIcon()`), and renders the detected link badge panel with drag-to-reorder support. Manages the link edit modal (open/save/delete for both text-extracted and custom metadata links). Handles the editor tab system (`resolvePagePath()`, `updateTabLabels()`, `switchEditorTab()`), discard button state management, textarea height persistence via `ResizeObserver`, champion portrait icon rendering, and the quick search auto-fill input.
+### `sync_load.js`
+- **Purpose**: Fetching and loading remote state.
+- **Responsibilities**: Implements `loadMatchup()` to resolve champion inputs and build file paths. The core `loadMatchupByPath()` function fetches files from GitHub via the CORS bridge, performs conflict detection between local drafts and remote copies, manages the `currentSha` revision tracker, and handles cross-tab metadata resolution.
+
+### `sync_save.js`
+- **Purpose**: Pushing state to GitHub.
+- **Responsibilities**: Encodes content in Base64, PUTs to GitHub, updates SHA, triggers dual-tab syncing, and runs the YouTube links index sync pipeline.
+
+### `ui_links.js`
+- **Purpose**: Link extraction and rendering.
+- **Responsibilities**: Parses and extracts URLs from editor text (`extractUrls()`), generates domain-specific icons (`getLinkIcon()`), and renders the detected link badge panel with drag-to-reorder support.
+
+### `ui_modal.js`
+- **Purpose**: Link formatting modal.
+- **Responsibilities**: Manages the link edit modal (open/save/delete for both text-extracted and custom metadata links).
+
+### `ui_tabs.js`
+- **Purpose**: Editor tab system.
+- **Responsibilities**: Handles path resolution (`resolvePagePath()`), updates tab labels, manages content-presence indicators (`updateTabIndicators()`), and handles tab switching (`switchEditorTab()`).
+
+### `ui_core.js`
+- **Purpose**: General DOM manipulation and UI feedback.
+- **Responsibilities**: Manages discard button state, textarea height persistence via `ResizeObserver`, champion portrait icon rendering, and the quick search auto-fill input.
 
 ### `boot.js`
 - **Purpose**: Application lifecycle and entry point.
@@ -62,10 +82,15 @@ The HTML loads scripts in a strict order at the end of `<body>` to ensure depend
 1. utils.js        — Pure helpers, no dependencies
 2. config.js       — User credentials (onerror triggers handleConfigMissing)
 3. champions.js    — Depends on: global CHAMPIONS array, fetchDirectOrBridge (api.js loads later but champions.js only runs when called)
-4. storage.js      — Depends on: utils.js helpers, activeMatchup state
-5. sync.js         — Depends on: utils.js, api.js, storage.js, ui.js
-6. api.js          — Depends on: config.js CONFIG object
-7. ui.js           — Depends on: utils.js, activeMatchup/activeMetadata state
+4. storage_drafts.js — Depends on: utils.js helpers, activeMatchup state
+5. storage_saved.js  — Depends on: storage_drafts.js, ui helpers
+6. sync_load.js      — Depends on: utils.js, api.js, storage/ui helpers
+7. sync_save.js      — Depends on: sync_load.js, api.js, storage/ui helpers
+8. api.js          — Depends on: config.js CONFIG object
+9. ui_core.js      — Depends on: state
+10. ui_links.js    — Depends on: utils.js
+11. ui_modal.js    — Depends on: ui_links.js
+12. ui_tabs.js     — Depends on: sync_load.js
 8. boot.js         — Entry point, depends on everything above
 ```
 

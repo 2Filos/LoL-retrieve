@@ -54,7 +54,8 @@ function handleConfigMissing() {
  * @returns {Promise<boolean>} Resolves to true if bridge is active, false otherwise.
  */
 async function checkBridgeStatus() {
-    return new Promise((resolve) => {
+    PerfProfiler.phaseStart('checkBridgeStatus');
+    const result = await new Promise((resolve) => {
         let attempts = 0;
         const maxAttempts = 15;
         let interval;
@@ -82,6 +83,9 @@ async function checkBridgeStatus() {
         // Dispatch initial ping immediately
         window.dispatchEvent(new CustomEvent("PingTampermonkeyBridge"));
     });
+    PerfProfiler.mark(`bridge_resolved:${result}`);
+    PerfProfiler.phaseEnd();
+    return result;
 }
 
 /**
@@ -103,11 +107,45 @@ async function checkBridgeStatus() {
  * @returns {Promise<object>} Custom response object.
  */
 function bridgeFetch(url, options = {}) {
-    return new Promise((resolve) => {
+    // Build a short label for profiling (strip query params and base URL clutter)
+    const _label = (options.method || 'GET') + ' ' + url.replace(/https:\/\/api\.github\.com\/repos\/[^/]+\/[^/]+\/contents\//, '').replace(/\?.*$/, '');
+    const _startMs = PerfProfiler.elapsed();
+
+    return new Promise((resolve, reject) => {
         // Create a unique identifier for this request (avoids mixing up concurrent calls)
         const requestId = Math.random().toString(36).substr(2, 9);
+        let settled = false;
+
+        // Timeout guard: reject if bridge/GitHub doesn't respond within 30s
+        const timeoutId = setTimeout(() => {
+            if (settled) return;
+            settled = true;
+            window.removeEventListener(`FromTampermonkeyBridge_${requestId}`, responseHandler);
+            const endMs = PerfProfiler.elapsed();
+            PerfProfiler.recordRequest({
+                label: _label,
+                phase: 'TIMEOUT',
+                startMs: _startMs,
+                endMs: endMs,
+                durationMs: endMs - _startMs,
+                status: 'TIMEOUT',
+                extra: '30s timeout — bridge or GitHub unresponsive'
+            });
+            console.error(`%c⏰ BRIDGE TIMEOUT%c ${_label} — no response after 30s`, 'background:#e94560;color:#fff;padding:2px 6px;border-radius:3px;font-weight:bold', 'color:#e94560');
+            resolve({
+                ok: false,
+                status: 0,
+                isExpired: false,
+                json: () => null,
+                text: () => 'Bridge request timed out after 30 seconds'
+            });
+        }, 30000);
 
         const responseHandler = (e) => {
+            if (settled) return;
+            settled = true;
+            clearTimeout(timeoutId);
+
             // Clean up the event listener immediately after receiving response
             window.removeEventListener(`FromTampermonkeyBridge_${requestId}`, responseHandler);
 
@@ -117,6 +155,18 @@ function bridgeFetch(url, options = {}) {
             } catch (err) {
                 // Not JSON or empty body - ignore parsing error
             }
+
+            // Record timing
+            const endMs = PerfProfiler.elapsed();
+            PerfProfiler.recordRequest({
+                label: _label,
+                phase: 'bridgeFetch',
+                startMs: _startMs,
+                endMs: endMs,
+                durationMs: endMs - _startMs,
+                status: e.detail.status,
+                extra: e.detail.isExpired ? 'TOKEN_EXPIRED' : ''
+            });
 
             // Return a standardized fetch-like response interface
             resolve({
@@ -175,10 +225,22 @@ function getAPIConfig() {
  * @returns {Promise<object>} Parsed JSON response.
  */
 async function fetchDirectOrBridge(url) {
+    const shortUrl = url.replace(/https:\/\/ddragon\.leagueoflegends\.com\//, '');
+    const startMs = PerfProfiler.elapsed();
     try {
         // Try direct fetch first
         const res = await fetch(url);
-        if (res.ok) return await res.json();
+        if (res.ok) {
+            const endMs = PerfProfiler.elapsed();
+            PerfProfiler.recordRequest({
+                label: `DIRECT ${shortUrl}`,
+                phase: 'fetchDirect',
+                startMs, endMs,
+                durationMs: endMs - startMs,
+                status: res.status
+            });
+            return await res.json();
+        }
     } catch (e) {
         console.warn("Direct fetch failed or blocked by CORS, trying bridge fallback...", e);
     }
@@ -200,6 +262,7 @@ async function fetchDirectOrBridge(url) {
  * see the guide: learning/github_contents_api.md
  */
 async function checkTokenValidity() {
+    PerfProfiler.phaseStart('checkTokenValidity');
     try {
         const statusEl = document.getElementById('status');
         let authTimer;
@@ -261,6 +324,8 @@ async function checkTokenValidity() {
         }
         if (statusEl) statusEl.innerText = "Status Check Failed: " + err.message;
     }
+    PerfProfiler.mark('token_validated');
+    PerfProfiler.phaseEnd();
 }
 
 // Global state for youtube links index SHA
@@ -270,30 +335,46 @@ let youtubeLinksSha = null;
  * Fetches the global youtube_links.json file from GitHub.
  * This ensures the sidebar has active VOD icons even for matchups without local drafts.
  */
-async function fetchYoutubeLinksIndex() {
+async function fetchYoutubeLinksIndex(retries = 3) {
     if (!bridgeActive || !isConfigValid) return;
-    try {
-        const config = getAPIConfig();
-        const response = await bridgeFetch(config.url + 'youtube_links.json', {
-            headers: config.headers
-        });
+    PerfProfiler.phaseStart('fetchYoutubeLinksIndex');
+    
+    const config = getAPIConfig();
+    
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+            const response = await bridgeFetch(config.url + 'youtube_links.json', {
+                headers: config.headers
+            });
 
-        if (response.ok) {
-            const data = await response.json();
-            youtubeLinksSha = data.sha;
-            
-            // Decode the Base64 content
-            const textContent = decodeURIComponent(escape(atob(data.content)));
-            
-            // Store it in localStorage for immediate sync-less rendering
-            localStorage.setItem('youtube_links_index', textContent);
-            console.log("[DEBUG] Successfully fetched and cached youtube_links.json", youtubeLinksSha);
-        } else if (response.status === 404) {
-            console.log("[DEBUG] youtube_links.json does not exist yet.");
-        } else {
-            console.warn("[DEBUG] Failed to fetch youtube_links.json:", response.status);
+            if (response.ok) {
+                const data = await response.json();
+                youtubeLinksSha = data.sha;
+                
+                // Decode the Base64 content
+                const textContent = decodeURIComponent(escape(atob(data.content)));
+                
+                // Store it in localStorage for immediate sync-less rendering
+                localStorage.setItem('youtube_links_index', textContent);
+                console.log("[DEBUG] Successfully fetched and cached youtube_links.json", youtubeLinksSha);
+                break; // Success, exit retry loop
+            } else if (response.status === 404) {
+                console.log("[DEBUG] youtube_links.json does not exist yet.");
+                break; // Not found, don't retry
+            } else {
+                console.warn(`[DEBUG] Failed to fetch youtube_links.json (Attempt ${attempt}/${retries}):`, response.status);
+                if (attempt < retries) {
+                    await new Promise(r => setTimeout(r, 2000 * attempt));
+                }
+            }
+        } catch (err) {
+            console.error(`[DEBUG] Error fetching youtube_links.json (Attempt ${attempt}/${retries}):`, err);
+            if (attempt < retries) {
+                await new Promise(r => setTimeout(r, 2000 * attempt));
+            }
         }
-    } catch (err) {
-        console.error("[DEBUG] Error fetching youtube_links.json:", err);
     }
+    
+    PerfProfiler.mark('youtube_index_loaded');
+    PerfProfiler.phaseEnd();
 }

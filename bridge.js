@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         Local HTML to GitHub CORS Bridge
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  Bypasses Firefox & Chrome CORS blocks, handles token checks, and supports ping diagnostics
 // @author       You
 // @match        file:///*matchup*.html*
 // @match        file:///*/matchups.html
 // @match        file:///*
+// @include      file://*
+// @include      file:///*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_openInTab
 // @connect      api.github.com
@@ -83,6 +85,10 @@
         const { detail } = event;
         const { requestId, url, method, headers, body } = detail;
 
+        // Performance timing for bridge-side diagnostics
+        const _bridgeStart = performance.now();
+        const _shortUrl = (method || 'GET') + ' ' + url.replace(/https:\/\/api\.github\.com\/repos\/[^/]+\/[^/]+\/contents\//, '').replace(/\?.*$/, '').replace(/https:\/\/ddragon\.leagueoflegends\.com\//, '');
+
         // GM_xmlhttpRequest is a privileged API provided by Tampermonkey that bypasses CORS.
         GM_xmlhttpRequest({
             method: method,
@@ -92,6 +98,14 @@
             
             // Triggered when the request completes successfully
             onload: function(response) {
+                const _dur = (performance.now() - _bridgeStart).toFixed(1);
+                console.log(`%c[BRIDGE PERF]%c ${_shortUrl} %c${_dur}ms %c[${response.status}]`,
+                    'background:#2d1b69;color:#bb86fc;font-weight:bold;padding:1px 4px;border-radius:2px',
+                    'color:#ccc',
+                    parseFloat(_dur) > 3000 ? 'color:#e94560;font-weight:bold' : parseFloat(_dur) > 1000 ? 'color:#f5a623;font-weight:bold' : 'color:#03dac6',
+                    response.status >= 200 && response.status < 300 ? 'color:#03dac6' : 'color:#cf6679'
+                );
+
                 // Read response headers to check if GitHub rejected our credentials
                 const authHeader = response.responseHeaders ? response.responseHeaders.toLowerCase() : "";
                 const isExpired = authHeader.includes("bad credentials") || response.status === 401;
@@ -109,6 +123,13 @@
             
             // Triggered if the remote server is down, DNS fails, or network is disconnected
             onerror: function(error) {
+                const _dur = (performance.now() - _bridgeStart).toFixed(1);
+                console.error(`%c[BRIDGE PERF]%c ${_shortUrl} %cERROR after ${_dur}ms`,
+                    'background:#2d1b69;color:#cf6679;font-weight:bold;padding:1px 4px;border-radius:2px',
+                    'color:#ccc',
+                    'color:#cf6679;font-weight:bold'
+                );
+
                 window.dispatchEvent(new CustomEvent(`FromTampermonkeyBridge_${requestId}`, {
                     detail: { 
                         status: 0, 
