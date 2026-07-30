@@ -1,12 +1,5 @@
 KAYLE MEDIUM
 RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST/IGNITE. Ability Order: Q MAX.
 Rush Berserker Greaves into Ironspike Whip.
-Kayle is a lethal tempo champion so naturally Garen will struggle with extended trades. For this reason, Garen Q maxes and plays for short
-pokes into Kayle. This is important because if Kayle can extend the trade and get her Lethal Tempo stacked, you will lose too much HP and
-CS. At lvl 1, it's important to let Kayle push the wave if she got to it first. However, if she leashes, Garen can E the wave lvl 1 and get prio.
-This allows you to have more control of the lane and be safer from her early game Lethal Tempo all in. You can try to punish Kayle in the
-early levels (1-5) but after first back with Berserker's Greaves and lvl 6, Kayle will start to win simply by being ranged. For this reason you
-will need to respect her until Stridebreaker or if she misuses her slow or speed up abilities. If you want to trade with her, don't immediately
-use Q until she uses the ability that slows you since you will not be able to cleanse it if you do. Otherwise, try to get a kill or at least her TP
-in early levels and farm until Stridebreaker where you will outscale in 1v1 at lvl 11 if you are not behind too much XP or CS. You can flash on
-Kayle even if she has R up if you do it fast enough so she can't react to the silence when she is low HP for your all in with R.
+Kayle is a lethal tempo champion so naturally Garen will struggle with extended trades. For this reason, Garen Q maxes and plays for short pokes into Kayle. This is important because if Kayle can extend the trade and get her Lethal Tempo stacked, you will lose too much HP and CS. At lvl 1, it's important to let Kayle push the wave if she got to it first. However, if she leashes, Garen can E the wave lvl 1 and get prio.
+This allows you to have more control of the lane and be safer from her early game Lethal Tempo all in. You can try to punish Kayle in the early levels (1-5) but after first back with Berserker's Greaves and lvl 6, Kayle will start to win simply by being ranged. For this reason you will need to respect her until Stridebreaker or if she misuses her slow or speed up abilities. If you want to trade with her, don't immediately use Q until she uses the ability that slows you since you will not be able to cleanse it if you do. Otherwise, try to get a kill or at least her TP in early levels and farm until Stridebreaker where you will outscale in 1v1 at lvl 11 if you are not behind too much XP or CS. You can flash on Kayle even if she has R up if you do it fast enough so she can't react to the silence when she is low HP for your all in with R.

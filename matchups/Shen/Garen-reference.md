@@ -1,11 +1,4 @@
 SHEN EASY
 RUNES: Grasp of The Undying (Demolish, Conditioning/Bone Plating, Overgrowth), Inspiration: Magical Footwear, Cosmic Insight.
 SUMMS: FLASH GHOST ABILITY ORDER: Q MAX. Rush Sheen into Ruby Crystal into Hearthbound Axe.
-Shen is an incredibly strong early game champion that isn't really to be messed with. Garen can begin to win after first back and around
-level 7 with Sheen, but until then you have to respect Shen and W his taunt or his Q auto since he does an insane extended trade with those
-abilities. However, after some scaling begins to happen, and especially at mythic, Shen falls apart quite quickly. If he Rs while you are perma
-shoving with demolish and Sheen, his whole tower will disappear. Trinity Force and Black Cleaver end up being incredibly effective against
-him and you do tons of damage to him in side lane. All you really have to do is get to the point where you win the short trades vs him in lane
-and then you will have a really easy time splitpushing vs him for the rest of the game. Just watch out for his strong early game, start W even
-if you are scared of him zoning you from XP. It can be good to start spinning as he is about to taunt you as well since you will hit your full
-spin for free and avoid auto attacking him while he uses his W to dodge what would be autos.
+Shen is an incredibly strong early game champion that isn't really to be messed with. Garen can begin to win after first back and around level 7 with Sheen, but until then you have to respect Shen and W his taunt or his Q auto since he does an insane extended trade with those abilities. However, after some scaling begins to happen, and especially at mythic, Shen falls apart quite quickly. If he Rs while you are perma shoving with demolish and Sheen, his whole tower will disappear. Trinity Force and Black Cleaver end up being incredibly effective against him and you do tons of damage to him in side lane. All you really have to do is get to the point where you win the short trades vs him in lane and then you will have a really easy time splitpushing vs him for the rest of the game. Just watch out for his strong early game, start W even if you are scared of him zoning you from XP. It can be good to start spinning as he is about to taunt you as well since you will hit your full spin for free and avoid auto attacking him while he uses his W to dodge what would be autos.

@@ -71,7 +71,7 @@ function getLocalDrafts() {
                 if (parts.length === 2) {
                     let mySide = parts[1];
                     // Strip tab suffixes for grouping
-                    mySide = mySide.replace(/-plan$/, '').replace(/-vod$/, '').replace(/-reference$/, '');
+                    mySide = mySide.replace(/-plan$/, '').replace(/-vod$/, '');
                     const groupKey = `${parts[0]}/${mySide}`;
                     if (!seen.has(groupKey)) {
                         seen.add(groupKey);
@@ -95,7 +95,7 @@ function renderLocalDrafts() {
     if (!container) return;
 
     const drafts = getLocalDrafts();
-    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
         console.log(`[DEBUG EditorFlow] renderLocalDrafts: Found ${drafts.length} total distinct grouped drafts in localStorage.`);
     }
 
@@ -104,7 +104,7 @@ function renderLocalDrafts() {
     let activeGroupPath = null;
     if (activeDraftKey) {
         activeGroupPath = activeDraftKey.replace('draft_matchup:', '')
-            .replace(/-plan$/, '').replace(/-vod$/, '').replace(/-reference$/, '');
+            .replace(/-plan$/, '').replace(/-vod$/, '');
         // Normalize 'Notes-vod' to 'Notes'
         if (activeGroupPath === 'Notes-vod') activeGroupPath = 'Notes';
     }
@@ -178,8 +178,7 @@ async function syncDraftDirectly(enemyKey, myKey) {
         const label = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
         draftEntries = [
             { path: `matchups/${enemyKey}/${myKey}.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}`, label: `${label} (Notes)` },
-            { path: `matchups/${enemyKey}/${myKey}-plan.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}-plan`, label: `${label} (Plan)` },
-            { path: `matchups/${enemyKey}/${myKey}-reference.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}-reference`, label: `${label} (Reference)` }
+            { path: `matchups/${enemyKey}/${myKey}-plan.md`, draftKey: `draft_matchup:${enemyKey}/${myKey}-plan`, label: `${label} (Plan)` }
         ];
     }
 
@@ -295,7 +294,7 @@ async function syncDraftDirectly(enemyKey, myKey) {
 
     if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
         console.log("[DEBUG syncDraftDirectly] Finished loop. allOk:", allOk);
-
+        
         // Log all remaining localStorage keys to see what's stuck
         const remainingKeys = Object.keys(localStorage).filter(k => k.startsWith('draft_matchup:'));
         console.log("[DEBUG syncDraftDirectly] Remaining draft keys in localStorage:", remainingKeys);

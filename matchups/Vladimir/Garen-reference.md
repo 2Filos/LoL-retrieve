@@ -1,10 +1,3 @@
 VLADIMIR MEDIUM
-RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: E MAX. Rush
-Berserker Greaves into Ironspike Whip.
-Vladimir is a ranged champion with sustain, good poke, and a lot of healing in combat. For this reason, Garen needs to mainly just farm until
-Stridebreaker. There is pretty much nothing to do in this lane to win, especially if Vladimir goes Ghost Ignite and Summon Aery. Vlad actually
-has really high kill pressure with his empowered Q under the tower when he crashes a big wave since he can choose to do his empowered
-Q and tank a turret shot for the extra damage on you to keep your passive down and do extra damage to you. This is why it's important to
-give some CS if Vladimir begins to do this because he can threaten a dive if your hp drops too low with his Q, R, and ignite. However, most
-Vladimir players are pretty passive and let you farm up and outscale them for Stridebreaker and Hullbreaker which is basically GG in side
-lane. If Vladimir goes Phase Rush it can be a lot harder to outscale him but your lane will be a lot safer so it will usually be fine either way.
+RUNES: Phase Rush, Resolve (Second Wind, Overgrowth/Unflinching) SUMMS: FLASH GHOST. Ability Order: E MAX. Rush Berserker Greaves into Ironspike Whip.
+Vladimir is a ranged champion with sustain, good poke, and a lot of healing in combat. For this reason, Garen needs to mainly just farm until Stridebreaker. There is pretty much nothing to do in this lane to win, especially if Vladimir goes Ghost Ignite and Summon Aery. Vlad actually has really high kill pressure with his empowered Q under the tower when he crashes a big wave since he can choose to do his empowered Q and tank a turret shot for the extra damage on you to keep your passive down and do extra damage to you. This is why it's important to give some CS if Vladimir begins to do this because he can threaten a dive if your hp drops too low with his Q, R, and ignite. However, most Vladimir players are pretty passive and let you farm up and outscale them for Stridebreaker and Hullbreaker which is basically GG in side lane. If Vladimir goes Phase Rush it can be a lot harder to outscale him but your lane will be a lot safer so it will usually be fine either way.

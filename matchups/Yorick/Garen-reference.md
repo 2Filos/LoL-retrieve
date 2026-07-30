@@ -1,11 +1,5 @@
 YORICK MEDIUM
 RUNES: Grasp of The Undying (Demolish, Second Wind, Overgrowth) Sorcery: (Nimbus Cloak, Celerity) SUMMS: FLASH IGNITE.
 Ability Order: Q MAX. Rush Sheen into Tier 1 Boots into Ruby Crystal into Hearthbound Axe.
-Yorick is a scaling champion with an incredibly weak early game and a kit that counters Garen's spin specifically. Since Garen has no
-dashes, Yorick's cage ability is really strong vs him since it instantly denies Garen from moving to continously hit multiple spins. But since
-Grasp is now a viable build with Q max, this isn't really a problem. The only issue is that Yorick can put up a fight if he hits his E (Cone
-shaped ability that slows) since that can make you take a ton of damage from his ghouls if you're stuck in the cage at the same time. It's
-important to dodge this. If you do, you can easily just run at him to slap him with a Q Grasp trade. You can try to Q him without seeing
-if he misses an ability first, but you have to be careful and make sure that he can't one shot you if he does end up hitting his E and his cage.
-We have to win early game since Yorick outscales us so make sure that you play at least a bit aggressively during the early game. Always
-match his splitpush since you should be ahead for the entire game if you utilize your early game advantage.
+Yorick is a scaling champion with an incredibly weak early game and a kit that counters Garen's spin specifically. Since Garen has no dashes, Yorick's cage ability is really strong vs him since it instantly denies Garen from moving to continously hit multiple spins. But since Grasp is now a viable build with Q max, this isn't really a problem. The only issue is that Yorick can put up a fight if he hits his E (Cone shaped ability that slows) since that can make you take a ton of damage from his ghouls if you're stuck in the cage at the same time. It's important to dodge this. If you do, you can easily just run at him to slap him with a Q Grasp trade. You can try to Q him without seeing if he misses an ability first, but you have to be careful and make sure that he can't one shot you if he does end up hitting his E and his cage.
+We have to win early game since Yorick outscales us so make sure that you play at least a bit aggressively during the early game. Always match his splitpush since you should be ahead for the entire game if you utilize your early game advantage.
