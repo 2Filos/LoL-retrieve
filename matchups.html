@@ -152,6 +152,17 @@
                         <button class="tab-btn" data-page="left" id="tabLeft" onclick="switchEditorTab('left')">Plan</button>
                         <button class="tab-btn active" data-page="right" id="tabRight" onclick="switchEditorTab('right')">Notes</button>
                         <button class="tab-btn" data-page="ref" id="tabRef" onclick="switchEditorTab('ref')">Reference</button>
+                        
+                        <div class="analysis-container" id="analysis-container" style="display: flex; position: relative;">
+                            <button id="btn-analysis" class="tab-btn no-indicator" style="display: flex; align-items: center; gap: 4px;">Analysis <span class="chevron" style="font-size: 10px;">▼</span></button>
+                            <button id="btn-analysis-add" class="tab-btn no-indicator" style="padding: 0 8px; font-weight: bold; border-left: none; margin-left: 2px;" title="New Analysis Page">+</button>
+                            
+                            <div id="analysis-dropdown" class="hidden" style="position: absolute; top: 100%; right: 0; background: #0b0f19; border: 1px solid var(--gold-dark); border-radius: 4px; padding: 8px; z-index: 1000; min-width: 160px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); display: flex; flex-direction: column; gap: 8px;">
+                                <input type="text" id="analysis-search" placeholder="Search pages..." style="width: 100%; box-sizing: border-box; padding: 6px 8px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-primary); border-radius: 2px;" />
+                                <ul id="analysis-list" style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; max-height: 300px; overflow-y: auto;">
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="conflictBanner" style="display: none; align-items: center; gap: 8px; flex-wrap: nowrap; margin-left: 10px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 6px 12px;">
@@ -284,6 +295,28 @@
         </div>
     </div>
 
+    <!-- Analysis Page Edit Modal -->
+    <div id="analysisEditModal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000; padding: 20px; box-sizing: border-box; backdrop-filter: blur(2px);">
+        <div class="card"
+            style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 16px; border: 1px solid var(--gold-accent); box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 20px rgba(0, 188, 171, 0.15);">
+            <h3 id="analysisEditTitle"
+                style="margin: 0; color: var(--gold-accent); font-family: 'Cinzel', serif; letter-spacing: 1px; border-bottom: 1px solid var(--gold-dark); padding-bottom: 10px;">
+                New Analysis Page</h3>
+
+            <div class="form-group">
+                <label for="analysisEditName">Page Name</label>
+                <input type="text" id="analysisEditName" placeholder="e.g. Mid Game Spikes">
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px;">
+                <button class="btn-secondary" onclick="closeAnalysisEditModal()" style="width: auto;">Cancel</button>
+                <button class="btn-primary" onclick="saveAnalysisEditModal()"
+                    style="width: auto; padding: 8px 24px;">Save Page</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Core Script references -->
     <script src="config.js" onerror="handleConfigMissing()"></script>
     <script src="js/debug.js"></script>
@@ -298,6 +331,7 @@
     <script src="js/ui_links.js"></script>
     <script src="js/ui_modal.js"></script>
     <script src="js/ui_tabs.js"></script>
+    <script src="js/ui_analysis.js"></script>
     <script src="js/boot.js"></script>
 </body>
 

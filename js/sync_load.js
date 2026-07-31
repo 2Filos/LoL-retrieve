@@ -271,6 +271,12 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
 
     updateStarButtonUI();
     updateTabLabels();
+    
+    // Fetch Analysis index for the newly loaded context
+    if (typeof loadAnalysisIndex === 'function') {
+        loadAnalysisIndex();
+    }
+    
     PerfProfiler.mark(`matchup_loaded:${path}`);
     PerfProfiler.phaseEnd();
 }
