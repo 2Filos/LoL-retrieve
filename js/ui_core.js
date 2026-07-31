@@ -52,18 +52,26 @@ function toggleLinksPanel() {
 (function () {
     // Wait for DOM to load if included in head, but usually runs at end of body.
     window.addEventListener('DOMContentLoaded', () => {
-        const editor = document.getElementById('editor');
-        if (!editor) return;
+        const saveHeight = (el) => {
+            if (!el.style.height || el.style.height === '0px') return;
+            localStorage.setItem('matchup_editor_height', el.style.height);
+        };
 
-        // Observe resize via ResizeObserver
         let resizeTimeout;
-        const observer = new ResizeObserver(() => {
+        const observer = new ResizeObserver((entries) => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
-                localStorage.setItem('matchup_editor_height', editor.style.height);
+                for (const entry of entries) {
+                    saveHeight(entry.target);
+                }
             }, 200);
         });
-        observer.observe(editor);
+
+        const editor = document.getElementById('editor');
+        if (editor) observer.observe(editor);
+        
+        const wysiwygEditor = document.getElementById('wysiwyg-editor-container');
+        if (wysiwygEditor) observer.observe(wysiwygEditor);
     });
 })();
 

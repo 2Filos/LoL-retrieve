@@ -31,7 +31,7 @@ window.onload = async () => {
     PerfProfiler.phaseStart('boot');
     // Restore last-active tab side from localStorage
     const savedTabSide = localStorage.getItem('editor_active_tab_side');
-    if (savedTabSide && (savedTabSide === 'left' || savedTabSide === 'right')) {
+    if (savedTabSide) {
         activePageSide = savedTabSide;
     }
     const editorEl = document.getElementById('editor');
@@ -200,11 +200,25 @@ window.onload = async () => {
     if (window.matchupFallbackTimer) clearTimeout(window.matchupFallbackTimer);
 
     PerfProfiler.mark('boot_content_loading');
+    window.isBooting = true;
     if (enemyVal && myVal) {
         await loadMatchup();
     } else {
         await loadGeneralNotes();
     }
+    window.isBooting = false;
+    
+    // If the active tab was an Analysis page, restore the exact page from localStorage
+    if (activePageSide === 'analysis') {
+        const savedFilename = localStorage.getItem('editor_active_analysis_filename');
+        if (savedFilename && typeof currentAnalysisIndex !== 'undefined') {
+            const page = currentAnalysisIndex.find(p => p.filename === savedFilename);
+            if (page && typeof loadAnalysisPage === 'function') {
+                loadAnalysisPage(page);
+            }
+        }
+    }
+    
     PerfProfiler.mark('boot_content_loaded');
     PerfProfiler.phaseEnd(); // end 'boot' phase
     PerfProfiler.printSummary();
@@ -219,16 +233,95 @@ window.onload = async () => {
 };
 
 /**
+ * Image Paste Handler
+ * Intercepts image pastes, uploads them to GitHub, and injects markdown.
+ */
+document.getElementById('editor').addEventListener('paste', async (e) => {
+    const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    let imageItem = null;
+    let imageExtension = 'png';
+
+    for (let item of items) {
+        if (item.type.indexOf('image') === 0) {
+            imageItem = item;
+            if (item.type === 'image/jpeg') imageExtension = 'jpg';
+            else if (item.type === 'image/gif') imageExtension = 'gif';
+            else if (item.type === 'image/webp') imageExtension = 'webp';
+            break;
+        }
+    }
+
+    if (!imageItem) return; // Let default paste handle text
+
+    e.preventDefault(); // Stop default pasting behavior
+
+    const file = imageItem.getAsFile();
+    if (!file) return;
+
+    const editorEl = document.getElementById('editor');
+    
+    // Calculate cursor position for injection
+    const startPos = editorEl.selectionStart;
+    const endPos = editorEl.selectionEnd;
+    const originalValue = editorEl.value;
+
+    const filename = `img_${Date.now()}.${imageExtension}`;
+    const placeholder = `![Uploading ${filename}...]()`;
+
+    // Inject placeholder
+    editorEl.value = originalValue.substring(0, startPos) + placeholder + originalValue.substring(endPos);
+    
+    // Move cursor after placeholder
+    editorEl.selectionStart = editorEl.selectionEnd = startPos + placeholder.length;
+    
+    // Trigger input event to save the placeholder temporarily to local draft
+    editorEl.dispatchEvent(new Event('input'));
+
+    document.getElementById('status').innerText = "Uploading pasted image to GitHub...";
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+        const dataUrl = event.target.result;
+        // Strip prefix: data:image/png;base64,
+        const base64Data = dataUrl.split(',')[1];
+        
+        if (typeof uploadImageToGitHub === 'function') {
+            const success = await uploadImageToGitHub(base64Data, filename);
+            
+            // Re-fetch current value in case user typed while uploading
+            const currentValue = editorEl.value;
+            
+            if (success) {
+                // Replace placeholder with actual relative link
+                const finalLink = `![image](${filename})`;
+                editorEl.value = currentValue.replace(placeholder, finalLink);
+                document.getElementById('status').innerText = "Image uploaded successfully!";
+            } else {
+                // Failed upload
+                editorEl.value = currentValue.replace(placeholder, `*[Image upload failed: ${filename}]*`);
+                document.getElementById('status').innerText = "Image upload failed.";
+            }
+            // Trigger input event to save the final state
+            editorEl.dispatchEvent(new Event('input'));
+        }
+    };
+    reader.readAsDataURL(file);
+});
+
+/**
  * Dynamic event handler triggered on textarea inputs.
  * Auto-saves drafts locally immediately upon user typing.
  */
 let autosaveTimeoutId;
-document.getElementById('editor').addEventListener('input', () => {
+
+window.triggerAutoSave = function() {
     clearTimeout(autosaveTimeoutId);
     autosaveTimeoutId = setTimeout(() => {
         if (!activeMatchup.draftKey) return;
 
-        const textContent = document.getElementById('editor').value;
+        const textContent = activeMatchup.isAnalysisPage && typeof getWysiwygContent === 'function' 
+                            ? getWysiwygContent() 
+                            : document.getElementById('editor').value;
 
         // Only append metadata to the primary file draft, matching saveToGitHub() and saveDraftBeforeSwitch()
         const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
@@ -237,7 +330,11 @@ document.getElementById('editor').addEventListener('input', () => {
         const fullText = isPrimaryFile ? appendMetadata(textContent) : textContent;
         localStorage.setItem(activeMatchup.draftKey, fullText);
         renderLocalDrafts(); // Refresh list display
-                if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        
+        // Indicate unsaved changes to user
+        updateDiscardButtonState(true);
+
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
             console.log(`[DEBUG EditorFlow] Editor autosave triggered for ${activeMatchup.path} (Length: ${textContent.length})`);
         }
 
@@ -249,4 +346,6 @@ document.getElementById('editor').addEventListener('input', () => {
         document.getElementById('status').innerText = "Typing... saved draft locally.";
         updateDetectedLinks();
     }, 500); // 500ms debounce
-});
+};
+
+document.getElementById('editor').addEventListener('input', window.triggerAutoSave);

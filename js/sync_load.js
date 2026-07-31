@@ -4,6 +4,17 @@
  * handling offline fallbacks, and triggering conflict detection.
  */
 
+function setEditorContent(content) {
+    if (activeMatchup && activeMatchup.isAnalysisPage) {
+        if (typeof setWysiwygContent === 'function') {
+            setWysiwygContent(content);
+        }
+    } else {
+        const el = document.getElementById('editor');
+        if (el) el.value = content;
+    }
+}
+
 /**
  * Resolves search terms, builds target path rules, fetches notes from GitHub
  * or retrieves active local storage drafts, and populates the text editor.
@@ -51,6 +62,13 @@ async function loadMatchup() {
     }
 
     const label = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
+    
+    // Reset to Notes tab if we are navigating away from an Analysis page
+    if (typeof activePageSide !== 'undefined' && activePageSide === 'analysis' && !window.isBooting) {
+        activePageSide = 'right';
+        localStorage.setItem('editor_active_tab_side', 'right');
+    }
+
     const pathInfo = resolvePagePath({ enemyKey, myKey }, activePageSide);
 
     await loadMatchupByPath(pathInfo.path, label, pathInfo.draftKey, enemyKey, myKey);
@@ -76,6 +94,12 @@ async function loadGeneralNotes() {    if (typeof DEBUG_CONFIG !== 'undefined' &
     const lolaLink = document.getElementById('lolaLink');
     if (lolaLink) lolaLink.style.display = 'none';
 
+    // Reset to Notes tab if we are navigating away from an Analysis page
+    if (typeof activePageSide !== 'undefined' && activePageSide === 'analysis' && !window.isBooting) {
+        activePageSide = 'left'; // General notes defaults to left (Notes)
+        localStorage.setItem('editor_active_tab_side', 'left');
+    }
+
     const pathInfo = resolvePagePath({ enemyKey: null, myKey: null }, activePageSide);
 
     await loadMatchupByPath(pathInfo.path, 'General', pathInfo.draftKey, null, null);
@@ -98,7 +122,8 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
         label: label,
         draftKey: draftKey,
         enemyKey: enemyKey,
-        myKey: myKey
+        myKey: myKey,
+        isAnalysisPage: (typeof activePageSide !== 'undefined' && activePageSide === 'analysis')
     };
 
     // Re-render local drafts so the newly active matchup is hidden and previously active ones reappear
@@ -176,7 +201,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     // Fallback load in offline-only mode
     if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
         fileLabel.innerText = `${label} (Local Draft)`;
-        editorEl.value = localDraftText || "";
+        setEditorContent(localDraftText || "");
         editorEl.disabled = false;
         statusEl.innerText = "Offline Mode: Draft active.";
         updateDiscardButtonState(localDraftText !== null);
@@ -209,7 +234,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
             // File does not exist on GitHub yet
             statusEl.innerText = `${label} not found on GitHub.\n Ready to create new file.`;
             fileLabel.innerText = `New File: ${label}`;
-            editorEl.value = localDraftText || "";
+            setEditorContent(localDraftText || "");
             editorEl.disabled = false;
             updateDiscardButtonState(true);
             updateDetectedLinks();
@@ -232,7 +257,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
                 if (conflictBanner) conflictBanner.style.display = 'flex'; // reveal conflict warning banner
 
                 // If there's a conflict, localDraftText (and activeMetadata) was already extracted above
-                editorEl.value = localDraftText;
+                setEditorContent(localDraftText);
 
                 // Cache the github remote text without overwriting our activeMetadata
                 const match = decodedTextRaw.match(/<!-- METADATA: (.*?) -->/);
@@ -249,8 +274,8 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
                     localStorage.removeItem(draftKey); // Clear redundant draft
                     renderLocalDrafts();
                 }
-                editorEl.value = extractMetadata(decodedTextRaw, shouldResetMetadata);
-                githubTextCache = editorEl.value;
+                setEditorContent(extractMetadata(decodedTextRaw, shouldResetMetadata));
+                githubTextCache = activeMatchup.isAnalysisPage && typeof getWysiwygContent === 'function' ? getWysiwygContent() : editorEl.value;
                 statusEl.innerText = "Loaded successfully from GitHub!";
                 updateDiscardButtonState(false);
                 updateDetectedLinks();
@@ -263,7 +288,7 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
     } catch (err) {
         statusEl.innerText = "Bridge fetch error: " + err.message;
         fileLabel.innerText = `${label} (Offline)`;
-        editorEl.value = localDraftText || "";
+        setEditorContent(localDraftText || "");
         editorEl.disabled = false;
         updateDiscardButtonState(localDraftRaw !== null);
         updateDetectedLinks();
@@ -271,6 +296,15 @@ async function loadMatchupByPath(path, label, draftKey, enemyKey = null, myKey =
 
     updateStarButtonUI();
     updateTabLabels();
+    
+    // Toggle Editor UI Visibility
+    if (activeMatchup.isAnalysisPage) {
+        document.getElementById('editor').style.display = 'none';
+        document.getElementById('wysiwyg-editor-container').style.display = 'flex';
+    } else {
+        document.getElementById('editor').style.display = 'block';
+        document.getElementById('wysiwyg-editor-container').style.display = 'none';
+    }
     
     // Fetch Analysis index for the newly loaded context
     if (typeof loadAnalysisIndex === 'function') {
