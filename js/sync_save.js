@@ -170,6 +170,21 @@ async function saveToGitHub() {
             }
             // === END YOUTUBE LINK GLOBAL INDEX SYNC ===
 
+            // === UPDATE ANALYSIS INDEX CONTENT FLAG ===
+            if (activeMatchup.isAnalysisPage && typeof currentAnalysisIndex !== 'undefined') {
+                const filename = activeMatchup.path.split('/').pop();
+                const page = currentAnalysisIndex.find(p => p.filename === filename);
+                if (page) {
+                    const hasText = fullText.replace(/\n?\n?<!-- METADATA: .*? -->/, '').trim().length > 0;
+                    if (page.hasContent !== hasText) {
+                        page.hasContent = hasText;
+                        if (typeof renderAnalysisList === 'function') renderAnalysisList();
+                        if (typeof saveAnalysisIndexToGitHub === 'function') saveAnalysisIndexToGitHub();
+                    }
+                }
+            }
+            // === END ANALYSIS INDEX CONTENT FLAG ===
+
             // Delete local draft cache for the current tab
             localStorage.removeItem(activeMatchup.draftKey);
 

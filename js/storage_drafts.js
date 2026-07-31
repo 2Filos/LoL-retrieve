@@ -95,7 +95,7 @@ function renderLocalDrafts() {
     if (!container) return;
 
     const drafts = getLocalDrafts();
-    if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
         console.log(`[DEBUG EditorFlow] renderLocalDrafts: Found ${drafts.length} total distinct grouped drafts in localStorage.`);
     }
 
@@ -295,7 +295,7 @@ async function syncDraftDirectly(enemyKey, myKey) {
 
     if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logSync) {
         console.log("[DEBUG syncDraftDirectly] Finished loop. allOk:", allOk);
-
+        
         // Log all remaining localStorage keys to see what's stuck
         const remainingKeys = Object.keys(localStorage).filter(k => k.startsWith('draft_matchup:'));
         console.log("[DEBUG syncDraftDirectly] Remaining draft keys in localStorage:", remainingKeys);

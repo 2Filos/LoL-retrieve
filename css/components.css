@@ -3,6 +3,8 @@
  * Core UI Components: Forms, Buttons, Panels, and specialized widgets
  */
 
+.hidden { display: none !important; }
+
 /* --- FORM FIELDS & INPUT ELEMENTS --- */
 .form-group {
     display: flex;
@@ -275,6 +277,10 @@ button:disabled {
     border-radius: 2px;
     transition: all 0.2s ease;
     opacity: 0.3;
+}
+
+.tab-btn.no-indicator::after {
+    display: none !important;
 }
 
 /* Tab Content Indicator (Filled state) */

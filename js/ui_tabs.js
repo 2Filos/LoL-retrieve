@@ -61,6 +61,8 @@ function updateTabLabels() {
 
     const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
     tabGroup.style.display = 'flex';
+    
+    const analysisContainer = document.getElementById('analysis-container');
 
     if (isMatchup) {
         tabLeft.textContent = 'Plan';
@@ -69,11 +71,17 @@ function updateTabLabels() {
             tabRef.style.display = 'inline-block';
             tabRef.textContent = 'Reference';
         }
+        if (analysisContainer) {
+            analysisContainer.style.display = 'none';
+        }
     } else {
         tabLeft.textContent = 'Notes';
         tabRight.textContent = 'VODs';
         if (tabRef) {
             tabRef.style.display = 'none';
+        }
+        if (analysisContainer) {
+            analysisContainer.style.display = 'flex';
         }
     }
 
