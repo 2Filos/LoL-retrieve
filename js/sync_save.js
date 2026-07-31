@@ -291,3 +291,54 @@ async function saveToGitHub() {
         statusEl.innerText = "Sync error: " + err.message + ". Draft saved locally.";
     }
 }
+
+/**
+ * Uploads a base64 encoded image to GitHub in the same directory as the active matchup.
+ * @param {string} base64Data - The raw base64 string (without the data URL prefix)
+ * @param {string} filename - The target filename (e.g. 'img_1234.png')
+ * @returns {Promise<boolean>} True if successful, false otherwise
+ */
+async function uploadImageToGitHub(base64Data, filename) {
+    if (!bridgeActive || typeof CONFIG === 'undefined' || !isConfigValid) {
+        console.warn("[WARN] Cannot upload image: Bridge or Config offline.");
+        return false;
+    }
+    
+    if (!activeMatchup.path) {
+        console.warn("[WARN] Cannot upload image: No active matchup loaded.");
+        return false;
+    }
+
+    const config = getAPIConfig();
+    
+    // Determine the directory path
+    // activeMatchup.path is like "matchups/Garen/Darius/Notes.md" or "matchups/Garen/Darius/Analysis/page_1.md"
+    const dirParts = activeMatchup.path.split('/');
+    dirParts.pop(); // remove the filename (e.g. "Notes.md")
+    const dirPath = dirParts.join('/');
+    const targetPath = dirPath + '/' + filename;
+
+    const bodyData = {
+        message: `Upload image: ${filename}`,
+        content: base64Data
+    };
+
+    try {
+        const response = await bridgeFetch(config.url + targetPath, {
+            method: 'PUT',
+            headers: config.headers,
+            body: JSON.stringify(bodyData)
+        });
+
+        if (response.ok) {
+            console.log(`[DEBUG] Image uploaded successfully to ${targetPath}`);
+            return true;
+        } else {
+            console.warn(`[WARN] Image upload failed: ${response.status}`);
+            return false;
+        }
+    } catch (err) {
+        console.error("[ERROR] Image upload error:", err);
+        return false;
+    }
+}

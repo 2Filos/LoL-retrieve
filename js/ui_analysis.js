@@ -60,6 +60,15 @@ function initAnalysisUI() {
     const btnAdd = document.getElementById('btn-analysis-add');
     const dropdown = document.getElementById('analysis-dropdown');
     const searchInput = document.getElementById('analysis-search');
+    const editInput = document.getElementById('analysisEditName');
+
+    if (editInput) {
+        editInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                saveAnalysisEditModal();
+            }
+        });
+    }
 
     if (!btnAnalysis || !btnAdd || !dropdown) return;
 
@@ -144,18 +153,11 @@ function renderAnalysisList(filter = "") {
         
         leftDiv.appendChild(nameSpan);
         
-        // Controls side (Indicator + Rename)
+        // Controls side (Rename + Delete)
         const rightDiv = document.createElement('div');
         rightDiv.style.display = "flex";
         rightDiv.style.alignItems = "center";
         rightDiv.style.gap = "8px";
-        
-        // Indicator
-        const indicator = document.createElement('span');
-        indicator.textContent = "[---]";
-        indicator.style.fontSize = "10px";
-        indicator.style.fontWeight = "bold";
-        indicator.style.color = page.hasContent ? "var(--success)" : "rgba(255,255,255,0.3)";
         
         const renameBtn = document.createElement('button');
         renameBtn.innerHTML = "✎"; // Simple pencil icon
@@ -173,9 +175,26 @@ function renderAnalysisList(filter = "") {
                 }
             }
         };
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = "🗑"; // Trash icon
+        deleteBtn.style.cssText = "background: none; border: none; color: var(--danger); cursor: pointer; font-size: 12px; padding: 2px 4px; opacity: 0.7;";
+        deleteBtn.title = "Delete page";
         
-        rightDiv.appendChild(indicator);
+        deleteBtn.onclick = async (e) => {
+            e.stopPropagation();
+            if (confirm(`Are you sure you want to delete the analysis page "${page.name}"? This action cannot be undone.`)) {
+                // Remove from array
+                currentAnalysisIndex.splice(index, 1);
+                renderAnalysisList(document.getElementById('analysis-search').value.toLowerCase());
+                if (typeof saveAnalysisIndexToGitHub === 'function') {
+                    await saveAnalysisIndexToGitHub();
+                }
+            }
+        };
+        
         rightDiv.appendChild(renameBtn);
+        rightDiv.appendChild(deleteBtn);
         
         li.appendChild(leftDiv);
         li.appendChild(rightDiv);
