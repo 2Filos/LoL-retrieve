@@ -64,7 +64,7 @@ async function loadMatchup() {
     const label = `${getChampionNameByKey(myKey)} vs ${getChampionNameByKey(enemyKey)}`;
     
     // Reset to Notes tab if we are navigating away from an Analysis page
-    if (typeof activePageSide !== 'undefined' && activePageSide === 'analysis') {
+    if (typeof activePageSide !== 'undefined' && activePageSide === 'analysis' && !window.isBooting) {
         activePageSide = 'right';
         localStorage.setItem('editor_active_tab_side', 'right');
     }
@@ -95,7 +95,7 @@ async function loadGeneralNotes() {    if (typeof DEBUG_CONFIG !== 'undefined' &
     if (lolaLink) lolaLink.style.display = 'none';
 
     // Reset to Notes tab if we are navigating away from an Analysis page
-    if (typeof activePageSide !== 'undefined' && activePageSide === 'analysis') {
+    if (typeof activePageSide !== 'undefined' && activePageSide === 'analysis' && !window.isBooting) {
         activePageSide = 'left'; // General notes defaults to left (Notes)
         localStorage.setItem('editor_active_tab_side', 'left');
     }

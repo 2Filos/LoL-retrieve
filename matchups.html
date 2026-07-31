@@ -181,7 +181,7 @@
                 <!-- Core Markdown Notepad Textarea -->
                 <div class="editor-wrapper" style="position: relative; width: 100%; height: 100%; display: flex; flex-direction: column;">
                     <textarea id="editor" placeholder="Select a matchup to start writing notes..." disabled></textarea>
-                    <div id="wysiwyg-editor-container" style="display: none; flex: 1; flex-direction: column; min-height: 0; background: var(--panel-bg);">
+                    <div id="wysiwyg-editor-container" style="display: none; flex-direction: column; min-height: 0;">
                         <div id="quill-editor" style="height: 100%; flex: 1;"></div>
                     </div>
                 </div>
@@ -193,6 +193,8 @@
                             const savedHeight = localStorage.getItem('matchup_editor_height');
                             if (savedHeight) {
                                 document.getElementById('editor').style.height = savedHeight;
+                                const wysiwyg = document.getElementById('wysiwyg-editor-container');
+                                if (wysiwyg) wysiwyg.style.height = savedHeight;
                             }
                         } catch (e) { }
                     })();

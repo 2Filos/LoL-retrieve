@@ -31,7 +31,7 @@ window.onload = async () => {
     PerfProfiler.phaseStart('boot');
     // Restore last-active tab side from localStorage
     const savedTabSide = localStorage.getItem('editor_active_tab_side');
-    if (savedTabSide && (savedTabSide === 'left' || savedTabSide === 'right')) {
+    if (savedTabSide) {
         activePageSide = savedTabSide;
     }
     const editorEl = document.getElementById('editor');
@@ -200,11 +200,25 @@ window.onload = async () => {
     if (window.matchupFallbackTimer) clearTimeout(window.matchupFallbackTimer);
 
     PerfProfiler.mark('boot_content_loading');
+    window.isBooting = true;
     if (enemyVal && myVal) {
         await loadMatchup();
     } else {
         await loadGeneralNotes();
     }
+    window.isBooting = false;
+    
+    // If the active tab was an Analysis page, restore the exact page from localStorage
+    if (activePageSide === 'analysis') {
+        const savedFilename = localStorage.getItem('editor_active_analysis_filename');
+        if (savedFilename && typeof currentAnalysisIndex !== 'undefined') {
+            const page = currentAnalysisIndex.find(p => p.filename === savedFilename);
+            if (page && typeof loadAnalysisPage === 'function') {
+                loadAnalysisPage(page);
+            }
+        }
+    }
+    
     PerfProfiler.mark('boot_content_loaded');
     PerfProfiler.phaseEnd(); // end 'boot' phase
     PerfProfiler.printSummary();

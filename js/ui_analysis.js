@@ -293,6 +293,7 @@ function loadAnalysisPage(page) {
     // Switch UI into Analysis mode
     activePageSide = 'analysis';
     localStorage.setItem('editor_active_tab_side', 'analysis');
+    localStorage.setItem('editor_active_analysis_filename', page.filename);
     
     // Deselect other tabs
     ['tabLeft', 'tabRight', 'tabRef'].forEach(id => {
