@@ -16,6 +16,9 @@
     <link rel="preconnect" href="https://ddragon.leagueoflegends.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 
+    <!-- Load Quill snow CSS before our theme CSS to allow overrides -->
+    <link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css">
+    
     <!-- Extracted External CSS Stylesheet -->
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/components.css">
@@ -176,7 +179,12 @@
                 </div>
 
                 <!-- Core Markdown Notepad Textarea -->
-                <textarea id="editor" placeholder="Select a matchup to start writing notes..." disabled></textarea>
+                <div class="editor-wrapper" style="position: relative; width: 100%; height: 100%; display: flex; flex-direction: column;">
+                    <textarea id="editor" placeholder="Select a matchup to start writing notes..." disabled></textarea>
+                    <div id="wysiwyg-editor-container" style="display: none; flex: 1; flex-direction: column; min-height: 0; background: var(--panel-bg);">
+                        <div id="quill-editor" style="height: 100%; flex: 1;"></div>
+                    </div>
+                </div>
 
                 <!-- Inline script to restore height immediately before the browser renders the layout, preventing flicker -->
                 <script>
@@ -332,6 +340,9 @@
     <script src="js/ui_modal.js"></script>
     <script src="js/ui_tabs.js"></script>
     <script src="js/ui_analysis.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
+    <script src="js/wysiwyg_handler.js"></script>
     <script src="js/boot.js"></script>
 </body>
 

@@ -299,12 +299,15 @@ document.getElementById('editor').addEventListener('paste', async (e) => {
  * Auto-saves drafts locally immediately upon user typing.
  */
 let autosaveTimeoutId;
-document.getElementById('editor').addEventListener('input', () => {
+
+window.triggerAutoSave = function() {
     clearTimeout(autosaveTimeoutId);
     autosaveTimeoutId = setTimeout(() => {
         if (!activeMatchup.draftKey) return;
 
-        const textContent = document.getElementById('editor').value;
+        const textContent = activeMatchup.isAnalysisPage && typeof getWysiwygContent === 'function' 
+                            ? getWysiwygContent() 
+                            : document.getElementById('editor').value;
 
         // Only append metadata to the primary file draft, matching saveToGitHub() and saveDraftBeforeSwitch()
         const isMatchup = activeMatchup.enemyKey && activeMatchup.myKey;
@@ -313,7 +316,11 @@ document.getElementById('editor').addEventListener('input', () => {
         const fullText = isPrimaryFile ? appendMetadata(textContent) : textContent;
         localStorage.setItem(activeMatchup.draftKey, fullText);
         renderLocalDrafts(); // Refresh list display
-                if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
+        
+        // Indicate unsaved changes to user
+        updateDiscardButtonState(true);
+
+        if (typeof DEBUG_CONFIG !== 'undefined' && DEBUG_CONFIG.logEditorFlow) {
             console.log(`[DEBUG EditorFlow] Editor autosave triggered for ${activeMatchup.path} (Length: ${textContent.length})`);
         }
 
@@ -325,4 +332,6 @@ document.getElementById('editor').addEventListener('input', () => {
         document.getElementById('status').innerText = "Typing... saved draft locally.";
         updateDetectedLinks();
     }, 500); // 500ms debounce
-});
+};
+
+document.getElementById('editor').addEventListener('input', window.triggerAutoSave);

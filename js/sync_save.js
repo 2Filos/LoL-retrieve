@@ -25,7 +25,9 @@ async function saveToGitHub() {
 
     const config = getAPIConfig();
     const path = activeMatchup.path;
-    const textContent = document.getElementById('editor').value;
+    const textContent = activeMatchup.isAnalysisPage && typeof getWysiwygContent === 'function' 
+                        ? getWysiwygContent() 
+                        : document.getElementById('editor').value;
     const statusEl = document.getElementById('status');
 
     statusEl.innerText = "Syncing changes to GitHub...";

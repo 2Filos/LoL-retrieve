@@ -104,7 +104,7 @@ function initAnalysisUI() {
         const newPage = {
             id: id,
             name: pageName.trim(),
-            filename: `${id}.md`,
+            filename: `${id}.html`,
             hasContent: false // Initially empty
         };
         

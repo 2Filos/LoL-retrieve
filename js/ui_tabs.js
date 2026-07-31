@@ -210,7 +210,9 @@ function saveDraftBeforeSwitch() {
     const editorEl = document.getElementById('editor');
     if (!editorEl) return;
 
-    const textContent = editorEl.value;
+    const textContent = activeMatchup.isAnalysisPage && typeof getWysiwygContent === 'function' 
+                        ? getWysiwygContent() 
+                        : editorEl.value;
     const existingDraft = localStorage.getItem(activeMatchup.draftKey);
     
     // Determine if text has actually changed compared to the loaded remote state
@@ -265,6 +267,7 @@ function switchEditorTab(side) {
     // Update activeMatchup path/draftKey for the new tab
     activeMatchup.path = pathInfo.path;
     activeMatchup.draftKey = pathInfo.draftKey;
+    activeMatchup.isAnalysisPage = false;
 
     loadMatchupByPath(pathInfo.path, activeMatchup.label, pathInfo.draftKey,
                       activeMatchup.enemyKey, activeMatchup.myKey);
