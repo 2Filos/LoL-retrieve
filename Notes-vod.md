@@ -22,4 +22,4 @@ Have mouse ON HIM while you move away (for when he turns) - probably need VOD re
 
 MACRO
 > Baron Intentionality
-> Support vision connection
+> Support vision connection             Treat focus as ondulation rather than constant
