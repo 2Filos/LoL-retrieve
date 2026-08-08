@@ -16,4 +16,7 @@ If you fight him with jungler in the area and he ults toward your tower AFTER he
 Care dives, he can dive you out of tower
 Flash last second his W and not behind him or away from him, diagonally?
 
+> EXPERIMENT
+Trying out ghost
+
 <!-- METADATA: {"customLinks":[{"customId":"custom_1783251390375","display":"DM playlist","url":"https://www.youtube.com/playlist?list=PLLaIEvK0meGosGkvhTnOwA9H01NPxJY1W"}],"linkOrder":["https://www.youtube.com/playlist?list=PLLaIEvK0meGosGkvhTnOwA9H01NPxJY1W"]} -->
