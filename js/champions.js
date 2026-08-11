@@ -22,17 +22,21 @@ async function loadChampionsList() {
 
         // Check if cache patch is current
         if (cache && cache.version === latestVersion && cache.champions && cache.champions.length > 0) {
-            CHAMPIONS = cache.champions;
+            // Remove any corrupted entries
+            CHAMPIONS = cache.champions.filter(c => c.key !== "Jade_Tryndamere");
             console.log(`Loaded champions from cache: Patch ${latestVersion}`);
         } else {
             // Cache is missing or out-of-date: Fetch champion descriptions
             const data = await fetchDirectOrBridge(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/champion.json`);
 
             // Map object keys to sorted lookup arrays
-            CHAMPIONS = Object.values(data.data).map(c => ({
-                key: c.id,
-                name: c.name
-            })).sort((a, b) => a.name.localeCompare(b.name));
+            CHAMPIONS = Object.values(data.data)
+                .map(c => ({
+                    key: c.id,
+                    name: c.name
+                }))
+                .filter(c => c.key !== "Jade_Tryndamere")
+                .sort((a, b) => a.name.localeCompare(b.name));
 
             // Write cache back to local storage
             localStorage.setItem('lol_champions_cache', JSON.stringify({

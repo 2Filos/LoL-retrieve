@@ -62,6 +62,11 @@ function getChampionKeyByName(name) {
     
     // Scan array looking for a match on name or key identifier
     const found = CHAMPIONS.find(c => c.name.toLowerCase() === clean || c.key.toLowerCase() === clean);
+    
+    if (found && found.key === "Jade_Tryndamere") {
+        return "Tryndamere";
+    }
+    
     return found ? found.key : null;
 }
 
@@ -78,6 +83,8 @@ function getChampionKeyByName(name) {
  */
 function getChampionNameByKey(key) {
     if (!key || typeof CHAMPIONS === 'undefined') return key;
+    if (key === "Jade_Tryndamere") return "Tryndamere";
+    
     const found = CHAMPIONS.find(c => c.key === key);
     return found ? found.name : key;
 }
