@@ -18,8 +18,9 @@ CRITERIA
 These 3 criteria are crucial particularly for VOD reviews!
 
 POOL
-Basically Garen/Yorick/Malphite cover 95% of matchups - Kayle covers Mordekaiser/Singed/Kled + others
-Sett and Chogath are redundant/alternative options vs A) tanks and B) Malphite/Camille + others
+Basically Garen/Yorick/Malphite cover 95% of matchups 
+- Kayle covers Mordekaiser/Singed/Kled + others
+- Sett and Chogath are redundant/alternative options vs A) tanks and B) Malphite/Camille + others
 Checking WR, my worst ranked matchups are Teemo/Sett/Trundle, Malphite fixes all three
 Also Urgot (Yorick/Kayle/Malphite) and Kayle (Malphite)
 
